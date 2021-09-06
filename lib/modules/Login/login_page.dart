@@ -1,3 +1,4 @@
+import 'package:assistsaude/shared/alert_button_pressed.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,7 +28,7 @@ class LoginPage extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.only(top: 120),
                           child: Image.asset(
-                            "images/logo.png",
+                            "images/logo2.png",
                             fit: BoxFit.fill,
                             width: 120,
                           ),
@@ -76,14 +77,12 @@ class LoginPage extends StatelessWidget {
                                   decoration: InputDecoration(
                                     contentPadding: new EdgeInsets.symmetric(
                                         vertical: 15, horizontal: 15),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.white, width: 1.0),
-                                    ),
+                                    focusedBorder: OutlineInputBorder(),
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8.0),
                                       borderSide: BorderSide(
-                                          color: Theme.of(context).errorColor),
+                                        color: Theme.of(context).errorColor,
+                                      ),
                                     ),
                                     labelText: 'Entre com o e-mail',
                                     labelStyle: GoogleFonts.montserrat(
@@ -123,12 +122,7 @@ class LoginPage extends StatelessWidget {
                                   decoration: InputDecoration(
                                     contentPadding: new EdgeInsets.symmetric(
                                         vertical: 15, horizontal: 15),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Theme.of(context).errorColor,
-                                        width: 1.0,
-                                      ),
-                                    ),
+                                    focusedBorder: OutlineInputBorder(),
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8.0),
                                       borderSide: BorderSide(
@@ -181,36 +175,22 @@ class LoginPage extends StatelessWidget {
                                       },
                                     ),
                                   ),
-                                  onPressed: () {
+                                  onPressed: () async {
                                     if (loginController.email.value.text ==
                                             '' ||
                                         loginController.password.value.text ==
-                                            '') {}
-                                    if (loginController.formKey.currentState!
-                                        .validate()) {
-                                      loginController.login().then(
-                                        (value) {
-                                          if (value == null) {
-                                            loginController
-                                                .password.value.text = '';
-                                          } else {
-                                            loginController.idprof.value =
-                                                value['idprof'];
-                                            loginController.nome.value =
-                                                value['nome'];
-                                            loginController.sobrenome.value =
-                                                value['sobrenome'];
-                                            loginController.tipousu.value =
-                                                value['tipousu'];
-                                            loginController.imgperfil.value =
-                                                value['imgperfil'];
-                                            loginController.especialidade
-                                                .value = value['especialidade'];
-
-                                            Get.toNamed('/home');
-                                          }
+                                            '') {
+                                      onAlertButtonPressed(
+                                        context,
+                                        'Campo de email ou senha vazios',
+                                        () {
+                                          Get.back();
                                         },
                                       );
+                                    }
+                                    if (loginController.formKey.currentState!
+                                        .validate()) {
+                                      await loginController.login();
                                     }
                                   },
                                   child: loginController.isLoading.value

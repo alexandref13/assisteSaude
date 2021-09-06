@@ -5,13 +5,14 @@ import 'login_controller.dart';
 
 class LoginRepository {
   static Future login() async {
-    LoginController loginController = Get.put(LoginController());
+    LoginController loginController = Get.find(tag: 'login');
 
     return await http.post(
-      Uri.https("https://assistesaude.com.br", "/flutter/login.php"),
+      Uri.https("assistesaude.com.br", "/flutter/login.php"),
       body: {
         'emal': loginController.email.value.text,
-        'senha': loginController.password.value.text
+        'senha': loginController.password.value.text,
+        'idevice': loginController.deviceId,
       },
     );
   }
