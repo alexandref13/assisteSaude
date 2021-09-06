@@ -80,9 +80,6 @@ class LoginPage extends StatelessWidget {
                                     focusedBorder: OutlineInputBorder(),
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8.0),
-                                      borderSide: BorderSide(
-                                        color: Theme.of(context).errorColor,
-                                      ),
                                     ),
                                     labelText: 'Entre com o e-mail',
                                     labelStyle: GoogleFonts.montserrat(
@@ -125,8 +122,6 @@ class LoginPage extends StatelessWidget {
                                     focusedBorder: OutlineInputBorder(),
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8.0),
-                                      borderSide: BorderSide(
-                                          color: Theme.of(context).errorColor),
                                     ),
                                     labelText: 'Entre com a senha',
                                     labelStyle: GoogleFonts.montserrat(

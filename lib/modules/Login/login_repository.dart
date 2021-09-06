@@ -10,7 +10,7 @@ class LoginRepository {
     return await http.post(
       Uri.https("assistesaude.com.br", "/flutter/login.php"),
       body: {
-        'emal': loginController.email.value.text,
+        'email': loginController.email.value.text,
         'senha': loginController.password.value.text,
         'idevice': loginController.deviceId,
       },
