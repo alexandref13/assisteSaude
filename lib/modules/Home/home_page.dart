@@ -41,11 +41,11 @@ class _HomePageState extends State<HomePage> {
     final box = GetStorage();
     box.erase();
 
-    // loginController.email.value.text = '';
-    // loginController.password.value.text = '';
-    // loginController.idusu.value = '';
-    // loginController.nome.value = '';
-    // loginController.tipousu.value = '';
+    loginController.email.value.text = '';
+    loginController.password.value.text = '';
+    loginController.idprof.value = '';
+    loginController.nome.value = '';
+    loginController.tipousu.value = '';
 
     Get.offAllNamed('/login');
   }
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
   Future uploadImage() async {
     var request = http.MultipartRequest('POST', uri);
     print('${loginController.idprof.value}');
-    request.fields['idusu'] = loginController.idprof.value;
+    request.fields['idprof'] = loginController.idprof.value;
     var pic = await http.MultipartFile.fromPath("image", _selectedFile!.path);
     request.files.add(pic);
     var response = await request.send();
