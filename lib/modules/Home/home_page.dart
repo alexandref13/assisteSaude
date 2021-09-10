@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:assistsaude/modules/Home/components/agenda_widget.dart';
 import 'package:assistsaude/modules/Home/components/comunidados_widget.dart';
 import 'package:assistsaude/modules/Home/components/home_widget.dart';
@@ -5,7 +7,10 @@ import 'package:assistsaude/modules/Home/components/terapias_widget.dart';
 import 'package:assistsaude/modules/Login/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'home_controller.dart';
 
@@ -15,12 +20,251 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  LoginController loginController = Get.put(LoginController());
   int selectedIndex = 0;
 
   void onItemTapped(int index) {
     setState(() {
       selectedIndex = index;
     });
+  }
+
+  var _picker;
+  File? _selectedFile;
+
+  final uri = Uri.parse(
+      "https://admautopecasbelem.com.br/login/flutter/upload_imagem.php");
+
+  Future<void> logoutUser() async {
+    await GetStorage.init();
+
+    final box = GetStorage();
+    box.erase();
+
+    // loginController.email.value.text = '';
+    // loginController.password.value.text = '';
+    // loginController.idusu.value = '';
+    // loginController.nome.value = '';
+    // loginController.tipousu.value = '';
+
+    Get.offAllNamed('/login');
+  }
+
+  Future uploadImage() async {
+    var request = http.MultipartRequest('POST', uri);
+    print('${loginController.idprof.value}');
+    request.fields['idusu'] = loginController.idprof.value;
+    var pic = await http.MultipartFile.fromPath("image", _selectedFile!.path);
+    request.files.add(pic);
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      Navigator.of(context).pop();
+      print('Imagem do perfil alterada');
+    } else if (response.statusCode == 404) {
+      loginController.imgperfil.value = '';
+    } else {
+      Navigator.of(context).pop();
+      print('Imagem Não Enviada');
+    }
+    _selectedFile = null;
+  }
+
+  Widget getImageWidget() {
+    if (_selectedFile != null) {
+      return GestureDetector(
+        onTap: () {
+          _configurandoModalBottomSheet(context);
+          //Navigator.pushNamed(context, '/Home');
+        },
+        child: Container(
+          child: Column(
+            children: [
+              Container(
+                  margin: EdgeInsets.only(left: 40, bottom: 5),
+                  child: Center(
+                    child: Icon(
+                      Icons.edit,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).accentColor)),
+            ],
+          ),
+          width: 70,
+          height: 70,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: new DecorationImage(
+              image: new FileImage(_selectedFile!),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      );
+    } else {
+      return GestureDetector(
+        onTap: () {
+          _configurandoModalBottomSheet(context);
+        },
+        child: loginController.imgperfil.value == ''
+            ? Container(
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 40, bottom: 5),
+                      child: Center(
+                        child: Icon(
+                          Icons.edit,
+                          size: 20,
+                          color: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Theme.of(context).accentColor,
+                      ),
+                    ),
+                  ],
+                ),
+                width: 70,
+                height: 70,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: AssetImage('images/user.png'),
+                  ),
+                ),
+              )
+            : Container(
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 40, bottom: 5),
+                      child: Center(
+                        child: Icon(
+                          Icons.edit,
+                          size: 20,
+                          color: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Theme.of(context).accentColor,
+                      ),
+                    ),
+                  ],
+                ),
+                width: 70,
+                height: 70,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: NetworkImage(
+                      'https://admautopecasbelem.com.br/login/areadm/downloads/fotosperfil/${loginController.imgperfil.value}',
+                    ),
+                  ),
+                ),
+              ),
+      );
+    }
+  }
+
+  getImage(ImageSource source) async {
+    this.setState(() {});
+    PickedFile image = await _picker.pickImage(source: source);
+    // XFile image = await _picker.pickImage(source: source);
+
+    if (image != null) {
+      File? cropped = await ImageCropper.cropImage(
+          sourcePath: image.path,
+          aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+          compressQuality: 80,
+          maxWidth: 400,
+          maxHeight: 400,
+          compressFormat: ImageCompressFormat.jpg,
+          androidUiSettings: AndroidUiSettings(
+            toolbarColor: Colors.deepOrange,
+            toolbarTitle: "Imagem para o Perfil",
+            statusBarColor: Colors.deepOrange.shade900,
+            backgroundColor: Colors.white,
+          ));
+
+      this.setState(() {
+        _selectedFile = File(image.path);
+        _selectedFile = cropped;
+        if (cropped != null) {
+          uploadImage();
+          Get.back();
+        }
+      });
+    }
+  }
+
+  void _configurandoModalBottomSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return Container(
+            color: Theme.of(context).accentColor,
+            padding: EdgeInsets.only(bottom: 30),
+            child: Wrap(
+              children: <Widget>[
+                ListTile(
+                    title: Center(
+                        child: Text(
+                  "Alterar Imagem",
+                  style: GoogleFonts.montserrat(fontSize: 16),
+                ))),
+                Divider(
+                  height: 20,
+                  color: Theme.of(context).textSelectionTheme.selectionColor,
+                ),
+                ListTile(
+                    leading: new Icon(
+                      Icons.camera_alt,
+                      color:
+                          Theme.of(context).textSelectionTheme.selectionColor,
+                    ),
+                    title: new Text('Câmera'),
+                    trailing: new Icon(
+                      Icons.arrow_right,
+                      color:
+                          Theme.of(context).textSelectionTheme.selectionColor,
+                    ),
+                    onTap: () => {getImage(ImageSource.camera)}),
+                Divider(
+                  height: 20,
+                  color: Theme.of(context).textSelectionTheme.selectionColor,
+                ),
+                ListTile(
+                    leading: new Icon(Icons.collections,
+                        color: Theme.of(context)
+                            .textSelectionTheme
+                            .selectionColor),
+                    title: new Text('Galeria de Fotos'),
+                    trailing: new Icon(Icons.arrow_right,
+                        color: Theme.of(context)
+                            .textSelectionTheme
+                            .selectionColor),
+                    onTap: () => {getImage(ImageSource.gallery)}),
+                Divider(
+                  height: 20,
+                  color: Theme.of(context).textSelectionTheme.selectionColor,
+                ),
+                SizedBox(
+                  height: 15,
+                )
+              ],
+            ),
+          );
+        });
   }
 
   @override
