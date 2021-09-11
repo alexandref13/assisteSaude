@@ -9,26 +9,28 @@ import 'modules/Login/login_bindings.dart';
 import 'modules/Login/login_page.dart';
 
 void main() {
-  runApp(GetMaterialApp(
-    localizationsDelegates: [
-      RefreshLocalizations.delegate,
-      GlobalMaterialLocalizations.delegate,
-      GlobalWidgetsLocalizations.delegate,
-    ],
-    supportedLocales: [Locale('pt')],
-    initialRoute: '/login',
-    debugShowCheckedModeBanner: false,
-    theme: admin,
-    getPages: [
-      GetPage(
-        name: '/login',
-        page: () => LoginPage(),
-        binding: LoginBinding(),
-      ),
-      GetPage(
-        name: '/home',
-        page: () => HomePage(),
-      ),
-    ],
-  ));
+  runApp(
+    GetMaterialApp(
+      localizationsDelegates: [
+        RefreshLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [Locale('pt')],
+      initialRoute: '/login',
+      debugShowCheckedModeBanner: false,
+      theme: admin,
+      getPages: [
+        GetPage(
+          name: '/login',
+          page: () => LoginPage(),
+          binding: LoginBinding(),
+        ),
+        GetPage(
+          name: '/home',
+          page: () => HomePage(),
+        ),
+      ],
+    ),
+  );
 }

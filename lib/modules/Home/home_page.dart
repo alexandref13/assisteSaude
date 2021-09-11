@@ -20,7 +20,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  LoginController loginController = Get.put(LoginController());
+  LoginController loginController = Get.find(tag: 'login');
   int selectedIndex = 0;
 
   void onItemTapped(int index) {
@@ -178,7 +178,7 @@ class _HomePageState extends State<HomePage> {
 
   getImage(ImageSource source) async {
     this.setState(() {});
-    PickedFile image = await _picker.pickImage(source: source);
+    PickedFile? image = await _picker.pickImage(source: source);
     // XFile image = await _picker.pickImage(source: source);
 
     if (image != null) {

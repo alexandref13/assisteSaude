@@ -185,7 +185,7 @@ class LoginPage extends StatelessWidget {
                                     }
                                     if (loginController.formKey.currentState!
                                         .validate()) {
-                                      await loginController.login();
+                                      await loginController.login(context);
                                     }
                                   },
                                   child: loginController.isLoading.value

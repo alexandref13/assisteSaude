@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:assistsaude/modules/Login/login_repository.dart';
+import 'package:assistsaude/shared/alert_button_pressed.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +20,7 @@ class LoginController extends GetxController {
 
   final formKey = GlobalKey<FormState>();
 
-  login() async {
+  login(context) async {
     isLoading(true);
 
     final response = await LoginRepository.login();
@@ -27,6 +28,8 @@ class LoginController extends GetxController {
     var dadosUsuario = json.decode(response.body);
 
     isLoading(false);
+
+    print(dadosUsuario);
 
     if (dadosUsuario['valida'] == 1) {
       idprof.value = dadosUsuario['idprof'];
@@ -37,8 +40,24 @@ class LoginController extends GetxController {
       especialidade.value = dadosUsuario['especialidade'];
 
       Get.offNamed('/home');
+    } else if (dadosUsuario['valida'] == 2) {
+      onAlertButtonPressed(
+        context,
+        'Identificamos que outro dispositivo está fazendo uso do app. Fale com a administração para realizar a liberação',
+        () {
+          password.value.text = '';
+          Get.back();
+        },
+      );
     } else {
-      password.value.text = '';
+      onAlertButtonPressed(
+        context,
+        'Algo deu errado',
+        () {
+          password.value.text = '';
+          Get.back();
+        },
+      );
     }
   }
 
