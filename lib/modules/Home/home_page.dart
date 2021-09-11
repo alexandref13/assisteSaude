@@ -396,7 +396,7 @@ class _HomePageState extends State<HomePage> {
                         size: 22,
                       ),
                       onTap: () {
-                        Get.toNamed('/sessoes');
+                        Get.toNamed('/visitas');
                       },
                     ),
                   ),

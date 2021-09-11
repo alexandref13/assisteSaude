@@ -18,10 +18,10 @@ class _InfoCheckPageState extends State<InfoCheckPage> {
   final MapaAgendaController mapaAgendaController =
       Get.put(MapaAgendaController());
 
-  var startSelectedDate = DateTime.now();
-  var startSelectedTime = TimeOfDay.now();
-  var endSelectedDate = DateTime.now();
-  var endSelectedTime = TimeOfDay.now();
+  DateTime? startSelectedDate;
+  TimeOfDay? startSelectedTime;
+  DateTime? endSelectedDate;
+  TimeOfDay? endSelectedTime;
   var startTime = TextEditingController();
   var endTime = TextEditingController();
 
@@ -52,8 +52,12 @@ class _InfoCheckPageState extends State<InfoCheckPage> {
 
   @override
   void initState() {
+    startSelectedDate = DateTime.now();
+    startSelectedTime = TimeOfDay.now();
+    endSelectedDate = DateTime.now();
+    endSelectedTime = TimeOfDay.now();
     infoCheckController.hour.value.text =
-        "${startSelectedTime.hour.toString()}:${startSelectedTime.minute.toString()}";
+        "${startSelectedTime!.hour.toString()}:${startSelectedTime!.minute.toString()}";
     print(infoCheckController.hour.value.text);
     super.initState();
   }
@@ -118,23 +122,26 @@ class _InfoCheckPageState extends State<InfoCheckPage> {
                           Container(
                             child: GestureDetector(
                               onTap: () async {
-                                startSelectedTime = await selectTime(context);
+                                startSelectedDate = await selectTime(context);
+                                if (startSelectedDate == null) return;
 
                                 setState(() {
                                   startSelectedDate = DateTime(
-                                    startSelectedDate.year,
-                                    startSelectedDate.month,
-                                    startSelectedDate.day,
-                                    startSelectedTime.hour,
-                                    startSelectedTime.minute,
+                                    startSelectedDate!.year,
+                                    startSelectedDate!.month,
+                                    startSelectedDate!.day,
+                                    startSelectedTime!.hour,
+                                    startSelectedTime!.minute,
                                   );
                                 });
                               },
                               child: customTextField(
                                 context,
-                                '',
                                 DateFormat("HH:mm").format(
-                                  startSelectedDate,
+                                  startSelectedDate!,
+                                ),
+                                DateFormat("HH:mm").format(
+                                  startSelectedDate!,
                                 ),
                                 false,
                                 1,
@@ -169,7 +176,7 @@ class _InfoCheckPageState extends State<InfoCheckPage> {
                               ),
                               onPressed: () async {
                                 infoCheckController.hour.value.text =
-                                    "${startSelectedTime.hour.toString()}:${startSelectedTime.minute.toString()}";
+                                    "${startSelectedTime!.hour.toString()}:${startSelectedTime!.minute.toString()}";
                                 await infoCheckController.changeHours(context);
                               },
                               child: Text(

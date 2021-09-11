@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'modules/Session/session_page.dart';
 import 'theme/theme.dart';
 
 import 'modules/Login/login_bindings.dart';
@@ -44,6 +45,10 @@ void main() {
         GetPage(
           name: '/terapia',
           page: () => TerapiaPage(),
+        ),
+        GetPage(
+          name: '/visitas',
+          page: () => SessionPage(),
         ),
       ],
     ),
