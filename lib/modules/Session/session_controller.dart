@@ -13,7 +13,7 @@ class SessionController extends GetxController {
   var firstId = '0'.obs;
   var isLoading = false.obs;
 
-  getVisitantes() async {
+  getSessions() async {
     isLoading(true);
 
     final response = await VisitasRepository.getVisitantes();
@@ -35,7 +35,7 @@ class SessionController extends GetxController {
     if (dados == null) {
       onAlertButtonPressed(
         context,
-        'Sem Registros de Visitas!',
+        'Sem Registros de Sessões!',
         () {
           Get.offAllNamed('/home');
         },
@@ -53,7 +53,7 @@ class SessionController extends GetxController {
 
   @override
   void onInit() {
-    getVisitantes();
+    getSessions();
     super.onInit();
   }
 }

@@ -16,4 +16,13 @@ class LoginRepository {
       },
     );
   }
+
+  static Future hasMoreEmail(String? email) async {
+    return await http.post(
+      Uri.https("assistesaude.com.br", "/flutter/clientes_lista.php"),
+      body: {
+        'email': email,
+      },
+    );
+  }
 }

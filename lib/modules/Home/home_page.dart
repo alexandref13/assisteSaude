@@ -341,6 +341,34 @@ class _HomePageState extends State<HomePage> {
                       contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
                       dense: true,
                       title: Text(
+                        'Unidades',
+                        style: GoogleFonts.montserrat(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 12,
+                        ),
+                      ),
+                      leading: Icon(
+                        Icons.home,
+                        color: Theme.of(context).primaryColor,
+                        size: 22,
+                      ),
+                      onTap: () async {
+                        await loginController.hasMoreEmail(
+                          loginController.email.value.text,
+                        );
+                        Get.offAllNamed('/listOfClients');
+                      },
+                    ),
+                  ),
+                  Divider(
+                    height: 5,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  Container(
+                    child: ListTile(
+                      contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
+                      dense: true,
+                      title: Text(
                         'Perfil',
                         style: GoogleFonts.montserrat(
                           color: Theme.of(context).primaryColor,
@@ -398,7 +426,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       leading: Icon(
-                        Icons.lock_outline,
+                        Icons.business,
                         color: Theme.of(context).primaryColor,
                         size: 22,
                       ),

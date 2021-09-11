@@ -1,6 +1,8 @@
 import 'package:assistsaude/modules/Comunicados/components/detalhes_comunicados_page.dart';
 import 'package:assistsaude/modules/Comunicados/comunicados.dart';
 import 'package:assistsaude/modules/Home/home_page.dart';
+import 'package:assistsaude/modules/Login/components/list_of_clients_page.dart';
+import 'package:assistsaude/modules/Senha/senha.dart';
 import 'package:assistsaude/modules/Terapia/terapia_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,6 +51,14 @@ void main() {
         GetPage(
           name: '/visitas',
           page: () => SessionPage(),
+        ),
+        GetPage(
+          name: '/listOfClients',
+          page: () => ListOfClients(),
+        ),
+        GetPage(
+          name: '/senha',
+          page: () => Senha(),
         ),
       ],
     ),

@@ -1,3 +1,4 @@
+import 'package:assistsaude/modules/Login/components/Auth/auth_controller.dart';
 import 'package:assistsaude/shared/alert_button_pressed.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'login_controller.dart';
 
 class LoginPage extends StatelessWidget {
+  final AuthController authController = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     LoginController loginController = Get.find(tag: 'login');
