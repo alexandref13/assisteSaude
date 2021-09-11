@@ -11,6 +11,7 @@ class LoginController extends GetxController {
   var password = TextEditingController().obs;
   var isLoading = false.obs;
   var idprof = ''.obs;
+  var idCliente = ''.obs;
   var nome = ''.obs;
   var sobrenome = ''.obs;
   var tipousu = ''.obs;
@@ -27,6 +28,8 @@ class LoginController extends GetxController {
 
     var dadosUsuario = json.decode(response.body);
 
+    print(dadosUsuario);
+
     isLoading(false);
 
     if (dadosUsuario['valida'] == 1) {
@@ -36,6 +39,7 @@ class LoginController extends GetxController {
       tipousu.value = dadosUsuario['tipousu'];
       imgperfil.value = dadosUsuario['imgperfil'];
       especialidade.value = dadosUsuario['especialidade'];
+      idCliente.value = dadosUsuario['idcliente'];
 
       Get.offNamed('/home');
     } else if (dadosUsuario['valida'] == 2) {

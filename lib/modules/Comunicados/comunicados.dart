@@ -11,18 +11,17 @@ class Comunicados extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Theme.of(context).accentColor,
-        body: Obx(
-          () {
-            return comunicadosController.isLoading.value
-                ? CircularProgressIndicatorWidget()
-                : Container(
+    return Scaffold(
+      body: Obx(
+        () {
+          return comunicadosController.isLoading.value
+              ? CircularProgressIndicatorWidget()
+              : SafeArea(
+                  child: Container(
+                    padding: EdgeInsets.all(8),
                     child: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.all(8),
                           child: boxSearch(
                             context,
                             comunicadosController.search.value,
@@ -235,9 +234,9 @@ class Comunicados extends StatelessWidget {
                         ),
                       ],
                     ),
-                  );
-          },
-        ),
+                  ),
+                );
+        },
       ),
     );
   }

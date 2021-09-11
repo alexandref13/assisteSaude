@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:assistsaude/modules/Agenda/visualizar_agenda.dart';
 import 'package:assistsaude/modules/Comunicados/comunicados.dart';
 import 'package:assistsaude/modules/Terapia/terapia_page.dart';
+import 'package:assistsaude/shared/alert_button_check.dart';
+import 'package:assistsaude/shared/alert_button_pressed.dart';
 import 'package:http/http.dart' as http;
 import 'package:assistsaude/modules/Home/components/home_widget.dart';
 import 'package:assistsaude/modules/Login/login_controller.dart';
@@ -34,8 +36,8 @@ class _HomePageState extends State<HomePage> {
   var _picker;
   File? _selectedFile;
 
-  final uri = Uri.parse(
-      "https://admautopecasbelem.com.br/login/flutter/upload_imagem.php");
+  final uri =
+      Uri.parse("https://assistesaude.com.br/flutter/upload_imagem.php");
 
   Future<void> logoutUser() async {
     await GetStorage.init();
@@ -54,19 +56,24 @@ class _HomePageState extends State<HomePage> {
 
   Future uploadImage() async {
     var request = http.MultipartRequest('POST', uri);
-    print('${loginController.idprof.value}');
-    request.fields['idusu'] = '27';
+    request.fields['idprof'] = loginController.idprof.value;
     var pic = await http.MultipartFile.fromPath("image", _selectedFile!.path);
     request.files.add(pic);
     var response = await request.send();
     if (response.statusCode == 200) {
       Navigator.of(context).pop();
-      print('Imagem do perfil alterada');
+      onAlertButtonCheck(context, 'Imagem Atualizada', null);
     } else if (response.statusCode == 404) {
       loginController.imgperfil.value = '';
     } else {
       Navigator.of(context).pop();
-      print('Imagem Não Enviada');
+      onAlertButtonPressed(
+        context,
+        'Algo deu errado.\n Tente novamente mais tarde',
+        () {
+          Get.back();
+        },
+      );
     }
     _selectedFile = null;
   }
@@ -169,7 +176,7 @@ class _HomePageState extends State<HomePage> {
                   shape: BoxShape.circle,
                   image: DecorationImage(
                     image: NetworkImage(
-                      'https://admautopecasbelem.com.br/login/areadm/downloads/fotosperfil/${loginController.imgperfil.value}',
+                      'https://assistesaude.com.br/downloads/fotosprofissionais/${loginController.imgperfil.value}',
                     ),
                   ),
                 ),
@@ -180,8 +187,8 @@ class _HomePageState extends State<HomePage> {
 
   getImage(ImageSource source) async {
     this.setState(() {});
-    PickedFile? image = await _picker.pickImage(source: source);
-    // XFile image = await _picker.pickImage(source: source);
+    // PickedFile? image = await _picker.pickImage(source: source);
+    XFile? image = await _picker.pickImage(source: source);
 
     if (image != null) {
       File? cropped = await ImageCropper.cropImage(
@@ -292,15 +299,15 @@ class _HomePageState extends State<HomePage> {
                     color: Theme.of(context).primaryColor,
                     child: Column(
                       children: <Widget>[
-                        // getImageWidget(),
+                        getImageWidget(),
                         Container(
                           child: Text(
-                            "${loginController.nome.value}",
+                            "${loginController.nome.value} ${loginController.sobrenome.value}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             softWrap: false,
                             style: GoogleFonts.montserrat(
-                                color: Theme.of(context).buttonColor,
+                                color: Theme.of(context).accentColor,
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -409,31 +416,6 @@ class _HomePageState extends State<HomePage> {
                       contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
                       dense: true,
                       title: Text(
-                        'Comunicados',
-                        style: GoogleFonts.montserrat(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 12,
-                        ),
-                      ),
-                      leading: Icon(
-                        Icons.notification_add,
-                        color: Theme.of(context).primaryColor,
-                        size: 22,
-                      ),
-                      onTap: () {
-                        Get.toNamed('/sobre');
-                      },
-                    ),
-                  ),
-                  Divider(
-                    height: 5,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  Container(
-                    child: ListTile(
-                      contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
-                      dense: true,
-                      title: Text(
                         'Ajuda',
                         style: GoogleFonts.montserrat(
                           color: Theme.of(context).primaryColor,
@@ -471,7 +453,7 @@ class _HomePageState extends State<HomePage> {
                         size: 22,
                       ),
                       onTap: () {
-                        // logoutUser();
+                        logoutUser();
                       },
                     ),
                   ),

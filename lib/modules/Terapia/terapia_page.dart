@@ -17,15 +17,15 @@ class TerapiaPage extends StatelessWidget {
               ? CircularProgressIndicatorWidget()
               : SafeArea(
                   child: Container(
+                    padding: EdgeInsets.all(8),
                     child: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.all(8),
                           child: boxSearch(
                             context,
                             terapiaController.search.value,
                             terapiaController.onSearchTextChanged,
-                            "Pesquise os Comunicados...",
+                            "Pesquise as terapias...",
                           ),
                         ),
                         Expanded(
@@ -38,14 +38,11 @@ class TerapiaPage extends StatelessWidget {
                                     child: ListView.builder(
                                       itemCount:
                                           terapiaController.searchResult.length,
-                                      itemBuilder: (_, i) {
-                                        var terapias =
-                                            terapiaController.searchResult[i];
-                                        return Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
+                                      itemBuilder: (context, index) {
+                                        var terapias = terapiaController
+                                            .searchResult[index];
+                                        return GestureDetector(
+                                          onTap: () {},
                                           child: Card(
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
@@ -54,16 +51,14 @@ class TerapiaPage extends StatelessWidget {
                                             color:
                                                 Theme.of(context).primaryColor,
                                             child: ListTile(
-                                              title: Container(
-                                                child: Text(
-                                                  terapias.nomepac!,
-                                                  style: GoogleFonts.montserrat(
-                                                      fontSize: 12,
-                                                      color: Theme.of(context)
-                                                          .textSelectionTheme
-                                                          .selectionColor,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                              title: Text(
+                                                terapias.nomepac!,
+                                                style: GoogleFonts.montserrat(
+                                                  fontSize: 12,
+                                                  color: Theme.of(context)
+                                                      .textSelectionTheme
+                                                      .selectionColor,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                               trailing: Icon(
@@ -80,53 +75,54 @@ class TerapiaPage extends StatelessWidget {
                                     ),
                                   ),
                                 )
-                              : Container(
-                                  padding: EdgeInsets.all(8),
-                                  child: RefreshIndicator(
-                                    onRefresh: terapiaController.onRefresh,
-                                    child: ListView.builder(
-                                      itemCount:
-                                          terapiaController.terapias.length,
-                                      itemBuilder: (_, i) {
-                                        var terapias =
-                                            terapiaController.terapias[i];
-                                        return Container(
-                                          decoration: BoxDecoration(
+                              : RefreshIndicator(
+                                  onRefresh: terapiaController.onRefresh,
+                                  child: ListView.builder(
+                                    itemCount:
+                                        terapiaController.terapias.length,
+                                    itemBuilder: (context, index) {
+                                      var terapias =
+                                          terapiaController.terapias[index];
+
+                                      return GestureDetector(
+                                        onTap: () {},
+                                        child: Card(
+                                          shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(10),
+                                                BorderRadius.circular(10.0),
                                           ),
-                                          child: Card(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                            ),
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            child: ListTile(
-                                              title: Container(
-                                                child: Text(
-                                                  terapias.nomepac!,
-                                                  style: GoogleFonts.montserrat(
-                                                      fontSize: 12,
-                                                      color: Theme.of(context)
-                                                          .textSelectionTheme
-                                                          .selectionColor,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ),
-                                              trailing: Icon(
-                                                Icons.arrow_right,
-                                                color: Theme.of(context)
-                                                    .textSelectionTheme
-                                                    .selectionColor,
-                                                size: 26,
+                                          color: terapias.ctlaceito == '0'
+                                              ? Colors.amber
+                                              : terapias.ctlaceito == '1'
+                                                  ? Theme.of(context)
+                                                      .primaryColor
+                                                  : Colors.red[300],
+                                          child: ListTile(
+                                            title: Text(
+                                              terapias.nomepac!,
+                                              style: GoogleFonts.montserrat(
+                                                fontSize: 12,
+                                                color: terapias.ctlaceito == '0'
+                                                    ? Colors.black
+                                                    : Theme.of(context)
+                                                        .textSelectionTheme
+                                                        .selectionColor,
+                                                fontWeight: FontWeight.bold,
                                               ),
                                             ),
+                                            trailing: Icon(
+                                              Icons.arrow_right,
+                                              color: terapias.ctlaceito == '0'
+                                                  ? Colors.black
+                                                  : Theme.of(context)
+                                                      .textSelectionTheme
+                                                      .selectionColor,
+                                              size: 26,
+                                            ),
                                           ),
-                                        );
-                                      },
-                                    ),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                         ),

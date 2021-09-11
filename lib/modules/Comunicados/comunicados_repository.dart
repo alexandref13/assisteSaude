@@ -7,9 +7,9 @@ class ComunicadosRepository {
     LoginController loginController = Get.find(tag: 'login');
 
     return await http.post(
-      Uri.https("admautopecasbelem.com.br", "login/flutter/comunicados.php"),
+      Uri.https("assistesaude.com.br", "flutter/comunicados.php"),
       body: {
-        'idusu': '27',
+        'idcliente': loginController.idCliente.value,
       },
     );
   }
