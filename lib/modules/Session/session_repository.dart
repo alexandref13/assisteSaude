@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class VisitasRepository {
   static Future getVisitantes() async {
-    LoginController loginController = Get.put(LoginController());
+    LoginController loginController = Get.find(tag: 'login');
 
     return await http.post(
       Uri.https("www.admautopecasbelem.com.br",

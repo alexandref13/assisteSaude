@@ -29,8 +29,6 @@ class LoginController extends GetxController {
 
     isLoading(false);
 
-    print('dados: $dadosUsuario');
-
     if (dadosUsuario['valida'] == 1) {
       idprof.value = dadosUsuario['idprof'];
       nome.value = dadosUsuario['nome'];

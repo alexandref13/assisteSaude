@@ -11,102 +11,131 @@ class TerapiaPage extends StatelessWidget {
     TerapiaController terapiaController = Get.put(TerapiaController());
 
     return Scaffold(
-      body: terapiaController.isLoading.value
-          ? CircularProgressIndicatorWidget()
-          : SafeArea(
-              child: Container(
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      child: boxSearch(
-                        context,
-                        terapiaController.search.value,
-                        terapiaController.onSearchTextChanged,
-                        "Pesquise os Comunicados...",
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.all(8),
-                        child: ListView(
-                          children: [
-                            Container(
-                                padding: EdgeInsets.only(bottom: 30),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  color: Theme.of(context).primaryColor,
-                                  child: ListTile(
-                                    leading: RichText(
-                                      text: TextSpan(
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 12,
-                                          color: Theme.of(context)
-                                              .textSelectionTheme
-                                              .selectionColor,
-                                        ),
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                              text: '11' + "  ",
-                                              style: GoogleFonts.montserrat(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold)),
-                                          TextSpan(
-                                            text: 'Set' + ' ',
-                                            style: GoogleFonts.montserrat(
-                                                fontSize: 14,
-                                                color: Theme.of(context)
-                                                    .textSelectionTheme
-                                                    .selectionColor,
-                                                letterSpacing: 2),
-                                          ),
-                                          TextSpan(
-                                            text: '21' + ' ',
-                                            style: GoogleFonts.montserrat(
-                                                fontSize: 14,
-                                                color: Theme.of(context)
-                                                    .textSelectionTheme
-                                                    .selectionColor,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    title: Container(
-                                      child: Center(
-                                        child: Text(
-                                          'Paciente',
-                                          style: GoogleFonts.montserrat(
-                                              fontSize: 12,
-                                              color: Theme.of(context)
-                                                  .textSelectionTheme
-                                                  .selectionColor,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ),
-                                    trailing: Icon(
-                                      Icons.arrow_right,
-                                      color: Theme.of(context)
-                                          .textSelectionTheme
-                                          .selectionColor,
-                                      size: 26,
-                                    ),
-                                  ),
-                                ))
-                          ],
+      body: Obx(
+        () {
+          return terapiaController.isLoading.value
+              ? CircularProgressIndicatorWidget()
+              : SafeArea(
+                  child: Container(
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(8),
+                          child: boxSearch(
+                            context,
+                            terapiaController.search.value,
+                            terapiaController.onSearchTextChanged,
+                            "Pesquise os Comunicados...",
+                          ),
                         ),
-                      ),
+                        Expanded(
+                          child: terapiaController.searchResult.isNotEmpty ||
+                                  terapiaController.search.value.text.isNotEmpty
+                              ? Container(
+                                  padding: EdgeInsets.all(8),
+                                  child: RefreshIndicator(
+                                    onRefresh: terapiaController.onRefresh,
+                                    child: ListView.builder(
+                                      itemCount:
+                                          terapiaController.searchResult.length,
+                                      itemBuilder: (_, i) {
+                                        var terapias =
+                                            terapiaController.searchResult[i];
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ),
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            child: ListTile(
+                                              title: Container(
+                                                child: Text(
+                                                  terapias.nomepac!,
+                                                  style: GoogleFonts.montserrat(
+                                                      fontSize: 12,
+                                                      color: Theme.of(context)
+                                                          .textSelectionTheme
+                                                          .selectionColor,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                              trailing: Icon(
+                                                Icons.arrow_right,
+                                                color: Theme.of(context)
+                                                    .textSelectionTheme
+                                                    .selectionColor,
+                                                size: 26,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                )
+                              : Container(
+                                  padding: EdgeInsets.all(8),
+                                  child: RefreshIndicator(
+                                    onRefresh: terapiaController.onRefresh,
+                                    child: ListView.builder(
+                                      itemCount:
+                                          terapiaController.terapias.length,
+                                      itemBuilder: (_, i) {
+                                        var terapias =
+                                            terapiaController.terapias[i];
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ),
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            child: ListTile(
+                                              title: Container(
+                                                child: Text(
+                                                  terapias.nomepac!,
+                                                  style: GoogleFonts.montserrat(
+                                                      fontSize: 12,
+                                                      color: Theme.of(context)
+                                                          .textSelectionTheme
+                                                          .selectionColor,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                              trailing: Icon(
+                                                Icons.arrow_right,
+                                                color: Theme.of(context)
+                                                    .textSelectionTheme
+                                                    .selectionColor,
+                                                size: 26,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
+                );
+        },
+      ),
     );
   }
 }
