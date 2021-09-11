@@ -1,3 +1,5 @@
+import 'package:assistsaude/modules/Comunicados/components/detalhes_comunicados_page.dart';
+import 'package:assistsaude/modules/Comunicados/comunicados.dart';
 import 'package:assistsaude/modules/Home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,6 +31,14 @@ void main() {
         GetPage(
           name: '/home',
           page: () => HomePage(),
+        ),
+        GetPage(
+          name: '/comunicados',
+          page: () => Comunicados(),
+        ),
+        GetPage(
+          name: '/detalhesComunicados',
+          page: () => DetalhesComunicadosPage(),
         ),
       ],
     ),

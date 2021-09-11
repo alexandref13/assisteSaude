@@ -1,7 +1,7 @@
 import 'dart:io';
+import 'package:assistsaude/modules/Comunicados/comunicados.dart';
 import 'package:http/http.dart' as http;
 import 'package:assistsaude/modules/Home/components/agenda_widget.dart';
-import 'package:assistsaude/modules/Home/components/comunidados_widget.dart';
 import 'package:assistsaude/modules/Home/components/home_widget.dart';
 import 'package:assistsaude/modules/Home/components/terapias_widget.dart';
 import 'package:assistsaude/modules/Login/login_controller.dart';
@@ -274,7 +274,7 @@ class _HomePageState extends State<HomePage> {
 
     List<Widget> bottomNavigationList = <Widget>[
       HomeWidget(),
-      ComunicadosWidget(),
+      Comunicados(),
       TerapiasWidget(),
       AgendaWidget()
     ];
@@ -511,28 +511,39 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).accentColor,
+        backgroundColor: Theme.of(context).primaryColor,
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(
+              Icons.home,
+            ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: Icon(
+              Icons.notification_add,
+            ),
             label: 'Comunicados',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: Icon(
+              Icons.business,
+            ),
             label: 'Terapias',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: Icon(
+              Icons.business,
+            ),
             label: 'Agenda',
           ),
         ],
+        selectedIconTheme: IconThemeData(color: Theme.of(context).accentColor),
+        unselectedIconTheme: IconThemeData(color: Colors.white),
+        selectedItemColor: Theme.of(context).accentColor,
+        unselectedItemColor: Colors.white,
         currentIndex: selectedIndex,
-        selectedItemColor: Theme.of(context).primaryColor,
         onTap: onItemTapped,
       ),
       body: bottomNavigationList[selectedIndex],

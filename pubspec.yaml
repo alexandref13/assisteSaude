@@ -17,14 +17,19 @@ dependencies:
   flutter_icons: ^1.1.0
   flutter_localizations:
     sdk: flutter
+  flutter_speed_dial: ^4.3.0
+  geolocator: ^7.6.0
   get: ^4.3.8
   get_storage: ^2.0.3
   google_fonts: ^2.1.0
+  google_maps_flutter: ^2.0.8
   http: ^0.13.3
   image_cropper: ^1.4.1
   image_picker: ^0.8.4
+  mask_text_input_formatter: ^2.0.0
   pull_to_refresh: ^2.0.0
   rflutter_alert: ^2.0.4
+  table_calendar: ^3.0.2
   url_launcher: ^6.0.2
 
 dev_dependencies:
