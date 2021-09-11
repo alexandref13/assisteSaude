@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  var _picker;
+  final ImagePicker _picker = ImagePicker();
   File? _selectedFile;
 
   final uri =
@@ -187,7 +187,6 @@ class _HomePageState extends State<HomePage> {
 
   getImage(ImageSource source) async {
     this.setState(() {});
-    // PickedFile? image = await _picker.pickImage(source: source);
     XFile? image = await _picker.pickImage(source: source);
 
     if (image != null) {
@@ -301,6 +300,7 @@ class _HomePageState extends State<HomePage> {
                       children: <Widget>[
                         getImageWidget(),
                         Container(
+                          padding: EdgeInsets.only(top: 8),
                           child: Text(
                             "${loginController.nome.value} ${loginController.sobrenome.value}",
                             maxLines: 1,
