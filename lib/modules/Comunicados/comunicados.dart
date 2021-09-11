@@ -13,21 +13,22 @@ class Comunicados extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Theme.of(context).accentColor,
         body: Obx(
           () {
             return comunicadosController.isLoading.value
                 ? CircularProgressIndicatorWidget()
                 : Container(
-                    color: Theme.of(context).primaryColor,
                     child: Column(
                       children: [
                         Container(
                           padding: EdgeInsets.all(8),
                           child: boxSearch(
-                              context,
-                              comunicadosController.search.value,
-                              comunicadosController.onSearchTextChanged,
-                              "Pesquise os Comunicados..."),
+                            context,
+                            comunicadosController.search.value,
+                            comunicadosController.onSearchTextChanged,
+                            "Pesquise os Comunicados...",
+                          ),
                         ),
                         Expanded(
                           child: comunicadosController
@@ -74,16 +75,18 @@ class Comunicados extends StatelessWidget {
                                                               10.0),
                                                     ),
                                                     color: Theme.of(context)
-                                                        .accentColor,
+                                                        .primaryColor,
                                                     child: ListTile(
                                                       leading: RichText(
                                                         text: TextSpan(
-                                                          style: GoogleFonts.montserrat(
-                                                              fontSize: 12,
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .textSelectionTheme
-                                                                  .selectionColor),
+                                                          style: GoogleFonts
+                                                              .montserrat(
+                                                            fontSize: 12,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .textSelectionTheme
+                                                                .selectionColor,
+                                                          ),
                                                           children: <TextSpan>[
                                                             TextSpan(
                                                                 text: comunicados
@@ -193,7 +196,7 @@ class Comunicados extends StatelessWidget {
                                                           10.0),
                                                 ),
                                                 color: Theme.of(context)
-                                                    .accentColor,
+                                                    .primaryColor,
                                                 child: ListTile(
                                                   leading: RichText(
                                                     text: TextSpan(

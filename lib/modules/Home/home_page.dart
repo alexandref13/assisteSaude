@@ -1,7 +1,8 @@
 import 'dart:io';
+import 'package:assistsaude/modules/Agenda/agendar_visitas.dart';
+import 'package:assistsaude/modules/Agenda/visualizar_agenda.dart';
 import 'package:assistsaude/modules/Comunicados/comunicados.dart';
 import 'package:http/http.dart' as http;
-import 'package:assistsaude/modules/Home/components/agenda_widget.dart';
 import 'package:assistsaude/modules/Home/components/home_widget.dart';
 import 'package:assistsaude/modules/Home/components/terapias_widget.dart';
 import 'package:assistsaude/modules/Login/login_controller.dart';
@@ -90,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Theme.of(context).accentColor)),
+                      color: Theme.of(context).primaryColor)),
             ],
           ),
           width: 70,
@@ -126,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).primaryColor,
                       ),
                     ),
                   ],
@@ -156,7 +157,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).primaryColor,
                       ),
                     ),
                   ],
@@ -212,7 +213,7 @@ class _HomePageState extends State<HomePage> {
         context: context,
         builder: (BuildContext bc) {
           return Container(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).primaryColor,
             padding: EdgeInsets.only(bottom: 30),
             child: Wrap(
               children: <Widget>[
@@ -276,7 +277,7 @@ class _HomePageState extends State<HomePage> {
       HomeWidget(),
       Comunicados(),
       TerapiasWidget(),
-      AgendaWidget()
+      VisualizarAgenda()
     ];
 
     return Scaffold(
@@ -289,7 +290,7 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.all(0),
                   child: Container(
                     padding: EdgeInsets.only(top: 20),
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).primaryColor,
                     child: Column(
                       children: <Widget>[
                         // getImageWidget(),
@@ -534,7 +535,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.business,
+              Icons.date_range_outlined,
             ),
             label: 'Agenda',
           ),

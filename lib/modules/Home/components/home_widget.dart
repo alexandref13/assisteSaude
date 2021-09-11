@@ -51,7 +51,7 @@ class HomeWidget extends StatelessWidget {
                 'Saúde, Humanização e Tecnologia',
                 style: GoogleFonts.montserrat(
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).primaryColor,
                   fontSize: 16,
                 ),
               ),
