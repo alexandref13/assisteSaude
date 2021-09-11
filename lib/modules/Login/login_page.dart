@@ -7,8 +7,24 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'login_controller.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final AuthController authController = Get.put(AuthController());
+
+  @override
+  void initState() {
+    authController.localAuthentication.isDeviceSupported().then((isSupported) {
+      if (isSupported) {
+        authController.authenticate(context);
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     LoginController loginController = Get.find(tag: 'login');
