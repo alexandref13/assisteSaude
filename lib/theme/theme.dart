@@ -6,12 +6,14 @@ ThemeData admin = ThemeData(
   buttonColor: Color(0xffffacf3),
   backgroundColor: Color(0xfffbd859),
   textSelectionTheme: TextSelectionThemeData(
-    selectionColor: Color(0xffF3E9D2),
+    selectionColor: Color(0xffe3e3e3),
   ),
+  scaffoldBackgroundColor: Color(0xff333333),
   appBarTheme: AppBarTheme(
     backgroundColor: Color(0xff333333),
-    iconTheme: IconThemeData(color: Color(0xffe2e3d3)),
+    iconTheme: IconThemeData(color: Color(0xffe3e3e3)),
     elevation: 0,
+    centerTitle: true,
   ),
   errorColor: Color(0xffa3000b),
 );

@@ -1,10 +1,9 @@
 import 'dart:io';
-import 'package:assistsaude/modules/Agenda/agendar_visitas.dart';
 import 'package:assistsaude/modules/Agenda/visualizar_agenda.dart';
 import 'package:assistsaude/modules/Comunicados/comunicados.dart';
+import 'package:assistsaude/modules/Terapia/terapia_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:assistsaude/modules/Home/components/home_widget.dart';
-import 'package:assistsaude/modules/Home/components/terapias_widget.dart';
 import 'package:assistsaude/modules/Login/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,6 +21,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   LoginController loginController = Get.find(tag: 'login');
+  HomeController homeController = Get.put(HomeController());
+
   int selectedIndex = 0;
 
   void onItemTapped(int index) {
@@ -54,7 +55,7 @@ class _HomePageState extends State<HomePage> {
   Future uploadImage() async {
     var request = http.MultipartRequest('POST', uri);
     print('${loginController.idprof.value}');
-    request.fields['idprof'] = loginController.idprof.value;
+    request.fields['idusu'] = '27';
     var pic = await http.MultipartFile.fromPath("image", _selectedFile!.path);
     request.files.add(pic);
     var response = await request.send();
@@ -270,17 +271,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    HomeController homeController = Get.put(HomeController());
-    LoginController loginController = Get.find(tag: 'login');
-
     List<Widget> bottomNavigationList = <Widget>[
       HomeWidget(),
       Comunicados(),
-      TerapiasWidget(),
+      TerapiaPage(),
       VisualizarAgenda()
     ];
 
     return Scaffold(
+      backgroundColor: Theme.of(context).textSelectionTheme.selectionColor,
       key: homeController.key,
       drawer: Drawer(
         child: Container(

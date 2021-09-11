@@ -1,6 +1,7 @@
 import 'package:assistsaude/modules/Comunicados/components/detalhes_comunicados_page.dart';
 import 'package:assistsaude/modules/Comunicados/comunicados.dart';
 import 'package:assistsaude/modules/Home/home_page.dart';
+import 'package:assistsaude/modules/Terapia/terapia_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -39,6 +40,10 @@ void main() {
         GetPage(
           name: '/detalhesComunicados',
           page: () => DetalhesComunicadosPage(),
+        ),
+        GetPage(
+          name: '/terapia',
+          page: () => TerapiaPage(),
         ),
       ],
     ),

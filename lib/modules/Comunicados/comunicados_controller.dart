@@ -12,6 +12,10 @@ class ComunicadosController extends GetxController {
   var searchResult = [].obs;
   var search = TextEditingController().obs;
 
+  Future<void> onRefresh() async {
+    await getComunicados();
+  }
+
   onSearchTextChanged(String text) {
     searchResult.clear();
     if (text.isEmpty) {
@@ -32,8 +36,6 @@ class ComunicadosController extends GetxController {
 
     comunicados.assignAll(
         lista.map((model) => ComunicadosModel.fromJson(model)).toList());
-
-    print(json.decode(response.body));
 
     isLoading(false);
   }
