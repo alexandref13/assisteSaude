@@ -8,6 +8,9 @@
    <application
         android:label="assistsaude"
         android:icon="@mipmap/ic_launcher">
+
+            <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyDuEyHn6bs1qaV2UzePIrHV7GzK73PKaE8"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -50,7 +53,6 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
-            <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyDuEyHn6bs1qaV2UzePIrHV7GzK73PKaE8"/>
+               
     </application>
 </manifest>
