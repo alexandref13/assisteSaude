@@ -3,6 +3,7 @@ import 'package:assistsaude/modules/Comunicados/components/detalhes_comunicados_
 import 'package:assistsaude/modules/Comunicados/comunicados.dart';
 import 'package:assistsaude/modules/Home/home_page.dart';
 import 'package:assistsaude/modules/Login/components/list_of_clients_page.dart';
+import 'package:assistsaude/modules/MapaAgenda/mapa_agenda_page.dart';
 import 'package:assistsaude/modules/Senha/senha.dart';
 import 'package:assistsaude/modules/Terapia/components/DetalhesTerapia/detalhes_terapia_page.dart';
 import 'package:assistsaude/modules/Terapia/terapia_page.dart';
@@ -78,6 +79,10 @@ void main() {
         GetPage(
           name: '/visualizarAgenda',
           page: () => VisualizarAgenda(),
+        ),
+        GetPage(
+          name: '/mapaAgenda',
+          page: () => MapaAgendaPage(),
         ),
       ],
     ),

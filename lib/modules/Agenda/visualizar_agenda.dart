@@ -39,6 +39,7 @@ class VisualizarAgenda extends StatelessWidget {
   Widget build(BuildContext context) {
     var today = DateTime.now();
     var lastday = today.add(const Duration(days: 90));
+    var firstday = today.subtract(const Duration(days: 90));
 
     return Scaffold(
       backgroundColor: Theme.of(context).accentColor,
@@ -54,7 +55,7 @@ class VisualizarAgenda extends StatelessWidget {
                           padding: EdgeInsets.all(5),
                           child: TableCalendar(
                             locale: 'pt_BR',
-                            firstDay: DateTime.utc(2021, 08, 01),
+                            firstDay: firstday,
                             lastDay: lastday, //DateTime(2030),
                             focusedDay: calendarioController.focusedDay.value,
                             availableGestures: AvailableGestures.all,
@@ -256,17 +257,25 @@ class VisualizarAgenda extends StatelessWidget {
                                 } else if ((e.ctlCheckin != '1' ||
                                         e.ctlCheckout != '1') &&
                                     d2.compareTo(d1) > 0) {
-                                  Get.toNamed('/agendarhorario');
+                                  print('agendarhorario');
+
+                                  // Get.toNamed('/agendarhorario');
                                 } else if ((d2.compareTo(d1) < 0) &&
                                     (e.ctlCheckin == '0' ||
                                         e.ctlCheckout == '0')) {
-                                  Get.toNamed('/infoCheck');
+                                  print('infoCheck');
+
+                                  // Get.toNamed('/infoCheck');
                                 } else if (d2.compareTo(d1) < 0 &&
                                     (e.ctlCheckin == '1' &&
                                         e.ctlCheckout == '1')) {
-                                  Get.toNamed('/detalhesvisitas');
+                                  print('detalhesvisitas');
+
+                                  // Get.toNamed('/detalhesvisitas');
                                 } else {
-                                  Get.toNamed('/detalhesvisitas');
+                                  print('detalhesvisitas');
+
+                                  // Get.toNamed('/detalhesvisitas');
                                 }
                               },
                             ),

@@ -27,15 +27,15 @@ class TerapiaPage extends StatelessWidget {
                     padding: EdgeInsets.all(8),
                     child: Column(
                       children: [
-                        Container(
-                            child: GestureDetector(
-                          child: Text('ola', style: TextStyle(fontSize: 40)),
-                          onTap: () {
-                            loginController.selectedIndex.value = 3;
-                            Get.offAllNamed('/home');
-                            calendarioController.agenda();
-                          },
-                        )),
+                        // Container(
+                        //     child: GestureDetector(
+                        //   child: Text('ola', style: TextStyle(fontSize: 40)),
+                        //   onTap: () {
+                        //     loginController.selectedIndex.value = 3;
+                        //     Get.offAllNamed('/home');
+                        //     calendarioController.agenda();
+                        //   },
+                        // )),
                         Container(
                           child: boxSearch(
                             context,
