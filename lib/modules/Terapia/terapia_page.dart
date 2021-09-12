@@ -34,54 +34,59 @@ class TerapiaPage extends StatelessWidget {
                         Expanded(
                           child: terapiaController.searchResult.isNotEmpty ||
                                   terapiaController.search.value.text.isNotEmpty
-                              ? Container(
-                                  padding: EdgeInsets.all(8),
-                                  child: RefreshIndicator(
-                                    onRefresh: terapiaController.onRefresh,
-                                    child: ListView.builder(
-                                      itemCount:
-                                          terapiaController.searchResult.length,
-                                      itemBuilder: (context, index) {
-                                        var terapias = terapiaController
-                                            .searchResult[index];
-                                        return GestureDetector(
-                                          onTap: () async {
-                                            detalhesTerapiaController.idpftr
-                                                .value = terapias.idpftr!;
+                              ? RefreshIndicator(
+                                  onRefresh: terapiaController.onRefresh,
+                                  child: ListView.builder(
+                                    itemCount:
+                                        terapiaController.searchResult.length,
+                                    itemBuilder: (context, index) {
+                                      var terapias =
+                                          terapiaController.searchResult[index];
+                                      return GestureDetector(
+                                        onTap: () async {
+                                          detalhesTerapiaController
+                                              .idpftr.value = terapias.idpftr!;
 
-                                            await detalhesTerapiaController
-                                                .getDetails();
-                                          },
-                                          child: Card(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
+                                          await detalhesTerapiaController
+                                              .getDetails();
+                                        },
+                                        child: Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                          color: terapias.ctlaceito == '0'
+                                              ? Colors.amber
+                                              : terapias.ctlaceito == '1'
+                                                  ? Theme.of(context)
+                                                      .primaryColor
+                                                  : Colors.red[300],
+                                          child: ListTile(
+                                            title: Text(
+                                              terapias.nomepac!,
+                                              style: GoogleFonts.montserrat(
+                                                fontSize: 12,
+                                                color: terapias.ctlaceito == '0'
+                                                    ? Colors.black
+                                                    : Theme.of(context)
+                                                        .textSelectionTheme
+                                                        .selectionColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            child: ListTile(
-                                              title: Text(
-                                                terapias.nomepac!,
-                                                style: GoogleFonts.montserrat(
-                                                  fontSize: 12,
-                                                  color: Theme.of(context)
+                                            trailing: Icon(
+                                              Icons.arrow_right,
+                                              color: terapias.ctlaceito == '0'
+                                                  ? Colors.black
+                                                  : Theme.of(context)
                                                       .textSelectionTheme
                                                       .selectionColor,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              trailing: Icon(
-                                                Icons.arrow_right,
-                                                color: Theme.of(context)
-                                                    .textSelectionTheme
-                                                    .selectionColor,
-                                                size: 26,
-                                              ),
+                                              size: 26,
                                             ),
                                           ),
-                                        );
-                                      },
-                                    ),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 )
                               : RefreshIndicator(

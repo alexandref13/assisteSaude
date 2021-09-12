@@ -7,7 +7,7 @@ deleteAlert(context, String text, VoidCallback function) {
   Alert(
     image: Icon(
       Icons.warning,
-      color: Colors.amber[400],
+      color: Theme.of(context).errorColor,
       size: 50,
     ),
     style: AlertStyle(

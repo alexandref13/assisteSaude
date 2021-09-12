@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-confirmedButtonPressed(context, String? text, String? page) {
+confirmedButtonPressed(context, String? text, VoidCallback onTap) {
   Alert(
     image: Icon(
       Icons.check,
@@ -32,11 +32,7 @@ confirmedButtonPressed(context, String? text, String? page) {
             fontSize: 18,
           ),
         ),
-        onPressed: () {
-          page != null
-              ? Get.offNamedUntil('$page', ModalRoute.withName('$page'))
-              : Get.back();
-        },
+        onPressed: onTap,
         width: 80,
         color: Colors.green,
       )

@@ -25,11 +25,9 @@ class _HomePageState extends State<HomePage> {
   LoginController loginController = Get.find(tag: 'login');
   HomeController homeController = Get.put(HomeController());
 
-  int selectedIndex = 0;
-
   void onItemTapped(int index) {
     setState(() {
-      selectedIndex = index;
+      loginController.selectedIndex.value = index;
     });
   }
 
@@ -553,10 +551,10 @@ class _HomePageState extends State<HomePage> {
         unselectedIconTheme: IconThemeData(color: Colors.white),
         selectedItemColor: Theme.of(context).accentColor,
         unselectedItemColor: Colors.white,
-        currentIndex: selectedIndex,
+        currentIndex: loginController.selectedIndex.value,
         onTap: onItemTapped,
       ),
-      body: bottomNavigationList[selectedIndex],
+      body: bottomNavigationList[loginController.selectedIndex.value],
     );
   }
 }

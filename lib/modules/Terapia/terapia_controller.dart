@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 class TerapiaController extends GetxController {
   var terapias = <TerapiaModel>[].obs;
   var isLoading = false.obs;
-
   var searchResult = [].obs;
   var search = TextEditingController().obs;
 

@@ -24,6 +24,7 @@ class LoginController extends GetxController {
   var imgLogo = ''.obs;
   var slogan = ''.obs;
   var deviceId = '';
+  var selectedIndex = 0.obs;
 
   final formKey = GlobalKey<FormState>();
 

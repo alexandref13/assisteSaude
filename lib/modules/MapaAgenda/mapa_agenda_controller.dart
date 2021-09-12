@@ -52,7 +52,9 @@ class MapaAgendaController extends GetxController {
     var dados = json.decode(response.body);
 
     if (dados['valida'] == 1) {
-      confirmedButtonPressed(context, 'Observação salva com sucesso!', '/home');
+      confirmedButtonPressed(context, 'Observação salva com sucesso!', () {
+        Get.offAllNamed('/home');
+      });
     } else {
       onAlertButtonPressed(
         context,
@@ -78,8 +80,9 @@ class MapaAgendaController extends GetxController {
         },
       );
     } else if (dados['valida'] == 1) {
-      confirmedButtonPressed(
-          context, 'Check-in realizado com sucesso!', '/home');
+      confirmedButtonPressed(context, 'Check-in realizado com sucesso!', () {
+        Get.offAllNamed('/home');
+      });
     } else {
       onAlertButtonPressed(
         context,
@@ -105,8 +108,9 @@ class MapaAgendaController extends GetxController {
         },
       );
     } else {
-      confirmedButtonPressed(
-          context, 'Check-out realizado com sucesso!', '/home');
+      confirmedButtonPressed(context, 'Check-out realizado com sucesso!', () {
+        Get.offAllNamed('/home');
+      });
     }
   }
 
@@ -124,8 +128,10 @@ class MapaAgendaController extends GetxController {
         },
       );
     } else {
-      confirmedButtonPressed(
-          context, 'Alteração de GPS realizado com sucesso!', '/home');
+      confirmedButtonPressed(context, 'Alteração de GPS realizado com sucesso!',
+          () {
+        Get.offAllNamed('/home');
+      });
     }
   }
 
@@ -143,7 +149,9 @@ class MapaAgendaController extends GetxController {
         },
       );
     } else {
-      confirmedButtonPressed(context, 'Visita Deletada com Sucesso!', '/home');
+      confirmedButtonPressed(context, 'Visita Deletada com Sucesso!', () {
+        Get.offAllNamed('/home');
+      });
     }
   }
 }

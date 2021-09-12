@@ -1,3 +1,4 @@
+import 'package:assistsaude/modules/Agenda/agendar_visitas.dart';
 import 'package:assistsaude/modules/Comunicados/components/detalhes_comunicados_page.dart';
 import 'package:assistsaude/modules/Comunicados/comunicados.dart';
 import 'package:assistsaude/modules/Home/home_page.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'modules/InfoStatus/info_status_page.dart';
 import 'modules/Session/session_page.dart';
 import 'theme/theme.dart';
 import 'modules/Login/login_bindings.dart';
@@ -63,6 +65,14 @@ void main() {
         GetPage(
           name: '/detalhesTerapia',
           page: () => DetalhesTerapiaPage(),
+        ),
+        GetPage(
+          name: '/infoStatus',
+          page: () => InfoStatusPage(),
+        ),
+        GetPage(
+          name: '/agendaVisitas',
+          page: () => AgendarVisitas(),
         ),
       ],
     ),

@@ -16,4 +16,19 @@ class DetalhesTerapiaRepository {
       },
     );
   }
+
+  static Future aceitarRecusar() async {
+    DetalhesTerapiaController detalhesTerapiaController =
+        Get.put(DetalhesTerapiaController());
+
+    print(detalhesTerapiaController.idpftr.value);
+
+    return await http.post(
+      Uri.https("assistesaude.com.br", "/flutter/aceitar_recusar.php"),
+      body: {
+        'idpftr': detalhesTerapiaController.idpftr.value,
+        'ctl': detalhesTerapiaController.ctl.value,
+      },
+    );
+  }
 }

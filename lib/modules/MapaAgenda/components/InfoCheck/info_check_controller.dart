@@ -36,11 +36,14 @@ class InfoCheckController extends GetxController {
       );
     } else {
       confirmedButtonPressed(
-          context,
-          mapaAgendaController.ctlcheckin.value == '0'
-              ? 'Info check-in realizado com sucesso!'
-              : 'Info check-out realizado com sucesso!',
-          '/home');
+        context,
+        mapaAgendaController.ctlcheckin.value == '0'
+            ? 'Info check-in realizado com sucesso!'
+            : 'Info check-out realizado com sucesso!',
+        () {
+          Get.offAllNamed('/home');
+        },
+      );
     }
 
     isLoading(false);
