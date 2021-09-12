@@ -1,6 +1,9 @@
 import 'package:assistsaude/modules/Agenda/agenda_controller.dart';
+import 'package:assistsaude/modules/Agenda/calendario_controller.dart';
+import 'package:assistsaude/modules/Login/login_controller.dart';
 import 'package:assistsaude/shared/alert_button_pressed.dart';
 import 'package:assistsaude/shared/circular_progress_indicator.dart';
+import 'package:assistsaude/shared/confirmed_button_pressed.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,12 +15,12 @@ class AgendarVisitas extends StatefulWidget {
 
 class _AgendarVisitasState extends State<AgendarVisitas> {
   AgendaController agendaController = Get.put(AgendaController());
+  LoginController loginController = Get.find(tag: 'login');
+  CalendarioController calendarioController = Get.put(CalendarioController());
 
   void dropDownFavoriteSelected(String novoItem) {
     agendaController.firstId.value = novoItem;
   }
-
-  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +69,7 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                               iconEnabledColor: Theme.of(context)
                                   .textSelectionTheme
                                   .selectionColor,
-                              dropdownColor: Theme.of(context).primaryColor,
+                              dropdownColor: Theme.of(context).accentColor,
                               style: GoogleFonts.montserrat(
                                 fontSize: 14,
                                 color: Theme.of(context)
@@ -92,43 +95,50 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                             height: 15,
                           ),
                           Container(
-                              child: CheckboxListTile(
-                                  title: Text(
-                                    "Domingo",
-                                    style: GoogleFonts.montserrat(
-                                      fontSize: 14,
-                                      color: Theme.of(context)
-                                          .textSelectionTheme
-                                          .selectionColor,
-                                    ),
+                            child: CheckboxListTile(
+                                title: Text(
+                                  "Domingo",
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: 14,
+                                    color: Theme.of(context)
+                                        .textSelectionTheme
+                                        .selectionColor,
                                   ),
-                                  value: agendaController.checkeddom.value,
-                                  onChanged: (newValue) {
-                                    agendaController.checkeddom.value =
-                                        newValue!;
-                                  },
-                                  activeColor: Theme.of(context).buttonColor,
-                                  controlAffinity:
-                                      ListTileControlAffinity.platform)),
+                                ),
+                                value: agendaController.checkeddom.value,
+                                onChanged: (newValue) {
+                                  agendaController.checkeddom.value = newValue!;
+                                },
+                                activeColor: Theme.of(context).primaryColor,
+                                controlAffinity:
+                                    ListTileControlAffinity.platform),
+                          ),
+                          Divider(
+                            color: Theme.of(context).primaryColor,
+                          ),
                           Container(
-                              child: CheckboxListTile(
-                            title: Text(
-                              "Segunda",
-                              style: GoogleFonts.montserrat(
-                                fontSize: 14,
-                                color: Theme.of(context)
-                                    .textSelectionTheme
-                                    .selectionColor,
+                            child: CheckboxListTile(
+                              title: Text(
+                                "Segunda",
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 14,
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor,
+                                ),
                               ),
+                              value: agendaController.checkedseg.value,
+                              onChanged: (newValue) {
+                                agendaController.checkedseg.value = newValue!;
+                              },
+                              controlAffinity: ListTileControlAffinity.platform,
+                              activeColor: Theme.of(context)
+                                  .primaryColor, //  <-- platform Checkbox
                             ),
-                            value: agendaController.checkedseg.value,
-                            onChanged: (newValue) {
-                              agendaController.checkedseg.value = newValue!;
-                            },
-                            controlAffinity: ListTileControlAffinity.platform,
-                            activeColor: Theme.of(context)
-                                .buttonColor, //  <-- platform Checkbox
-                          )),
+                          ),
+                          Divider(
+                            color: Theme.of(context).primaryColor,
+                          ),
                           Container(
                               child: CheckboxListTile(
                             title: Text(
@@ -144,10 +154,13 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                             onChanged: (newValue) {
                               agendaController.checkedter.value = newValue!;
                             },
-                            activeColor: Theme.of(context).buttonColor,
+                            activeColor: Theme.of(context).primaryColor,
                             controlAffinity: ListTileControlAffinity
                                 .platform, //  <-- platform Checkbox
                           )),
+                          Divider(
+                            color: Theme.of(context).primaryColor,
+                          ),
                           Container(
                               child: CheckboxListTile(
                             title: Text(
@@ -163,10 +176,13 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                             onChanged: (newValue) {
                               agendaController.checkedqua.value = newValue!;
                             },
-                            activeColor: Theme.of(context).buttonColor,
+                            activeColor: Theme.of(context).primaryColor,
                             controlAffinity: ListTileControlAffinity
                                 .platform, //  <-- platform Checkbox
                           )),
+                          Divider(
+                            color: Theme.of(context).primaryColor,
+                          ),
                           Container(
                               child: CheckboxListTile(
                             title: Text(
@@ -182,10 +198,13 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                             onChanged: (newValue) {
                               agendaController.checkedqui.value = newValue!;
                             },
-                            activeColor: Theme.of(context).buttonColor,
+                            activeColor: Theme.of(context).primaryColor,
                             controlAffinity: ListTileControlAffinity
                                 .platform, //  <-- platform Checkbox
                           )),
+                          Divider(
+                            color: Theme.of(context).primaryColor,
+                          ),
                           Container(
                               child: CheckboxListTile(
                             title: Text(
@@ -201,10 +220,13 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                             onChanged: (newValue) {
                               agendaController.checkedsex.value = newValue!;
                             },
-                            activeColor: Theme.of(context).buttonColor,
+                            activeColor: Theme.of(context).primaryColor,
                             controlAffinity: ListTileControlAffinity
                                 .platform, //  <-- platform Checkbox
                           )),
+                          Divider(
+                            color: Theme.of(context).primaryColor,
+                          ),
                           Container(
                               child: CheckboxListTile(
                             title: Text(
@@ -220,10 +242,13 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                             onChanged: (newValue) {
                               agendaController.checkedsab.value = newValue!;
                             },
-                            activeColor: Theme.of(context).buttonColor,
+                            activeColor: Theme.of(context).primaryColor,
                             controlAffinity: ListTileControlAffinity
                                 .platform, //  <-- platform Checkbox
                           )),
+                          Divider(
+                            color: Theme.of(context).primaryColor,
+                          ),
                           SizedBox(
                             height: 30,
                           ),
@@ -234,7 +259,7 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                                 backgroundColor:
                                     MaterialStateProperty.resolveWith<Color>(
                                   (Set<MaterialState> states) {
-                                    return Theme.of(context).accentColor;
+                                    return Theme.of(context).primaryColor;
                                   },
                                 ),
                                 shape: MaterialStateProperty.resolveWith<
@@ -252,19 +277,27 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                                     .getAgendarVisitas()
                                     .then((value) {
                                   if (value == 1) {
-                                    print('ola');
-                                    // edgeAlertWidgetTop(
-                                    //   context,
-                                    //   'Agendamento Realizado com Sucesso!',
-                                    // );
-                                    Get.offNamed('/visualizar_agenda');
-                                    // Get.toNamed('/visualizar_agenda');
+                                    confirmedButtonPressed(
+                                      context,
+                                      'Agendamento Realizado com Sucesso!',
+                                      () async {
+                                        await calendarioController.agenda();
+                                        loginController.selectedIndex.value = 3;
+                                        Get.offAllNamed('/home');
+                                      },
+                                    );
                                   } else if (value == "qtdvazio") {
-                                    // edgeAlertWidgetDangerTop(
-                                    //     context, 'Selecione Qtd de Semanas!');
+                                    onAlertButtonPressed(
+                                        context, 'Selecione Qtd de Semanas!',
+                                        () {
+                                      Get.back();
+                                    });
                                   } else if (value == "diasvazio") {
-                                    // edgeAlertWidgetDangerTop(context,
-                                    //     'Selecione pelo menos um dia da semana!');
+                                    onAlertButtonPressed(context,
+                                        'Selecione pelo menos um dia da semana!',
+                                        () {
+                                      Get.back();
+                                    });
                                   } else {
                                     onAlertButtonPressed(
                                       context,

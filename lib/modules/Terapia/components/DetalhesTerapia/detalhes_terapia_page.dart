@@ -730,7 +730,10 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                                         },
                                                       ),
                                                     ),
-                                                    onPressed: () async {},
+                                                    onPressed: () {
+                                                      Get.toNamed(
+                                                          '/agendaVisitas');
+                                                    },
                                                     child: Text(
                                                       "Agendar",
                                                       style: GoogleFonts

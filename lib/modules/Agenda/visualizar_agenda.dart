@@ -148,62 +148,54 @@ class VisualizarAgenda extends StatelessWidget {
                           calendarioController.selectedDay.value,
                         )
                             .map((MapaEvento e) {
-                          print(e.infocheckin);
+                          // print(e.infocheckin);
                           return Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12.0),
-                              color: (e.ctlcheckin == "0" &&
-                                          e.ctlcheckout == "0") &&
-                                      (e.infocheckin == "0" &&
-                                          e.infocheckout == "0")
-                                  ? Theme.of(context).buttonColor
-                                  : (e.ctlcheckin == "1" && e.ctlcheckout == "0") &&
-                                          (e.infocheckin == "0" &&
-                                              e.infocheckout == "0")
+                              color: (e.ctlCheckin == "0" &&
+                                          e.ctlCheckout == "0") &&
+                                      (e.infoCheck == "0" &&
+                                          e.infoCheckout == "0")
+                                  ? Colors.amber
+                                  : (e.ctlCheckin == "1" &&
+                                              e.ctlCheckout == "0") &&
+                                          (e.infoCheck == "0" &&
+                                              e.infoCheckout == "0")
                                       ? Colors.red[400]
-                                      : (e.ctlcheckin == "1" &&
-                                                  e.ctlcheckout == "1") &&
-                                              (e.infocheckin == "0" &&
-                                                  e.infocheckout == "0")
+                                      : (e.ctlCheckin == "1" &&
+                                                  e.ctlCheckout == "1") &&
+                                              (e.infoCheck == "0" &&
+                                                  e.infoCheckout == "0")
                                           ? Colors.green[400]
-                                          : (e.ctlcheckin == "1" &&
-                                                      e.ctlcheckout == "1") &&
-                                                  ((e.infocheckin == "0" &&
-                                                          e.infocheckout ==
-                                                              "1") ||
-                                                      (e.infocheckin == "1" &&
-                                                          e.infocheckout ==
-                                                              "0"))
+                                          : (e.ctlCheckin == "1" &&
+                                                      e.ctlCheckout == "1") &&
+                                                  (e.infoCheck == "0" &&
+                                                      e.infoCheckout == "1")
                                               ? Colors.blue[400]
-                                              : (e.ctlcheckin == "1" &&
-                                                          e.ctlcheckout ==
+                                              : (e.ctlCheckin == "1" &&
+                                                          e.ctlCheckout ==
                                                               "1") &&
-                                                      (e.infocheckin == "1" &&
-                                                          e.infocheckout == "1")
+                                                      (e.infoCheck == "1" &&
+                                                          e.infoCheckout == "1")
                                                   ? Colors.grey
                                                   : Colors.white,
                             ),
                             margin: const EdgeInsets.symmetric(
                                 horizontal: 8.0, vertical: 4.0),
                             child: ListTile(
-                              trailing: e.hragenda == "00:00"
-                                  ? Icon(
-                                      Icons.hourglass_empty,
-                                      color: Colors.black,
-                                      size: 20,
-                                    )
-                                  : Text("${e.hragenda}h",
-                                      style: GoogleFonts.montserrat(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black87)),
-
-                              /*Icon(
-                                Icons.arrow_right_outlined,
-                                color: Colors.black,
-                              ),*/
+                              // trailing: e.hragenda == "00:00"
+                              //     ? Icon(
+                              //         Icons.hourglass_empty,
+                              //         color: Colors.black,
+                              //         size: 20,
+                              //       )
+                              //     : Text("${e.hragenda}h",
+                              //         style: GoogleFonts.montserrat(
+                              //             fontSize: 12,
+                              //             fontWeight: FontWeight.bold,
+                              //             color: Colors.black87)),
                               title: Text(
-                                e.fantasia!,
+                                e.paciente!,
                                 style: GoogleFonts.montserrat(
                                   fontSize: 12,
                                   color: Colors.black87,
@@ -215,8 +207,7 @@ class VisualizarAgenda extends StatelessWidget {
                                       fontSize: 10, color: Colors.black87),
                                   children: <TextSpan>[
                                     TextSpan(
-                                        text:
-                                            '${e.endereco}, ${e.numero} - ${e.bairro}',
+                                        text: '${e.logradouro} - ${e.bairro}',
                                         style: GoogleFonts.montserrat(
                                             fontWeight: FontWeight.bold)),
                                   ],
@@ -229,20 +220,20 @@ class VisualizarAgenda extends StatelessWidget {
 
                                 mapaAgendaController.lat.value = lat;
                                 mapaAgendaController.lng.value = lng;
-                                mapaAgendaController.name.value = e.fantasia!;
-                                mapaAgendaController.adress.value = e.endereco!;
+                                mapaAgendaController.name.value = e.paciente!;
+                                mapaAgendaController.adress.value =
+                                    e.logradouro!;
                                 mapaAgendaController.district.value = e.bairro!;
                                 mapaAgendaController.uf.value = e.uf!;
                                 mapaAgendaController.city.value = e.cidade!;
-                                mapaAgendaController.number.value = e.numero!;
                                 mapaAgendaController.ctlcheckin.value =
-                                    e.ctlcheckin!;
+                                    e.ctlCheckin!;
                                 mapaAgendaController.idVisita.value =
-                                    e.idvisita!;
+                                    e.idsecao!;
                                 mapaAgendaController.idCliente.value =
-                                    e.idcliente!;
+                                    e.idpftr!;
                                 mapaAgendaController.dtagenda.value =
-                                    e.dtagenda!;
+                                    e.dtAgenda!;
                                 mapaAgendaController.checkin.value =
                                     e.checkout!;
                                 mapaAgendaController.checkout.value =
@@ -253,26 +244,26 @@ class VisualizarAgenda extends StatelessWidget {
                                 var d1 = DateTime.utc(
                                     temp.year, temp.month, temp.day);
 
-                                var data = DateTime.parse(e.dtagenda!);
+                                var data = DateTime.parse(e.dtAgenda!);
                                 var d2 = DateTime.utc(
                                     data.year, data.month, data.day);
 
-                                if ((e.ctlcheckin == '0' ||
-                                        e.ctlcheckout == '0') &&
+                                if ((e.ctlCheckin == '0' ||
+                                        e.ctlCheckout == '0') &&
                                     (d2.compareTo(d1) == 0)) {
                                   mapaAgendaController.getClientes();
                                   Get.toNamed('/mapaAgenda');
-                                } else if ((e.ctlcheckin != '1' ||
-                                        e.ctlcheckout != '1') &&
+                                } else if ((e.ctlCheckin != '1' ||
+                                        e.ctlCheckout != '1') &&
                                     d2.compareTo(d1) > 0) {
                                   Get.toNamed('/agendarhorario');
                                 } else if ((d2.compareTo(d1) < 0) &&
-                                    (e.ctlcheckin == '0' ||
-                                        e.ctlcheckout == '0')) {
+                                    (e.ctlCheckin == '0' ||
+                                        e.ctlCheckout == '0')) {
                                   Get.toNamed('/infoCheck');
                                 } else if (d2.compareTo(d1) < 0 &&
-                                    (e.ctlcheckin == '1' &&
-                                        e.ctlcheckout == '1')) {
+                                    (e.ctlCheckin == '1' &&
+                                        e.ctlCheckout == '1')) {
                                   Get.toNamed('/detalhesvisitas');
                                 } else {
                                   Get.toNamed('/detalhesvisitas');

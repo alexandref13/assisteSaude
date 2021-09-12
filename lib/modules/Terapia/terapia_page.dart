@@ -1,3 +1,5 @@
+import 'package:assistsaude/modules/Agenda/calendario_controller.dart';
+import 'package:assistsaude/modules/Login/login_controller.dart';
 import 'package:assistsaude/modules/Terapia/components/DetalhesTerapia/detalhs_terapia_controller.dart';
 import 'package:assistsaude/modules/Terapia/terapia_controller.dart';
 import 'package:assistsaude/shared/box_search.dart';
@@ -9,9 +11,11 @@ import 'package:google_fonts/google_fonts.dart';
 class TerapiaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    LoginController loginController = Get.find(tag: 'login');
     TerapiaController terapiaController = Get.put(TerapiaController());
     DetalhesTerapiaController detalhesTerapiaController =
         Get.put(DetalhesTerapiaController());
+    CalendarioController calendarioController = Get.put(CalendarioController());
 
     return Scaffold(
       body: Obx(
@@ -23,6 +27,15 @@ class TerapiaPage extends StatelessWidget {
                     padding: EdgeInsets.all(8),
                     child: Column(
                       children: [
+                        Container(
+                            child: GestureDetector(
+                          child: Text('ola', style: TextStyle(fontSize: 40)),
+                          onTap: () {
+                            loginController.selectedIndex.value = 3;
+                            Get.offAllNamed('/home');
+                            calendarioController.agenda();
+                          },
+                        )),
                         Container(
                           child: boxSearch(
                             context,

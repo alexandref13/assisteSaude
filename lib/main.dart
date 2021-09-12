@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'modules/Agenda/visualizar_agenda.dart';
 import 'modules/InfoStatus/info_status_page.dart';
 import 'modules/Session/session_page.dart';
 import 'theme/theme.dart';
@@ -73,6 +74,10 @@ void main() {
         GetPage(
           name: '/agendaVisitas',
           page: () => AgendarVisitas(),
+        ),
+        GetPage(
+          name: '/visualizarAgenda',
+          page: () => VisualizarAgenda(),
         ),
       ],
     ),

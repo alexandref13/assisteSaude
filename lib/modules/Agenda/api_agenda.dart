@@ -1,21 +1,25 @@
 import 'package:assistsaude/modules/Agenda/agenda_controller.dart';
 import 'package:assistsaude/modules/Login/login_controller.dart';
+import 'package:assistsaude/modules/Terapia/components/DetalhesTerapia/detalhs_terapia_controller.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class ApiAgendar {
   static Future agendarVisitas() async {
-    LoginController loginController = Get.find(tag: 'login');
+    DetalhesTerapiaController detalhesTerapiaController =
+        Get.put(DetalhesTerapiaController());
     AgendaController agendaController = Get.put(AgendaController());
 
-    print("perido: ${agendaController.diasArray.toString()} ");
+    print({
+      "${agendaController.diasArray.toString()} ",
+      agendaController.itemSelecionado.value,
+      detalhesTerapiaController.idpftr.value,
+    });
 
     return await http.post(
-      Uri.https(
-          "www.admautopecasbelem.com.br", "login/flutter/agendar_visitas.php"),
+      Uri.https("assistesaude.com.br", "flutter/sessoes_incluir.php"),
       body: {
-        'idusu': '27',
-        'idcliente': agendaController.idcliente.value,
+        'idpftr': detalhesTerapiaController.idpftr.value,
         'periodo': agendaController.itemSelecionado.value,
         'dias': agendaController.diasArray.toString(),
       },

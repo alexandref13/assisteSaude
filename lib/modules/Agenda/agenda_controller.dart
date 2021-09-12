@@ -73,6 +73,8 @@ class AgendaController extends GetxController {
       var response = await ApiAgendar.agendarVisitas();
       var dados = json.decode(response.body);
 
+      print('dados $dados');
+
       isLoading(false);
       return dados;
     }

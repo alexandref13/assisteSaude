@@ -86,7 +86,7 @@ class _InfoStatusPageState extends State<InfoStatusPage> {
                                   Icons.keyboard_arrow_down,
                                   size: 27,
                                 ),
-                                dropdownColor: Theme.of(context).primaryColor,
+                                dropdownColor: Theme.of(context).accentColor,
                                 style: GoogleFonts.montserrat(
                                     fontSize: 14,
                                     color: Theme.of(context)

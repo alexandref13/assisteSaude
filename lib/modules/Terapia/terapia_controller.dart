@@ -31,8 +31,6 @@ class TerapiaController extends GetxController {
 
     final response = await TerapiaRepository.getTerapias();
 
-    print(json.decode(response.body));
-
     Iterable dados = json.decode(response.body);
 
     terapias.assignAll(

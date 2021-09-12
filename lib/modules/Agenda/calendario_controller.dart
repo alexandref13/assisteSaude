@@ -30,38 +30,37 @@ class CalendarioController extends GetxController {
 
     var dados = json.decode(response.body);
 
-    if (dados != 0) {
+    if (dados != null) {
       for (var eventos in dados) {
         events
-            .putIfAbsent(DateTime.parse('${eventos['dtagenda']} 00:00:00.000Z'),
+            .putIfAbsent(
+                DateTime.parse('${eventos['dt_agenda']} 00:00:00.000Z'),
                 () => [])
             .add(
               MapaEvento(
-                idcliente: eventos['idcliente'],
-                fantasia: eventos['fantasia'],
-                endereco: eventos['endereco'],
-                numero: eventos['numero'],
-                complemento: eventos['complemento'],
+                confdata: eventos['confdata'],
+                paciente: eventos['paciente'],
+                logradouro: eventos['logradouro'],
                 bairro: eventos['bairro'],
                 cidade: eventos['cidade'],
                 uf: eventos['uf'],
-                ctlgps: eventos['ctlgps'],
-                latlng: eventos['latlng'],
-                idvisita: eventos['idvisita'],
+                ctlGps: eventos['ctl_gps'],
+                idsecao: eventos['idsecao'],
+                idpftr: eventos['idpftr'],
+                obs: eventos['obs'],
+                idStatus: eventos['id_status'],
+                dtAgenda: eventos['dt_agenda'],
                 checkin: eventos['checkin'],
                 checkout: eventos['checkout'],
-                ctlcheckin: eventos['ctlcheckin'],
-                ctlcheckout: eventos['ctlcheckout'],
-                dtagenda: eventos['dtagenda'],
-                hragenda: eventos['hragenda'],
-                infocheckin: eventos['infocheckin'],
-                infocheckout: eventos['infocheckout'],
-                obs: eventos['obs'],
+                ctlCheckin: eventos['ctl_checkin'],
+                ctlCheckout: eventos['ctl_checkout'],
+                infoCheck: eventos['info_check'],
+                infoCheckout: eventos['info_checkout'],
+                latlng: eventos['latlng'],
               ),
             );
       }
     }
-    print(dados);
     isLoading(false);
   }
 
