@@ -1,3 +1,4 @@
+import 'package:assistsaude/modules/Terapia/components/DetalhesTerapia/detalhs_terapia_controller.dart';
 import 'package:assistsaude/modules/Terapia/terapia_controller.dart';
 import 'package:assistsaude/shared/box_search.dart';
 import 'package:assistsaude/shared/circular_progress_indicator.dart';
@@ -9,6 +10,8 @@ class TerapiaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TerapiaController terapiaController = Get.put(TerapiaController());
+    DetalhesTerapiaController detalhesTerapiaController =
+        Get.put(DetalhesTerapiaController());
 
     return Scaffold(
       body: Obx(
@@ -42,7 +45,13 @@ class TerapiaPage extends StatelessWidget {
                                         var terapias = terapiaController
                                             .searchResult[index];
                                         return GestureDetector(
-                                          onTap: () {},
+                                          onTap: () async {
+                                            detalhesTerapiaController.idpftr
+                                                .value = terapias.idpftr!;
+
+                                            await detalhesTerapiaController
+                                                .getDetails();
+                                          },
                                           child: Card(
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
@@ -85,7 +94,13 @@ class TerapiaPage extends StatelessWidget {
                                           terapiaController.terapias[index];
 
                                       return GestureDetector(
-                                        onTap: () {},
+                                        onTap: () async {
+                                          detalhesTerapiaController
+                                              .idpftr.value = terapias.idpftr!;
+
+                                          await detalhesTerapiaController
+                                              .getDetails();
+                                        },
                                         child: Card(
                                           shape: RoundedRectangleBorder(
                                             borderRadius:

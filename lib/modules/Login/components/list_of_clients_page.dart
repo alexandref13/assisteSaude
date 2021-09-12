@@ -28,6 +28,7 @@ class ListOfClients extends StatelessWidget {
                               clients.nomecliente!;
                           loginController.imgLogo.value = clients.imglogo!;
                           loginController.slogan.value = clients.slogan!;
+                          loginController.idCliente.value = clients.idcliente!;
 
                           Get.offAllNamed('/home');
                         },

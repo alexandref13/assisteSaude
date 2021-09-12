@@ -32,6 +32,8 @@ class ComunicadosController extends GetxController {
 
     final response = await ComunicadosRepository.getComunicados();
 
+    print(json.decode(response.body));
+
     Iterable lista = json.decode(response.body);
 
     comunicados.assignAll(

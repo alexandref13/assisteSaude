@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-
 import 'login_controller.dart';
 
 class LoginRepository {

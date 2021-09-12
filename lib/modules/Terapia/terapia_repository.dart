@@ -6,12 +6,16 @@ class TerapiaRepository {
   static Future getTerapias() async {
     LoginController loginController = Get.find(tag: 'login');
 
-    print(loginController.idprof.value);
+    print({
+      loginController.idprof.value,
+      loginController.idCliente.value,
+    });
 
     return await http.post(
       Uri.https("assistesaude.com.br", "/flutter/terapias_buscar.php"),
       body: {
         'idprof': loginController.idprof.value,
+        'idcliente': loginController.idCliente.value,
       },
     );
   }

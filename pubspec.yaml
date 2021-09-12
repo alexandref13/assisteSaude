@@ -14,7 +14,6 @@ dependencies:
   email_validator: ^2.0.1
   flutter:
     sdk: flutter
-  flutter_icons: ^1.1.0
   flutter_localizations:
     sdk: flutter
   flutter_speed_dial: ^4.3.0
