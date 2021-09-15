@@ -18,6 +18,15 @@ class TerapiaPage extends StatelessWidget {
     CalendarioController calendarioController = Get.put(CalendarioController());
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Terapias',
+          style: GoogleFonts.montserrat(
+            fontSize: 16,
+            color: Theme.of(context).textSelectionTheme.selectionColor,
+          ),
+        ),
+      ),
       body: Obx(
         () {
           return terapiaController.isLoading.value

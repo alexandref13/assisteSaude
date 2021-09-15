@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:assistsaude/modules/Agenda/visualizar_agenda.dart';
-import 'package:assistsaude/modules/Comunicados/comunicados.dart';
+import 'package:assistsaude/modules/Session/session_page.dart';
 import 'package:assistsaude/modules/Terapia/terapia_page.dart';
 import 'package:assistsaude/shared/alert_button_check.dart';
 import 'package:assistsaude/shared/alert_button_pressed.dart';
@@ -277,7 +277,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     List<Widget> bottomNavigationList = <Widget>[
       HomeWidget(),
-      Comunicados(),
+      SessionPage(),
       TerapiaPage(),
       VisualizarAgenda()
     ];
@@ -334,34 +334,38 @@ class _HomePageState extends State<HomePage> {
                   )),
               Column(
                 children: <Widget>[
-                  Container(
-                    child: ListTile(
-                      contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
-                      dense: true,
-                      title: Text(
-                        'Unidades',
-                        style: GoogleFonts.montserrat(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 12,
+                  loginController.isMoreThanOneEmail.value == false
+                      ? Container()
+                      : Container(
+                          child: ListTile(
+                            contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
+                            dense: true,
+                            title: Text(
+                              'Unidades',
+                              style: GoogleFonts.montserrat(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 12,
+                              ),
+                            ),
+                            leading: Icon(
+                              Icons.home,
+                              color: Theme.of(context).primaryColor,
+                              size: 22,
+                            ),
+                            onTap: () async {
+                              await loginController.hasMoreEmail(
+                                loginController.email.value.text,
+                              );
+                              Get.offAllNamed('/listOfClients');
+                            },
+                          ),
                         ),
-                      ),
-                      leading: Icon(
-                        Icons.home,
-                        color: Theme.of(context).primaryColor,
-                        size: 22,
-                      ),
-                      onTap: () async {
-                        await loginController.hasMoreEmail(
-                          loginController.email.value.text,
-                        );
-                        Get.offAllNamed('/listOfClients');
-                      },
-                    ),
-                  ),
-                  Divider(
-                    height: 5,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  loginController.isMoreThanOneEmail.value == false
+                      ? Container()
+                      : Divider(
+                          height: 5,
+                          color: Theme.of(context).primaryColor,
+                        ),
                   Container(
                     child: ListTile(
                       contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
@@ -417,19 +421,19 @@ class _HomePageState extends State<HomePage> {
                       contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
                       dense: true,
                       title: Text(
-                        'Sessões',
+                        'Comunicados',
                         style: GoogleFonts.montserrat(
                           color: Theme.of(context).primaryColor,
                           fontSize: 12,
                         ),
                       ),
                       leading: Icon(
-                        Icons.business,
+                        Icons.notification_add,
                         color: Theme.of(context).primaryColor,
                         size: 22,
                       ),
                       onTap: () {
-                        Get.toNamed('/visitas');
+                        Get.toNamed('/comunicados');
                       },
                     ),
                   ),
@@ -532,7 +536,7 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(
               Icons.notification_add,
             ),
-            label: 'Comunicados',
+            label: 'Sessões',
           ),
           BottomNavigationBarItem(
             icon: Icon(

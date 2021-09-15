@@ -42,6 +42,15 @@ class VisualizarAgenda extends StatelessWidget {
     var firstday = today.subtract(const Duration(days: 90));
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Agenda',
+          style: GoogleFonts.montserrat(
+            fontSize: 16,
+            color: Theme.of(context).textSelectionTheme.selectionColor,
+          ),
+        ),
+      ),
       backgroundColor: Theme.of(context).accentColor,
       body: Obx(
         () {

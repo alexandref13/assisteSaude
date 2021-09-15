@@ -13,6 +13,7 @@ class LoginController extends GetxController {
   var email = TextEditingController().obs;
   var password = TextEditingController().obs;
   var isLoading = false.obs;
+  var isMoreThanOneEmail = false.obs;
   var idprof = ''.obs;
   var idCliente = ''.obs;
   var nome = ''.obs;
@@ -55,6 +56,8 @@ class LoginController extends GetxController {
 
     var dadosUsuario = json.decode(response.body);
 
+    print(dadosUsuario);
+
     isLoading(false);
 
     if (dadosUsuario['valida'] == 1) {
@@ -77,8 +80,10 @@ class LoginController extends GetxController {
 
           if (value.length > 1) {
             Get.toNamed('listOfClients');
+            isMoreThanOneEmail(true);
           } else {
             Get.offNamed('/home');
+            isMoreThanOneEmail(false);
           }
         },
       );

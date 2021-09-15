@@ -54,6 +54,8 @@ class AuthController extends GetxController {
 
         var dadosUsuario = json.decode(response.body);
 
+        print(dadosUsuario);
+
         if (dadosUsuario['valida'] == 1) {
           loginController.hasMoreEmail(email).then(
             (value) async {
@@ -76,8 +78,10 @@ class AuthController extends GetxController {
 
               if (value.length > 1) {
                 Get.toNamed('listOfClients');
+                loginController.isMoreThanOneEmail(true);
               } else {
                 Get.offNamed('/home');
+                loginController.isMoreThanOneEmail(false);
               }
             },
           );
