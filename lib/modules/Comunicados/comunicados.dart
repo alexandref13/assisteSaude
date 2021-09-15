@@ -12,6 +12,15 @@ class Comunicados extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Terapias',
+          style: GoogleFonts.montserrat(
+            fontSize: 16,
+            color: Theme.of(context).textSelectionTheme.selectionColor,
+          ),
+        ),
+      ),
       body: Obx(
         () {
           return comunicadosController.isLoading.value

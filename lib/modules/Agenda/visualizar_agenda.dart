@@ -238,7 +238,7 @@ class VisualizarAgenda extends StatelessWidget {
                                 mapaAgendaController.city.value = e.cidade!;
                                 mapaAgendaController.ctlcheckin.value =
                                     e.ctlCheckin!;
-                                mapaAgendaController.idVisita.value =
+                                mapaAgendaController.idSessao.value =
                                     e.idsecao!;
                                 mapaAgendaController.idCliente.value =
                                     e.idpftr!;

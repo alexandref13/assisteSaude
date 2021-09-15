@@ -16,6 +16,7 @@ class LoginController extends GetxController {
   var isMoreThanOneEmail = false.obs;
   var idprof = ''.obs;
   var idCliente = ''.obs;
+  var idSessao = ''.obs;
   var nome = ''.obs;
   var sobrenome = ''.obs;
   var tipousu = ''.obs;
@@ -77,6 +78,7 @@ class LoginController extends GetxController {
           nomeCliente.value = dadosUsuario['nomecliente'];
           imgLogo.value = dadosUsuario['imglogo'];
           slogan.value = dadosUsuario['slogan'];
+          idSessao.value = dadosUsuario['idsessao'];
 
           if (value.length > 1) {
             Get.toNamed('listOfClients');

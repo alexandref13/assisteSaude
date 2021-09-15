@@ -21,7 +21,7 @@ class MapaAgendaController extends GetxController {
   var number = ''.obs;
   var ctlcheckin = ''.obs;
   var dtagenda = ''.obs;
-  var idVisita = ''.obs;
+  var idSessao = ''.obs;
   var idCliente = ''.obs;
   var checkin = ''.obs;
   var checkout = ''.obs;

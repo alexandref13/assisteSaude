@@ -16,40 +16,42 @@ class SessionController extends GetxController {
   getSessions() async {
     isLoading(true);
 
-    final response = await VisitasRepository.getVisitantes();
+    final response = await VisitasRepository.getSessions();
 
     var dados = json.decode(response.body);
+
+    print(dados);
 
     clientes.assignAll(dados);
 
     isLoading(false);
   }
 
-  doRelatorios(context) async {
-    isLoading(true);
+  // doRelatorios(context) async {
+  //   isLoading(true);
 
-    final response = await VisitasRepository.doRelatorios();
+  //   final response = await VisitasRepository.doRelatorios();
 
-    var dados = json.decode(response.body);
+  //   var dados = json.decode(response.body);
 
-    if (dados == null) {
-      onAlertButtonPressed(
-        context,
-        'Sem Registros de Sessões!',
-        () {
-          Get.offAllNamed('/home');
-        },
-      );
-    }
+  //   if (dados == null) {
+  //     onAlertButtonPressed(
+  //       context,
+  //       'Sem Registros de Sessões!',
+  //       () {
+  //         Get.offAllNamed('/home');
+  //       },
+  //     );
+  //   }
 
-    dataTableController.data.assignAll(dados);
+  //   dataTableController.data.assignAll(dados);
 
-    Get.toNamed('/dataTableVisitas');
+  //   Get.toNamed('/dataTableVisitas');
 
-    dataTableController.isLoading(false);
+  //   dataTableController.isLoading(false);
 
-    isLoading(false);
-  }
+  //   isLoading(false);
+  // }
 
   @override
   void onInit() {

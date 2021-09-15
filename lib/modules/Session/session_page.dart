@@ -274,7 +274,7 @@ class _SessionPageState extends State<SessionPage> {
                                   Get.back();
                                 });
                               } else {
-                                await sessionController.doRelatorios(context);
+                                // await sessionController.doRelatorios(context);
                               }
                             },
                             child: Text(

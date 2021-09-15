@@ -1,3 +1,4 @@
+import 'package:assistsaude/modules/Login/login_controller.dart';
 import 'package:assistsaude/modules/MapaAgenda/mapa_agenda_controller.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -7,13 +8,13 @@ class MapaAgendaRepository {
     MapaAgendaController mapaAgendaController = Get.put(MapaAgendaController());
 
     return await http.post(
-      Uri.https("www.admautopecasbelem.com.br", "/login/flutter/check.php"),
+      Uri.https("assistesaude.com.br", "/login/flutter/check.php"),
       body: {
-        'idvisita': mapaAgendaController.idVisita.value,
+        'idsessao': mapaAgendaController.idSessao.value,
         'lat': mapaAgendaController.ourLat.value.toString(),
         'lng': mapaAgendaController.ourLng.value.toString(),
-        'latcliente': mapaAgendaController.lat.value.toString(),
-        'lngcliente': mapaAgendaController.lng.value.toString(),
+        'latpac': mapaAgendaController.lat.value.toString(),
+        // 'latpac': mapaAgendaController.lng.value.toString(),
         'ctlcheckin': mapaAgendaController.ctlcheckin.value,
       },
     );
@@ -23,10 +24,10 @@ class MapaAgendaRepository {
     MapaAgendaController mapaAgendaController = Get.put(MapaAgendaController());
 
     return await http.post(
-      Uri.https("www.admautopecasbelem.com.br",
-          "/login/flutter/visitas_obs_incluir.php"),
+      Uri.https(
+          "assistesaude.com.br", "/login/flutter/visitas_obs_incluir.php"),
       body: {
-        'idvisita': mapaAgendaController.idVisita.value,
+        'idvisita': mapaAgendaController.idSessao.value,
         'obs': mapaAgendaController.observacao.value.text,
       },
     );
@@ -36,7 +37,7 @@ class MapaAgendaRepository {
     MapaAgendaController mapaAgendaController = Get.put(MapaAgendaController());
 
     return await http.post(
-      Uri.https("www.admautopecasbelem.com.br", "login/flutter/alterargps.php"),
+      Uri.https("assistesaude.com.br", "login/flutter/alterargps.php"),
       body: {
         'idcliente': mapaAgendaController.idCliente.value,
         'lat': mapaAgendaController.ourLat.value.toString(),
@@ -49,10 +50,9 @@ class MapaAgendaRepository {
     MapaAgendaController mapaAgendaController = Get.put(MapaAgendaController());
 
     return await http.post(
-      Uri.https(
-          "www.admautopecasbelem.com.br", "login/flutter/visitas_excluir.php"),
+      Uri.https("assistesaude.com.br", "login/flutter/visitas_excluir.php"),
       body: {
-        'idvisita': mapaAgendaController.idVisita.value,
+        'idvisita': mapaAgendaController.idSessao.value,
       },
     );
   }
