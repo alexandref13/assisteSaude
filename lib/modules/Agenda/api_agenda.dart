@@ -17,7 +17,7 @@ class ApiAgendar {
     });
 
     return await http.post(
-      Uri.https("assistesaude.com.br", "flutter/sessoes_incluir.php"),
+      Uri.https("assistesaude.com.br", "flutter/agendar_sessoes.php"),
       body: {
         'idpftr': detalhesTerapiaController.idpftr.value,
         'periodo': agendaController.itemSelecionado.value,

@@ -78,7 +78,7 @@ class LoginController extends GetxController {
           nomeCliente.value = dadosUsuario['nomecliente'];
           imgLogo.value = dadosUsuario['imglogo'];
           slogan.value = dadosUsuario['slogan'];
-          idSessao.value = dadosUsuario['idsessao'];
+          // idSessao.value = dadosUsuario['idsessao'];
 
           if (value.length > 1) {
             Get.toNamed('listOfClients');
