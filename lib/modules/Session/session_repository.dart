@@ -8,26 +8,32 @@ class VisitasRepository {
     LoginController loginController = Get.find(tag: 'login');
 
     return await http.post(
-      Uri.https("assistesaude.com.br", "flutter/sessoes_agenda.php"),
+      Uri.https("assistesaude.com.br", "flutter/pacientes_lista.php"),
       body: {
         'idprof': loginController.idprof.value,
       },
     );
   }
 
-  // static Future doRelatorios() async {
-  //   LoginController loginController = Get.put(LoginController());
-  //   SessionController sessionController = Get.put(SessionController());
+  static Future doRelatorios() async {
+    LoginController loginController = Get.find(tag: 'login');
+    SessionController sessionController = Get.put(SessionController());
 
-  //   return await http.post(
-  //     Uri.https("www.admautopecasbelem.com.br",
-  //         "login/flutter/visitas_relatorio.php"),
-  //     body: {
-  //       'idusu': '27',
-  //       'idcliente': sessionController.firstId.value,
-  //       'datainicial': sessionController.initialDate.value,
-  //       'datafinal': sessionController.finalDate.value,
-  //     },
-  //   );
-  // }
+    print({
+      loginController.idprof.value,
+      sessionController.firstId.value,
+      sessionController.initialDate.value,
+      sessionController.finalDate.value,
+    });
+
+    return await http.post(
+      Uri.https("assistesaude.com.br", "flutter/sessoes_relatorio.php"),
+      body: {
+        'idprof': loginController.idprof.value,
+        'idpaciente': sessionController.firstId.value,
+        'datainicial': sessionController.initialDate.value,
+        'datafinal': sessionController.finalDate.value,
+      },
+    );
+  }
 }

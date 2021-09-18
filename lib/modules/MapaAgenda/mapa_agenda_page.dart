@@ -225,25 +225,25 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
     //   );
     // }
 
-    // Widget boxes() {
-    //   return Container(
-    //     child: FloatingActionButton(
-    //       backgroundColor: Theme.of(context).primaryColor,
-    //       onPressed: () {
-    //         // gotoLocation();
-    //       },
-    //       child: Container(
-    //         child: Container(
-    //           padding: const EdgeInsets.all(5),
-    //           child: Icon(
-    //             Icons.my_location_outlined,
-    //             color: Colors.white,
-    //           ),
-    //         ),
-    //       ),
-    //     ),
-    //   );
-    // }
+    Widget boxes() {
+      return Container(
+        child: FloatingActionButton(
+          backgroundColor: Theme.of(context).primaryColor,
+          onPressed: () {
+            // gotoLocation();
+          },
+          child: Container(
+            child: Container(
+              padding: const EdgeInsets.all(5),
+              child: Icon(
+                Icons.my_location_outlined,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
 
     // Widget buildContainer() {
     //   return Positioned(
@@ -293,6 +293,8 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
               elevation: 5,
               children: [
                 SpeedDialChild(
+                  labelBackgroundColor:
+                      Theme.of(context).textSelectionTheme.selectionColor,
                   child: Icon(
                     Icons.check,
                     color: Theme.of(context).textSelectionTheme.selectionColor,
@@ -312,6 +314,8 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                   },
                 ),
                 SpeedDialChild(
+                  labelBackgroundColor:
+                      Theme.of(context).textSelectionTheme.selectionColor,
                   child: Icon(
                     Icons.schedule,
                     color: Theme.of(context).accentColor,
@@ -327,6 +331,8 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                   },
                 ),
                 SpeedDialChild(
+                  labelBackgroundColor:
+                      Theme.of(context).textSelectionTheme.selectionColor,
                   child: Icon(
                     Icons.info,
                     color: Theme.of(context).textSelectionTheme.selectionColor,
@@ -342,6 +348,8 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                   },
                 ),
                 SpeedDialChild(
+                  labelBackgroundColor:
+                      Theme.of(context).textSelectionTheme.selectionColor,
                   child: Icon(
                     Icons.replay_outlined,
                     color: Theme.of(context).textSelectionTheme.selectionColor,
@@ -359,6 +367,8 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                   },
                 ),
                 SpeedDialChild(
+                  labelBackgroundColor:
+                      Theme.of(context).textSelectionTheme.selectionColor,
                   child: Icon(
                     Icons.delete,
                     color: Theme.of(context).textSelectionTheme.selectionColor,
@@ -392,6 +402,8 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
               elevation: 5,
               children: [
                 SpeedDialChild(
+                  labelBackgroundColor:
+                      Theme.of(context).textSelectionTheme.selectionColor,
                   child: Icon(
                     Icons.check,
                     color: Theme.of(context).textSelectionTheme.selectionColor,
@@ -413,6 +425,8 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                   },
                 ),
                 SpeedDialChild(
+                  labelBackgroundColor:
+                      Theme.of(context).textSelectionTheme.selectionColor,
                   child: Icon(
                     Icons.info_outline,
                     color: Theme.of(context).textSelectionTheme.selectionColor,
@@ -446,122 +460,131 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                     ),
                   ),
                 )
-              : Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child: GoogleMap(
-                    mapType: MapType.normal,
-                    zoomControlsEnabled: false,
-                    zoomGesturesEnabled: true,
-                    scrollGesturesEnabled: true,
-                    compassEnabled: true,
-                    rotateGesturesEnabled: true,
-                    mapToolbarEnabled: true,
-                    tiltGesturesEnabled: true,
-                    initialCameraPosition: CameraPosition(
-                        target: LatLng(mapaAgendaController.lat.value,
-                            mapaAgendaController.lng.value),
-                        zoom: 16),
-                    onMapCreated: (GoogleMapController controller) async {
-                      if (!_controller.isCompleted) {
-                        _controller.complete(controller);
-                      } else {}
-                      changeMapMode();
+              : Stack(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      child: GoogleMap(
+                        mapType: MapType.normal,
+                        zoomControlsEnabled: false,
+                        zoomGesturesEnabled: true,
+                        scrollGesturesEnabled: true,
+                        compassEnabled: true,
+                        rotateGesturesEnabled: true,
+                        mapToolbarEnabled: true,
+                        tiltGesturesEnabled: true,
+                        initialCameraPosition: CameraPosition(
+                            target: LatLng(mapaAgendaController.lat.value,
+                                mapaAgendaController.lng.value),
+                            zoom: 16),
+                        onMapCreated: (GoogleMapController controller) async {
+                          if (!_controller.isCompleted) {
+                            _controller.complete(controller);
+                          } else {}
+                          changeMapMode();
 
-                      Position position = await Geolocator.getCurrentPosition(
-                          desiredAccuracy: LocationAccuracy.high);
+                          Position position =
+                              await Geolocator.getCurrentPosition(
+                                  desiredAccuracy: LocationAccuracy.high);
 
-                      LatLng latLatPosition =
-                          LatLng(position.latitude, position.longitude);
+                          LatLng latLatPosition =
+                              LatLng(position.latitude, position.longitude);
 
-                      LatLng latLatCliente = LatLng(
-                          mapaAgendaController.lat.value,
-                          mapaAgendaController.lng.value);
+                          LatLng latLatCliente = LatLng(
+                              mapaAgendaController.lat.value,
+                              mapaAgendaController.lng.value);
 
-                      //condição para o reposicionamemto
-                      if (latLatPosition.latitude <= latLatCliente.latitude) {
-                        LatLngBounds bounds = LatLngBounds(
-                          southwest: latLatPosition,
-                          northeast: latLatCliente,
-                        );
-                        controller.animateCamera(
-                            CameraUpdate.newLatLngBounds(bounds, 50));
-                        final LatLng centerBounds = LatLng(
-                            (bounds.northeast.latitude +
-                                    bounds.southwest.latitude) /
-                                2,
-                            (bounds.northeast.longitude +
-                                    bounds.southwest.longitude) /
-                                2);
-
-                        controller.moveCamera(
-                            CameraUpdate.newCameraPosition(CameraPosition(
-                          target: centerBounds,
-                          zoom: 17,
-                        )));
-                        // zoomToFit(controller, bounds, centerBounds);
-                      } else {
-                        LatLngBounds bounds = LatLngBounds(
-                          southwest: latLatCliente,
-                          northeast: latLatPosition,
-                        );
-                        controller.animateCamera(
-                            CameraUpdate.newLatLngBounds(bounds, 50));
-                        final LatLng centerBounds = LatLng(
-                            (bounds.northeast.latitude +
-                                    bounds.southwest.latitude) /
-                                2,
-                            (bounds.northeast.longitude +
-                                    bounds.southwest.longitude) /
-                                2);
-
-                        controller.moveCamera(
-                            CameraUpdate.newCameraPosition(CameraPosition(
-                          target: centerBounds,
-                          zoom: 17,
-                        )));
-                        zoomToFit(controller, bounds, centerBounds);
-                      }
-
-                      if (this.mounted) {
-                        mapaAgendaController.ourLat.value = position.latitude;
-                        mapaAgendaController.ourLng.value = position.longitude;
-                        setState(
-                          () {
-                            mapaAgendaController.markers.add(
-                              Marker(
-                                markerId: MarkerId('Estou Aqui!'),
-                                position: latLatPosition,
-                                infoWindow: InfoWindow(
-                                  title: 'Minha Localização',
-                                  snippet: "",
-                                ),
-                                icon: BitmapDescriptor.defaultMarkerWithHue(
-                                    BitmapDescriptor.hueViolet),
-                              ),
+                          //condição para o reposicionamemto
+                          if (latLatPosition.latitude <=
+                              latLatCliente.latitude) {
+                            LatLngBounds bounds = LatLngBounds(
+                              southwest: latLatPosition,
+                              northeast: latLatCliente,
                             );
-                          },
-                        );
-                      }
-                      // timer();
-                    },
-                    circles: Set.from([
-                      Circle(
-                        circleId: CircleId('circle'),
-                        center: LatLng(mapaAgendaController.lat.value,
-                            mapaAgendaController.lng.value),
-                        radius: 80,
-                        strokeColor:
-                            mapaAgendaController.ctlcheckin.value == '0'
-                                ? Colors.yellow.withOpacity(0.2)
-                                : Colors.red.withOpacity(0.2),
-                        fillColor: mapaAgendaController.ctlcheckin.value == '0'
-                            ? Colors.yellow.withOpacity(0.3)
-                            : Colors.red.withOpacity(0.3),
-                      )
-                    ]),
-                    markers: mapaAgendaController.markers,
-                  ),
+                            controller.animateCamera(
+                                CameraUpdate.newLatLngBounds(bounds, 50));
+                            final LatLng centerBounds = LatLng(
+                                (bounds.northeast.latitude +
+                                        bounds.southwest.latitude) /
+                                    2,
+                                (bounds.northeast.longitude +
+                                        bounds.southwest.longitude) /
+                                    2);
+
+                            controller.moveCamera(
+                                CameraUpdate.newCameraPosition(CameraPosition(
+                              target: centerBounds,
+                              zoom: 17,
+                            )));
+                            // zoomToFit(controller, bounds, centerBounds);
+                          } else {
+                            LatLngBounds bounds = LatLngBounds(
+                              southwest: latLatCliente,
+                              northeast: latLatPosition,
+                            );
+                            controller.animateCamera(
+                                CameraUpdate.newLatLngBounds(bounds, 50));
+                            final LatLng centerBounds = LatLng(
+                                (bounds.northeast.latitude +
+                                        bounds.southwest.latitude) /
+                                    2,
+                                (bounds.northeast.longitude +
+                                        bounds.southwest.longitude) /
+                                    2);
+
+                            controller.moveCamera(
+                                CameraUpdate.newCameraPosition(CameraPosition(
+                              target: centerBounds,
+                              zoom: 17,
+                            )));
+                            zoomToFit(controller, bounds, centerBounds);
+                          }
+
+                          if (this.mounted) {
+                            mapaAgendaController.ourLat.value =
+                                position.latitude;
+                            mapaAgendaController.ourLng.value =
+                                position.longitude;
+                            setState(
+                              () {
+                                mapaAgendaController.markers.add(
+                                  Marker(
+                                    markerId: MarkerId('Estou Aqui!'),
+                                    position: latLatPosition,
+                                    infoWindow: InfoWindow(
+                                      title: 'Minha Localização',
+                                      snippet: "",
+                                    ),
+                                    icon: BitmapDescriptor.defaultMarkerWithHue(
+                                        BitmapDescriptor.hueViolet),
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                          // timer();
+                        },
+                        circles: Set.from([
+                          Circle(
+                            circleId: CircleId('circle'),
+                            center: LatLng(mapaAgendaController.lat.value,
+                                mapaAgendaController.lng.value),
+                            radius: 80,
+                            strokeColor:
+                                mapaAgendaController.ctlcheckin.value == '0'
+                                    ? Colors.yellow.withOpacity(0.2)
+                                    : Colors.red.withOpacity(0.2),
+                            fillColor:
+                                mapaAgendaController.ctlcheckin.value == '0'
+                                    ? Colors.yellow.withOpacity(0.3)
+                                    : Colors.red.withOpacity(0.3),
+                          )
+                        ]),
+                        markers: mapaAgendaController.markers,
+                      ),
+                    ),
+                  ],
                 );
         },
       ),

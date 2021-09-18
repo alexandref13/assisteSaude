@@ -4,7 +4,9 @@ import 'package:assistsaude/modules/Terapia/components/DetalhesTerapia/detalhs_t
 import 'package:assistsaude/modules/Terapia/terapia_controller.dart';
 import 'package:assistsaude/shared/box_search.dart';
 import 'package:assistsaude/shared/circular_progress_indicator.dart';
+import 'package:assistsaude/shared/delete_alert.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,155 +17,178 @@ class TerapiaPage extends StatelessWidget {
     TerapiaController terapiaController = Get.put(TerapiaController());
     DetalhesTerapiaController detalhesTerapiaController =
         Get.put(DetalhesTerapiaController());
-    CalendarioController calendarioController = Get.put(CalendarioController());
+    // CalendarioController calendarioController = Get.put(CalendarioController());
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Terapias',
-          style: GoogleFonts.montserrat(
-            fontSize: 16,
-            color: Theme.of(context).textSelectionTheme.selectionColor,
+    return WillPopScope(
+      onWillPop: () async {
+        deleteAlert(context, 'Deseja realmente sair?', () {
+          SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+        });
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Terapias',
+            style: GoogleFonts.montserrat(
+              fontSize: 16,
+              color: Theme.of(context).textSelectionTheme.selectionColor,
+            ),
           ),
         ),
-      ),
-      body: Obx(
-        () {
-          return terapiaController.isLoading.value
-              ? CircularProgressIndicatorWidget()
-              : SafeArea(
-                  child: Container(
-                    padding: EdgeInsets.all(8),
-                    child: Column(
-                      children: [
-                        Container(
-                          child: boxSearch(
-                            context,
-                            terapiaController.search.value,
-                            terapiaController.onSearchTextChanged,
-                            "Pesquise as terapias...",
+        body: Obx(
+          () {
+            return terapiaController.isLoading.value
+                ? CircularProgressIndicatorWidget()
+                : SafeArea(
+                    child: Container(
+                      padding: EdgeInsets.all(8),
+                      child: Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              loginController.selectedIndex.value = 0;
+                              Get.offAllNamed('/home');
+                            },
+                            child: Container(
+                              child: Text(
+                                'ola',
+                                style: TextStyle(fontSize: 40),
+                              ),
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: terapiaController.searchResult.isNotEmpty ||
-                                  terapiaController.search.value.text.isNotEmpty
-                              ? RefreshIndicator(
-                                  onRefresh: terapiaController.onRefresh,
-                                  child: ListView.builder(
-                                    itemCount:
-                                        terapiaController.searchResult.length,
-                                    itemBuilder: (context, index) {
-                                      var terapias =
-                                          terapiaController.searchResult[index];
-                                      return GestureDetector(
-                                        onTap: () async {
-                                          detalhesTerapiaController
-                                              .idpftr.value = terapias.idpftr!;
+                          Container(
+                            child: boxSearch(
+                              context,
+                              terapiaController.search.value,
+                              terapiaController.onSearchTextChanged,
+                              "Pesquise as terapias...",
+                            ),
+                          ),
+                          Expanded(
+                            child: terapiaController.searchResult.isNotEmpty ||
+                                    terapiaController
+                                        .search.value.text.isNotEmpty
+                                ? RefreshIndicator(
+                                    onRefresh: terapiaController.onRefresh,
+                                    child: ListView.builder(
+                                      itemCount:
+                                          terapiaController.searchResult.length,
+                                      itemBuilder: (context, index) {
+                                        var terapias = terapiaController
+                                            .searchResult[index];
+                                        return GestureDetector(
+                                          onTap: () async {
+                                            detalhesTerapiaController.idpftr
+                                                .value = terapias.idpftr!;
 
-                                          await detalhesTerapiaController
-                                              .getDetails();
-                                        },
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                          color: terapias.ctlaceito == '0'
-                                              ? Colors.amber
-                                              : terapias.ctlaceito == '1'
-                                                  ? Theme.of(context)
-                                                      .primaryColor
-                                                  : Colors.red[300],
-                                          child: ListTile(
-                                            title: Text(
-                                              terapias.nomepac!,
-                                              style: GoogleFonts.montserrat(
-                                                fontSize: 12,
+                                            await detalhesTerapiaController
+                                                .getDetails();
+                                          },
+                                          child: Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ),
+                                            color: terapias.ctlaceito == '0'
+                                                ? Colors.amber
+                                                : terapias.ctlaceito == '1'
+                                                    ? Theme.of(context)
+                                                        .primaryColor
+                                                    : Colors.red[300],
+                                            child: ListTile(
+                                              title: Text(
+                                                terapias.nomepac!,
+                                                style: GoogleFonts.montserrat(
+                                                  fontSize: 12,
+                                                  color: terapias.ctlaceito ==
+                                                          '0'
+                                                      ? Colors.black
+                                                      : Theme.of(context)
+                                                          .textSelectionTheme
+                                                          .selectionColor,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              trailing: Icon(
+                                                Icons.arrow_right,
                                                 color: terapias.ctlaceito == '0'
                                                     ? Colors.black
                                                     : Theme.of(context)
                                                         .textSelectionTheme
                                                         .selectionColor,
-                                                fontWeight: FontWeight.bold,
+                                                size: 26,
                                               ),
                                             ),
-                                            trailing: Icon(
-                                              Icons.arrow_right,
-                                              color: terapias.ctlaceito == '0'
-                                                  ? Colors.black
-                                                  : Theme.of(context)
-                                                      .textSelectionTheme
-                                                      .selectionColor,
-                                              size: 26,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  )
+                                : RefreshIndicator(
+                                    onRefresh: terapiaController.onRefresh,
+                                    child: ListView.builder(
+                                      itemCount:
+                                          terapiaController.terapias.length,
+                                      itemBuilder: (context, index) {
+                                        var terapias =
+                                            terapiaController.terapias[index];
+
+                                        return GestureDetector(
+                                          onTap: () async {
+                                            detalhesTerapiaController.idpftr
+                                                .value = terapias.idpftr!;
+
+                                            await detalhesTerapiaController
+                                                .getDetails();
+                                          },
+                                          child: Card(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
                                             ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                )
-                              : RefreshIndicator(
-                                  onRefresh: terapiaController.onRefresh,
-                                  child: ListView.builder(
-                                    itemCount:
-                                        terapiaController.terapias.length,
-                                    itemBuilder: (context, index) {
-                                      var terapias =
-                                          terapiaController.terapias[index];
-
-                                      return GestureDetector(
-                                        onTap: () async {
-                                          detalhesTerapiaController
-                                              .idpftr.value = terapias.idpftr!;
-
-                                          await detalhesTerapiaController
-                                              .getDetails();
-                                        },
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                          ),
-                                          color: terapias.ctlaceito == '0'
-                                              ? Colors.amber
-                                              : terapias.ctlaceito == '1'
-                                                  ? Theme.of(context)
-                                                      .primaryColor
-                                                  : Colors.red[300],
-                                          child: ListTile(
-                                            title: Text(
-                                              terapias.nomepac!,
-                                              style: GoogleFonts.montserrat(
-                                                fontSize: 12,
+                                            color: terapias.ctlaceito == '0'
+                                                ? Colors.amber
+                                                : terapias.ctlaceito == '1'
+                                                    ? Theme.of(context)
+                                                        .primaryColor
+                                                    : Colors.red[300],
+                                            child: ListTile(
+                                              title: Text(
+                                                terapias.nomepac!,
+                                                style: GoogleFonts.montserrat(
+                                                  fontSize: 12,
+                                                  color: terapias.ctlaceito ==
+                                                          '0'
+                                                      ? Colors.black
+                                                      : Theme.of(context)
+                                                          .textSelectionTheme
+                                                          .selectionColor,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              trailing: Icon(
+                                                Icons.arrow_right,
                                                 color: terapias.ctlaceito == '0'
                                                     ? Colors.black
                                                     : Theme.of(context)
                                                         .textSelectionTheme
                                                         .selectionColor,
-                                                fontWeight: FontWeight.bold,
+                                                size: 26,
                                               ),
                                             ),
-                                            trailing: Icon(
-                                              Icons.arrow_right,
-                                              color: terapias.ctlaceito == '0'
-                                                  ? Colors.black
-                                                  : Theme.of(context)
-                                                      .textSelectionTheme
-                                                      .selectionColor,
-                                              size: 26,
-                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
+                                        );
+                                      },
+                                    ),
                                   ),
-                                ),
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-        },
+                  );
+          },
+        ),
       ),
     );
   }

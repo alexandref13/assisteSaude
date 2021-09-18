@@ -6,6 +6,10 @@ class ApiCalendario {
   static Future getCalendario() async {
     LoginController loginController = Get.find(tag: 'login');
 
+    print({
+      loginController.idprof.value,
+    });
+
     return await http.post(
       Uri.https("assistesaude.com.br", "flutter/sessoes_agenda.php"),
       body: {

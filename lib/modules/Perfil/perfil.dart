@@ -273,8 +273,6 @@ class _PerfilState extends State<Perfil> {
                     child: Container(
                       margin: EdgeInsets.only(top: 5),
                       padding: EdgeInsets.all(8),
-                      height: MediaQuery.of(context).size.height * .95,
-                      width: MediaQuery.of(context).size.width,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -289,8 +287,7 @@ class _PerfilState extends State<Perfil> {
                                   _configurandoModalBottomSheet(context);
                                 },
                                 child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 2, bottom: 20),
+                                  padding: const EdgeInsets.only(top: 2),
                                   child: Text(
                                     'Alterar Foto',
                                     style: GoogleFonts.montserrat(
@@ -307,18 +304,448 @@ class _PerfilState extends State<Perfil> {
                           SizedBox(
                             height: 15,
                           ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 8,
+                            ),
+                            child: Text(
+                              'Nome: ',
+                              style: GoogleFonts.montserrat(
+                                fontSize: 14,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
+                              ),
+                            ),
+                          ),
                           customTextField(
                             context,
-                            'Nome',
-                            'Nome',
+                            '',
+                            loginController.nome.value,
                             false,
                             1,
                             true,
                             perfilController.name.value,
                             false,
                           ),
-                          SizedBox(
-                            height: 15,
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 8,
+                            ),
+                            child: Text(
+                              'Sobrenome: ',
+                              style: GoogleFonts.montserrat(
+                                fontSize: 14,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
+                              ),
+                            ),
+                          ),
+                          customTextField(
+                            context,
+                            'Sobrenome',
+                            loginController.sobrenome.value,
+                            false,
+                            1,
+                            true,
+                            perfilController.secondName.value,
+                            false,
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 8,
+                            ),
+                            child: Text(
+                              'Endereço: ',
+                              style: GoogleFonts.montserrat(
+                                fontSize: 14,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
+                              ),
+                            ),
+                          ),
+                          TextField(
+                            controller: perfilController.endereco.value,
+                            style: GoogleFonts.montserrat(
+                              fontSize: 14,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
+                            ),
+                            decoration: InputDecoration(
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 1,
+                                ),
+                              ),
+                              isDense: true,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 2,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 8,
+                            ),
+                            child: Text(
+                              'Complemento: ',
+                              style: GoogleFonts.montserrat(
+                                fontSize: 14,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
+                              ),
+                            ),
+                          ),
+                          TextField(
+                            controller: perfilController.complemento.value,
+                            style: GoogleFonts.montserrat(
+                              fontSize: 14,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
+                            ),
+                            decoration: InputDecoration(
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 1,
+                                ),
+                              ),
+                              isDense: true,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 2,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 8,
+                            ),
+                            child: Text(
+                              'Cidade: ',
+                              style: GoogleFonts.montserrat(
+                                fontSize: 14,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
+                              ),
+                            ),
+                          ),
+                          TextField(
+                            controller: perfilController.cidade.value,
+                            style: GoogleFonts.montserrat(
+                              fontSize: 14,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
+                            ),
+                            decoration: InputDecoration(
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 1,
+                                ),
+                              ),
+                              isDense: true,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 2,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 8,
+                            ),
+                            child: Text(
+                              'Bairro: ',
+                              style: GoogleFonts.montserrat(
+                                fontSize: 14,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
+                              ),
+                            ),
+                          ),
+                          TextField(
+                            controller: perfilController.bairro.value,
+                            style: GoogleFonts.montserrat(
+                              fontSize: 14,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
+                            ),
+                            decoration: InputDecoration(
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 1,
+                                ),
+                              ),
+                              isDense: true,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 2,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 8,
+                            ),
+                            child: Text(
+                              'CEP: ',
+                              style: GoogleFonts.montserrat(
+                                fontSize: 14,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
+                              ),
+                            ),
+                          ),
+                          TextField(
+                            controller: perfilController.cep.value,
+                            style: GoogleFonts.montserrat(
+                              fontSize: 14,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
+                            ),
+                            decoration: InputDecoration(
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 1,
+                                ),
+                              ),
+                              isDense: true,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 2,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 8,
+                            ),
+                            child: Text(
+                              'UF: ',
+                              style: GoogleFonts.montserrat(
+                                fontSize: 14,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
+                              ),
+                            ),
+                          ),
+                          TextField(
+                            controller: perfilController.uf.value,
+                            style: GoogleFonts.montserrat(
+                              fontSize: 14,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
+                            ),
+                            decoration: InputDecoration(
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 1,
+                                ),
+                              ),
+                              isDense: true,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 2,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 8,
+                            ),
+                            child: Text(
+                              'Celular: ',
+                              style: GoogleFonts.montserrat(
+                                fontSize: 14,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
+                              ),
+                            ),
+                          ),
+                          TextField(
+                            controller: perfilController.phone.value,
+                            style: GoogleFonts.montserrat(
+                              fontSize: 14,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
+                            ),
+                            decoration: InputDecoration(
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 1,
+                                ),
+                              ),
+                              isDense: true,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 2,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 8,
+                            ),
+                            child: Text(
+                              'Data de Nascimento: ',
+                              style: GoogleFonts.montserrat(
+                                fontSize: 14,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
+                              ),
+                            ),
                           ),
                           TextField(
                             keyboardType: TextInputType.number,
@@ -342,13 +769,6 @@ class _PerfilState extends State<Perfil> {
                                   width: 1,
                                 ),
                               ),
-                              labelText: 'Data de Aniversário',
-                              labelStyle: GoogleFonts.montserrat(
-                                fontSize: 14,
-                                color: Theme.of(context)
-                                    .textSelectionTheme
-                                    .selectionColor,
-                              ),
                               isDense: true,
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -370,105 +790,64 @@ class _PerfilState extends State<Perfil> {
                               ),
                             ),
                           ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 7),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                color: Theme.of(context)
-                                    .textSelectionTheme
-                                    .selectionColor!,
-                                width: 1,
-                              ),
-                            ),
-                            child: DropdownButton<String>(
-                              isExpanded: true,
-                              underline: Container(),
-                              icon: Icon(
-                                Icons.keyboard_arrow_down,
-                                size: 27,
-                              ),
-                              iconEnabledColor: Theme.of(context)
-                                  .textSelectionTheme
-                                  .selectionColor,
-                              dropdownColor: Theme.of(context).primaryColor,
-                              style: GoogleFonts.montserrat(
-                                fontSize: 14,
-                                color: Theme.of(context)
-                                    .textSelectionTheme
-                                    .selectionColor,
-                              ),
-                              items: perfilController.tipos
-                                  .map((String dropDownStringItem) {
-                                return DropdownMenuItem<String>(
-                                  value: dropDownStringItem,
-                                  child: Text(dropDownStringItem),
-                                );
-                              }).toList(),
-                              onChanged: (String? novoItemSelecionado) {
-                                dropDownFavoriteSelected(novoItemSelecionado!);
-                                perfilController.itemSelecionado.value =
-                                    novoItemSelecionado;
-                              },
-                              value: perfilController.itemSelecionado.value,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          TextField(
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              perfilController.cellMaskFormatter
-                            ],
-                            controller: perfilController.phone.value,
-                            style: GoogleFonts.montserrat(
-                              fontSize: 14,
-                              color: Theme.of(context)
-                                  .textSelectionTheme
-                                  .selectionColor,
-                            ),
-                            decoration: InputDecoration(
-                              disabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(
-                                  color: Theme.of(context)
-                                      .textSelectionTheme
-                                      .selectionColor!,
-                                  width: 1,
-                                ),
-                              ),
-                              labelText: 'Celular',
-                              labelStyle: GoogleFonts.montserrat(
-                                fontSize: 14,
-                                color: Theme.of(context)
-                                    .textSelectionTheme
-                                    .selectionColor,
-                              ),
-                              isDense: true,
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(
-                                  color: Theme.of(context)
-                                      .textSelectionTheme
-                                      .selectionColor!,
-                                  width: 2,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(
-                                  color: Theme.of(context)
-                                      .textSelectionTheme
-                                      .selectionColor!,
-                                  width: 1,
-                                ),
-                              ),
-                            ),
-                          ),
+                          // Container(
+                          //   padding: EdgeInsets.symmetric(
+                          //     horizontal: 5,
+                          //     vertical: 8,
+                          //   ),
+                          //   child: Text(
+                          //     'Gênero: ',
+                          //     style: GoogleFonts.montserrat(
+                          //       fontSize: 14,
+                          //       color: Theme.of(context)
+                          //           .textSelectionTheme
+                          //           .selectionColor,
+                          //     ),
+                          //   ),
+                          // ),
+                          // Container(
+                          //   padding: EdgeInsets.symmetric(horizontal: 7),
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(10),
+                          //     border: Border.all(
+                          //       color: Theme.of(context)
+                          //           .textSelectionTheme
+                          //           .selectionColor!,
+                          //       width: 1,
+                          //     ),
+                          //   ),
+                          //   child: DropdownButton<String>(
+                          //     isExpanded: true,
+                          //     underline: Container(),
+                          //     icon: Icon(
+                          //       Icons.keyboard_arrow_down,
+                          //       size: 27,
+                          //     ),
+                          //     iconEnabledColor: Theme.of(context)
+                          //         .textSelectionTheme
+                          //         .selectionColor,
+                          //     dropdownColor: Theme.of(context).primaryColor,
+                          //     style: GoogleFonts.montserrat(
+                          //       fontSize: 14,
+                          //       color: Theme.of(context)
+                          //           .textSelectionTheme
+                          //           .selectionColor,
+                          //     ),
+                          //     items: perfilController.tipos
+                          //         .map((String dropDownStringItem) {
+                          //       return DropdownMenuItem<String>(
+                          //         value: dropDownStringItem,
+                          //         child: Text(dropDownStringItem),
+                          //       );
+                          //     }).toList(),
+                          //     onChanged: (String? novoItemSelecionado) {
+                          //       dropDownFavoriteSelected(novoItemSelecionado!);
+                          //       perfilController.itemSelecionado.value =
+                          //           novoItemSelecionado;
+                          //     },
+                          //     value: perfilController.itemSelecionado.value,
+                          //   ),
+                          // ),
                           SizedBox(
                             height: 30,
                           ),

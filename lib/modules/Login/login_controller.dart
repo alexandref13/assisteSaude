@@ -26,6 +26,15 @@ class LoginController extends GetxController {
   var imgLogo = ''.obs;
   var slogan = ''.obs;
   var deviceId = '';
+  var endereco = ''.obs;
+  var complemento = ''.obs;
+  var cidade = ''.obs;
+  var bairro = ''.obs;
+  var cep = ''.obs;
+  var uf = ''.obs;
+  var cel = ''.obs;
+  var genero = ''.obs;
+  var datanas = ''.obs;
   var selectedIndex = 0.obs;
 
   final formKey = GlobalKey<FormState>();
@@ -78,7 +87,15 @@ class LoginController extends GetxController {
           nomeCliente.value = dadosUsuario['nomecliente'];
           imgLogo.value = dadosUsuario['imglogo'];
           slogan.value = dadosUsuario['slogan'];
-          // idSessao.value = dadosUsuario['idsessao'];
+          endereco.value = dadosUsuario['endereco'];
+          complemento.value = dadosUsuario['complemento'];
+          cidade.value = dadosUsuario['cidade'];
+          bairro.value = dadosUsuario['bairro'];
+          cep.value = dadosUsuario['cep'];
+          uf.value = dadosUsuario['uf'];
+          cel.value = dadosUsuario['cel'];
+          genero.value = dadosUsuario['genero'];
+          datanas.value = dadosUsuario['datanas'];
 
           if (value.length > 1) {
             Get.toNamed('listOfClients');

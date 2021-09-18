@@ -9,14 +9,15 @@ class ApiPerfil {
     PerfilController perfilController = Get.put(PerfilController());
 
     return await http.post(
-        Uri.https("www.admautopecasbelem.com.br",
-            "/login/flutter/perfil_alterar.php"),
-        body: {
-          'idusu': '27',
-          'nome': perfilController.name.value.text,
-          'aniversario': perfilController.newDate.value,
-          'celular': perfilController.phone.value.text,
-          'genero': perfilController.itemSelecionado.value,
-        });
+      Uri.https(
+          "www.admautopecasbelem.com.br", "/login/flutter/perfil_alterar.php"),
+      body: {
+        'idusu': '27',
+        'nome': perfilController.name.value.text,
+        'aniversario': perfilController.newDate.value,
+        'celular': perfilController.phone.value.text,
+        'genero': perfilController.itemSelecionado.value,
+      },
+    );
   }
 }

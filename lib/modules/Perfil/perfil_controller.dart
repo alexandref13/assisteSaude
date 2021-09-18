@@ -12,6 +12,12 @@ class PerfilController extends GetxController {
 
   var name = TextEditingController().obs;
   var secondName = TextEditingController().obs;
+  var endereco = TextEditingController().obs;
+  var complemento = TextEditingController().obs;
+  var cidade = TextEditingController().obs;
+  var bairro = TextEditingController().obs;
+  var cep = TextEditingController().obs;
+  var uf = TextEditingController().obs;
   var gender = TextEditingController().obs;
   var birthdate = TextEditingController().obs;
   var newDate = ''.obs;
@@ -70,11 +76,18 @@ class PerfilController extends GetxController {
   }
 
   init() {
-    // name.value.text = loginController.nome.value;
-    // phone.value.text = loginController.phone.value;
-    // var date = loginController.birthdate.value.replaceAll('-', '/').split('/');
-    // birthdate.value.text = '${date[2]}/${date[1]}/${date[0]}';
-    // itemSelecionado.value = loginController.genero.value;
+    var date = loginController.datanas.value.replaceAll('-', '/').split('/');
+    birthdate.value.text = '${date[2]}/${date[1]}/${date[0]}';
+    // print(date);
+    name.value.text = loginController.nome.value;
+    phone.value.text = loginController.cel.value;
+    itemSelecionado.value = loginController.genero.value;
+    endereco.value.text = loginController.endereco.value;
+    complemento.value.text = loginController.complemento.value;
+    cidade.value.text = loginController.cidade.value;
+    bairro.value.text = loginController.bairro.value;
+    cep.value.text = loginController.cep.value;
+    uf.value.text = loginController.uf.value;
   }
 
   @override

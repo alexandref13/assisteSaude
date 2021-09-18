@@ -4,6 +4,8 @@ import 'package:assistsaude/modules/Session/session_page.dart';
 import 'package:assistsaude/modules/Terapia/terapia_page.dart';
 import 'package:assistsaude/shared/alert_button_check.dart';
 import 'package:assistsaude/shared/alert_button_pressed.dart';
+import 'package:assistsaude/shared/delete_alert.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:assistsaude/modules/Home/components/home_widget.dart';
 import 'package:assistsaude/modules/Login/login_controller.dart';
@@ -282,283 +284,292 @@ class _HomePageState extends State<HomePage> {
       VisualizarAgenda()
     ];
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).textSelectionTheme.selectionColor,
-      key: homeController.key,
-      drawer: Drawer(
-        child: Container(
-          child: ListView(
-            children: <Widget>[
-              DrawerHeader(
-                  padding: EdgeInsets.all(0),
-                  child: Container(
-                    padding: EdgeInsets.only(top: 20),
-                    color: Theme.of(context).primaryColor,
-                    child: Column(
-                      children: <Widget>[
-                        getImageWidget(),
-                        Container(
-                          padding: EdgeInsets.only(top: 8),
-                          child: Text(
-                            "${loginController.nome.value} ${loginController.sobrenome.value}",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            softWrap: false,
-                            style: GoogleFonts.montserrat(
-                                color: Theme.of(context).accentColor,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(top: 2),
-                          child: Text(
-                            "${loginController.email.value.text}",
-                            style: GoogleFonts.montserrat(
-                              fontSize: 10,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(top: 2),
-                          child: Text(
-                            '${loginController.tipousu.value}',
-                            style: GoogleFonts.montserrat(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 10,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )),
-              Column(
-                children: <Widget>[
-                  loginController.isMoreThanOneEmail.value == false
-                      ? Container()
-                      : Container(
-                          child: ListTile(
-                            contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
-                            dense: true,
-                            title: Text(
-                              'Unidades',
+    return WillPopScope(
+      onWillPop: () async {
+        deleteAlert(context, 'Deseja realmente sair?', () {
+          SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+        });
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: Theme.of(context).textSelectionTheme.selectionColor,
+        key: homeController.key,
+        drawer: Drawer(
+          child: Container(
+            child: ListView(
+              children: <Widget>[
+                DrawerHeader(
+                    padding: EdgeInsets.all(0),
+                    child: Container(
+                      padding: EdgeInsets.only(top: 20),
+                      color: Theme.of(context).primaryColor,
+                      child: Column(
+                        children: <Widget>[
+                          getImageWidget(),
+                          Container(
+                            padding: EdgeInsets.only(top: 8),
+                            child: Text(
+                              "${loginController.nome.value} ${loginController.sobrenome.value}",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: false,
                               style: GoogleFonts.montserrat(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 12,
+                                  color: Theme.of(context).accentColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(top: 2),
+                            child: Text(
+                              "${loginController.email.value.text}",
+                              style: GoogleFonts.montserrat(
+                                fontSize: 10,
                               ),
                             ),
-                            leading: Icon(
-                              Icons.home,
-                              color: Theme.of(context).primaryColor,
-                              size: 22,
-                            ),
-                            onTap: () async {
-                              await loginController.hasMoreEmail(
-                                loginController.email.value.text,
-                              );
-                              Get.offAllNamed('/listOfClients');
-                            },
                           ),
-                        ),
-                  loginController.isMoreThanOneEmail.value == false
-                      ? Container()
-                      : Divider(
-                          height: 5,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                  Container(
-                    child: ListTile(
-                      contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
-                      dense: true,
-                      title: Text(
-                        'Perfil',
-                        style: GoogleFonts.montserrat(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 12,
-                        ),
+                          Container(
+                            padding: EdgeInsets.only(top: 2),
+                            child: Text(
+                              '${loginController.tipousu.value}',
+                              style: GoogleFonts.montserrat(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      leading: Icon(
-                        Icons.person_outline,
-                        color: Theme.of(context).primaryColor,
-                        size: 22,
-                      ),
-                      onTap: () {
-                        Get.toNamed('/perfil');
-                      },
-                    ),
-                  ),
-                  Divider(
-                    height: 5,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  Container(
-                    child: ListTile(
-                      contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
-                      dense: true,
-                      title: Text(
-                        'Senha',
-                        style: GoogleFonts.montserrat(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 12,
-                        ),
-                      ),
-                      leading: Icon(
-                        Icons.lock_outline,
-                        color: Theme.of(context).primaryColor,
-                        size: 22,
-                      ),
-                      onTap: () {
-                        Get.toNamed('/senha');
-                      },
-                    ),
-                  ),
-                  Divider(
-                    height: 5,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  Container(
-                    child: ListTile(
-                      contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
-                      dense: true,
-                      title: Text(
-                        'Comunicados',
-                        style: GoogleFonts.montserrat(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 12,
-                        ),
-                      ),
-                      leading: Icon(
-                        Icons.notification_add,
-                        color: Theme.of(context).primaryColor,
-                        size: 22,
-                      ),
-                      onTap: () {
-                        Get.toNamed('/comunicados');
-                      },
-                    ),
-                  ),
-                  Divider(
-                    height: 5,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  Container(
-                    child: ListTile(
-                      contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
-                      dense: true,
-                      title: Text(
-                        'Ajuda',
-                        style: GoogleFonts.montserrat(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 12,
-                        ),
-                      ),
-                      leading: Icon(
-                        Icons.help,
-                        color: Theme.of(context).primaryColor,
-                        size: 22,
-                      ),
-                      onTap: () {
-                        homeController.abrirWhatsApp();
-                      },
-                    ),
-                  ),
-                  Divider(
-                    height: 5,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  Container(
-                    child: ListTile(
-                      contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
-                      dense: true,
-                      title: Text(
-                        'Sair',
-                        style: GoogleFonts.montserrat(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 12,
-                        ),
-                      ),
-                      leading: Icon(
-                        Icons.exit_to_app,
-                        color: Theme.of(context).primaryColor,
-                        size: 22,
-                      ),
-                      onTap: () {
-                        logoutUser();
-                      },
-                    ),
-                  ),
-                  Divider(
-                    height: 15,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  Container(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 60, bottom: 5),
-                      child: Container(
-                        //color: Color(0xfff5f5f5),
-                        child: Image.asset(
-                          'images/logo.png',
-                          width: 80,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    child: Column(
-                      children: [
-                        Text(
-                          'Versão 1.0.0',
+                    )),
+                Column(
+                  children: <Widget>[
+                    loginController.isMoreThanOneEmail.value == false
+                        ? Container()
+                        : Container(
+                            child: ListTile(
+                              contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
+                              dense: true,
+                              title: Text(
+                                'Unidades',
+                                style: GoogleFonts.montserrat(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              leading: Icon(
+                                Icons.home,
+                                color: Theme.of(context).primaryColor,
+                                size: 22,
+                              ),
+                              onTap: () async {
+                                await loginController.hasMoreEmail(
+                                  loginController.email.value.text,
+                                );
+                                Get.offAllNamed('/listOfClients');
+                              },
+                            ),
+                          ),
+                    loginController.isMoreThanOneEmail.value == false
+                        ? Container()
+                        : Divider(
+                            height: 5,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                    Container(
+                      child: ListTile(
+                        contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
+                        dense: true,
+                        title: Text(
+                          'Perfil',
                           style: GoogleFonts.montserrat(
                             color: Theme.of(context).primaryColor,
-                            fontSize: 9,
+                            fontSize: 12,
                           ),
                         ),
-                      ],
+                        leading: Icon(
+                          Icons.person_outline,
+                          color: Theme.of(context).primaryColor,
+                          size: 22,
+                        ),
+                        onTap: () {
+                          Get.toNamed('/perfil');
+                        },
+                      ),
                     ),
-                  )
-                ],
-              )
-            ],
+                    Divider(
+                      height: 5,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    Container(
+                      child: ListTile(
+                        contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
+                        dense: true,
+                        title: Text(
+                          'Senha',
+                          style: GoogleFonts.montserrat(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 12,
+                          ),
+                        ),
+                        leading: Icon(
+                          Icons.lock_outline,
+                          color: Theme.of(context).primaryColor,
+                          size: 22,
+                        ),
+                        onTap: () {
+                          Get.toNamed('/senha');
+                        },
+                      ),
+                    ),
+                    Divider(
+                      height: 5,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    Container(
+                      child: ListTile(
+                        contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
+                        dense: true,
+                        title: Text(
+                          'Comunicados',
+                          style: GoogleFonts.montserrat(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 12,
+                          ),
+                        ),
+                        leading: Icon(
+                          Icons.notification_add,
+                          color: Theme.of(context).primaryColor,
+                          size: 22,
+                        ),
+                        onTap: () {
+                          Get.toNamed('/comunicados');
+                        },
+                      ),
+                    ),
+                    Divider(
+                      height: 5,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    Container(
+                      child: ListTile(
+                        contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
+                        dense: true,
+                        title: Text(
+                          'Ajuda',
+                          style: GoogleFonts.montserrat(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 12,
+                          ),
+                        ),
+                        leading: Icon(
+                          Icons.help,
+                          color: Theme.of(context).primaryColor,
+                          size: 22,
+                        ),
+                        onTap: () {
+                          homeController.abrirWhatsApp();
+                        },
+                      ),
+                    ),
+                    Divider(
+                      height: 5,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    Container(
+                      child: ListTile(
+                        contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
+                        dense: true,
+                        title: Text(
+                          'Sair',
+                          style: GoogleFonts.montserrat(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 12,
+                          ),
+                        ),
+                        leading: Icon(
+                          Icons.exit_to_app,
+                          color: Theme.of(context).primaryColor,
+                          size: 22,
+                        ),
+                        onTap: () {
+                          logoutUser();
+                        },
+                      ),
+                    ),
+                    Divider(
+                      height: 15,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    Container(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 60, bottom: 5),
+                        child: Container(
+                          //color: Color(0xfff5f5f5),
+                          child: Image.asset(
+                            'images/logo.png',
+                            width: 80,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      child: Column(
+                        children: [
+                          Text(
+                            'Versão 1.0.0',
+                            style: GoogleFonts.montserrat(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 9,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          type: BottomNavigationBarType.fixed,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
+              ),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.notification_add,
+              ),
+              label: 'Sessões',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.business,
+              ),
+              label: 'Terapias',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.date_range_outlined,
+              ),
+              label: 'Agenda',
+            ),
+          ],
+          selectedIconTheme:
+              IconThemeData(color: Theme.of(context).accentColor),
+          unselectedIconTheme: IconThemeData(color: Colors.white),
+          selectedItemColor: Theme.of(context).accentColor,
+          unselectedItemColor: Colors.white,
+          currentIndex: loginController.selectedIndex.value,
+          onTap: onItemTapped,
+        ),
+        body: bottomNavigationList[loginController.selectedIndex.value],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.notification_add,
-            ),
-            label: 'Sessões',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.business,
-            ),
-            label: 'Terapias',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.date_range_outlined,
-            ),
-            label: 'Agenda',
-          ),
-        ],
-        selectedIconTheme: IconThemeData(color: Theme.of(context).accentColor),
-        unselectedIconTheme: IconThemeData(color: Colors.white),
-        selectedItemColor: Theme.of(context).accentColor,
-        unselectedItemColor: Colors.white,
-        currentIndex: loginController.selectedIndex.value,
-        onTap: onItemTapped,
-      ),
-      body: bottomNavigationList[loginController.selectedIndex.value],
     );
   }
 }

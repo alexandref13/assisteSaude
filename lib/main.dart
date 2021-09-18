@@ -1,8 +1,10 @@
 import 'package:assistsaude/modules/Agenda/agendar_visitas.dart';
+import 'package:assistsaude/modules/AgendarHorario/agendarhorario.dart';
 import 'package:assistsaude/modules/Comunicados/components/detalhes_comunicados_page.dart';
 import 'package:assistsaude/modules/Comunicados/comunicados.dart';
 import 'package:assistsaude/modules/Home/home_page.dart';
 import 'package:assistsaude/modules/Login/components/list_of_clients_page.dart';
+import 'package:assistsaude/modules/MapaAgenda/components/InfoCheck/info_check_page.dart';
 import 'package:assistsaude/modules/MapaAgenda/mapa_agenda_page.dart';
 import 'package:assistsaude/modules/Perfil/perfil.dart';
 import 'package:assistsaude/modules/Senha/senha.dart';
@@ -14,6 +16,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'modules/Agenda/visualizar_agenda.dart';
 import 'modules/InfoStatus/info_status_page.dart';
+import 'modules/Session/components/DataTable/data_table_visitas_page.dart';
 import 'modules/Session/session_page.dart';
 import 'theme/theme.dart';
 import 'modules/Login/login_bindings.dart';
@@ -88,6 +91,18 @@ void main() {
         GetPage(
           name: '/perfil',
           page: () => Perfil(),
+        ),
+        GetPage(
+          name: '/infoCheck',
+          page: () => InfoCheckPage(),
+        ),
+        GetPage(
+          name: '/agendarhorario',
+          page: () => AgendarHorario(),
+        ),
+        GetPage(
+          name: '/dataTableVisitas',
+          page: () => DataTableVisitas(),
         ),
       ],
     ),

@@ -59,6 +59,8 @@ class CalendarioController extends GetxController {
                 infoCheck: eventos['info_check'],
                 infoCheckout: eventos['info_checkout'],
                 latlng: eventos['latlng'],
+                idpac: eventos['idpac'],
+                hragenda: eventos['hragenda'],
               ),
             );
       }

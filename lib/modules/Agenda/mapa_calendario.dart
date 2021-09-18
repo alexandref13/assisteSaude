@@ -18,27 +18,32 @@ class MapaEvento {
   String? infoCheck;
   String? infoCheckout;
   String? latlng;
+  String? idpac;
+  String? hragenda;
 
-  MapaEvento(
-      {this.confdata,
-      this.paciente,
-      this.logradouro,
-      this.bairro,
-      this.cidade,
-      this.uf,
-      this.ctlGps,
-      this.idsecao,
-      this.idpftr,
-      this.obs,
-      this.idStatus,
-      this.dtAgenda,
-      this.checkin,
-      this.checkout,
-      this.ctlCheckin,
-      this.ctlCheckout,
-      this.infoCheck,
-      this.infoCheckout,
-      this.latlng});
+  MapaEvento({
+    this.confdata,
+    this.paciente,
+    this.logradouro,
+    this.bairro,
+    this.cidade,
+    this.uf,
+    this.ctlGps,
+    this.idsecao,
+    this.idpftr,
+    this.obs,
+    this.idStatus,
+    this.dtAgenda,
+    this.checkin,
+    this.checkout,
+    this.ctlCheckin,
+    this.ctlCheckout,
+    this.infoCheck,
+    this.infoCheckout,
+    this.latlng,
+    this.idpac,
+    this.hragenda,
+  });
 
   MapaEvento.fromJson(Map<String, dynamic> json) {
     confdata = json['confdata'];
@@ -60,6 +65,8 @@ class MapaEvento {
     infoCheck = json['info_check'];
     infoCheckout = json['info_checkout'];
     latlng = json['latlng'];
+    idpac = json['idpac'];
+    hragenda = json['idpac'];
   }
 
   Map<String, dynamic> toJson() {
@@ -83,6 +90,8 @@ class MapaEvento {
     data['info_check'] = this.infoCheck;
     data['info_checkout'] = this.infoCheckout;
     data['latlng'] = this.latlng;
+    data['idpac'] = this.idpac;
+    data['hragenda'] = this.hragenda;
     return data;
   }
 }

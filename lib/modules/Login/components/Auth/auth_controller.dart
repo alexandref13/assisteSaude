@@ -75,7 +75,15 @@ class AuthController extends GetxController {
               loginController.nomeCliente.value = dadosUsuario['nomecliente'];
               loginController.imgLogo.value = dadosUsuario['imglogo'];
               loginController.slogan.value = dadosUsuario['slogan'];
-              // loginController.idSessao.value = dadosUsuario['idsessao'];
+              loginController.endereco.value = dadosUsuario['endereco'];
+              loginController.complemento.value = dadosUsuario['complemento'];
+              loginController.cidade.value = dadosUsuario['cidade'];
+              loginController.bairro.value = dadosUsuario['bairro'];
+              loginController.cep.value = dadosUsuario['cep'];
+              loginController.uf.value = dadosUsuario['uf'];
+              loginController.cel.value = dadosUsuario['cel'];
+              loginController.genero.value = dadosUsuario['genero'];
+              loginController.datanas.value = dadosUsuario['datanas'];
 
               if (value.length > 1) {
                 Get.toNamed('listOfClients');

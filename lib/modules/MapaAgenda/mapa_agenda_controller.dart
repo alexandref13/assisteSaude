@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:assistsaude/modules/Login/login_controller.dart';
 import 'package:assistsaude/modules/MapaAgenda/mapa_agenda_repository.dart';
 import 'package:assistsaude/shared/alert_button_pressed.dart';
 import 'package:assistsaude/shared/confirmed_button_pressed.dart';
@@ -7,8 +8,9 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapaAgendaController extends GetxController {
-  var isLoading = true.obs;
+  LoginController loginController = Get.find(tag: 'login');
 
+  var isLoading = true.obs;
   var lat = 0.0.obs;
   var lng = 0.0.obs;
   var ourLat = 0.0.obs;
@@ -22,7 +24,7 @@ class MapaAgendaController extends GetxController {
   var ctlcheckin = ''.obs;
   var dtagenda = ''.obs;
   var idSessao = ''.obs;
-  var idCliente = ''.obs;
+  var idPaciente = ''.obs;
   var checkin = ''.obs;
   var checkout = ''.obs;
   var obs = ''.obs;
@@ -70,10 +72,12 @@ class MapaAgendaController extends GetxController {
 
     var dados = json.decode(response.body);
 
+    loginController.selectedIndex.value = 3;
+
     if (dados['valida'] == 0) {
       onAlertButtonPressed(
         context,
-        'Cliente Fora do Raio de Check-in!',
+        'Paciente Fora do Raio de Check-in!',
         () {
           Get.offAllNamed('/home');
         },
@@ -139,6 +143,8 @@ class MapaAgendaController extends GetxController {
 
     var dados = json.decode(response.body);
 
+    loginController.selectedIndex.value = 3;
+
     if (dados['valida'] == 0) {
       onAlertButtonPressed(
         context,
@@ -148,7 +154,7 @@ class MapaAgendaController extends GetxController {
         },
       );
     } else {
-      confirmedButtonPressed(context, 'Visita Deletada com Sucesso!', () {
+      confirmedButtonPressed(context, 'Sessão Deletada com Sucesso!', () {
         Get.offAllNamed('/home');
       });
     }

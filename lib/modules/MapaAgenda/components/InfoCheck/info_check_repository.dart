@@ -9,9 +9,9 @@ class InfoCheckRepository {
     InfoCheckController infoCheckController = Get.put(InfoCheckController());
 
     return await http.post(
-      Uri.https("www.admautopecasbelem.com.br", "login/flutter/info_check.php"),
+      Uri.https("assistesaude.com.br", "/flutter/info_check.php"),
       body: {
-        'idvisita': mapaAgendaController.idSessao.value,
+        'idsessao': mapaAgendaController.idSessao.value,
         'ctlcheck': mapaAgendaController.ctlcheckin.value,
         'time': infoCheckController.hour.value.text,
         'dataformat': mapaAgendaController.dtagenda.value,
