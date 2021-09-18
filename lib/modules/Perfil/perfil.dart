@@ -346,7 +346,7 @@ class _PerfilState extends State<Perfil> {
                           ),
                           customTextField(
                             context,
-                            'Sobrenome',
+                            '',
                             loginController.sobrenome.value,
                             false,
                             1,
@@ -870,7 +870,56 @@ class _PerfilState extends State<Perfil> {
                                   },
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () async {
+                                perfilController.editPerfil().then((value) {
+                                  if (value == 1) {
+                                    loginController.nome.value =
+                                        perfilController.name.value.text;
+                                    loginController.sobrenome.value =
+                                        perfilController.secondName.value.text;
+                                    loginController.endereco.value =
+                                        perfilController.endereco.value.text;
+                                    loginController.complemento.value =
+                                        perfilController.complemento.value.text;
+                                    loginController.cidade.value =
+                                        perfilController.cidade.value.text;
+                                    loginController.bairro.value =
+                                        perfilController.bairro.value.text;
+                                    loginController.cep.value =
+                                        perfilController.cep.value.text;
+                                    loginController.uf.value =
+                                        perfilController.uf.value.text;
+                                    loginController.genero.value =
+                                        perfilController.gender.value.text;
+                                    loginController.datanas.value =
+                                        perfilController.birthdate.value.text;
+                                    loginController.cel.value =
+                                        perfilController.phone.value.text;
+                                    onAlertButtonCheck(
+                                      context,
+                                      'Seu Perfil foi Atualizado!',
+                                      '/home',
+                                    );
+                                  }
+                                  //  else if (value == "vazio") {
+                                  //   onAlertButtonPressed(
+                                  //     context,
+                                  //     'Algum Campo Vazio!',
+                                  //     () {Get.back();},
+                                  //   );
+                                  // }
+
+                                  else {
+                                    onAlertButtonPressed(
+                                      context,
+                                      'Algo deu errado\n Tente novamente',
+                                      () {
+                                        Get.offAllNamed('/home');
+                                      },
+                                    );
+                                  }
+                                });
+                              },
                               child: Text(
                                 "Enviar",
                                 style: GoogleFonts.montserrat(

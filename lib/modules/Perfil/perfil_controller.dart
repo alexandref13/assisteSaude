@@ -80,6 +80,7 @@ class PerfilController extends GetxController {
     birthdate.value.text = '${date[2]}/${date[1]}/${date[0]}';
     // print(date);
     name.value.text = loginController.nome.value;
+    secondName.value.text = loginController.sobrenome.value;
     phone.value.text = loginController.cel.value;
     itemSelecionado.value = loginController.genero.value;
     endereco.value.text = loginController.endereco.value;
