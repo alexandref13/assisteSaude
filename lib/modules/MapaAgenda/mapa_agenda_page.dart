@@ -230,7 +230,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
         child: FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColor,
           onPressed: () {
-            // gotoLocation();
+            gotoLocation();
           },
           child: Container(
             child: Container(
@@ -245,27 +245,27 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
       );
     }
 
-    // Widget buildContainer() {
-    //   return Positioned(
-    //     top: 0,
-    //     right: 5,
-    //     child: Column(
-    //       mainAxisAlignment: MainAxisAlignment.center,
-    //       children: [
-    //         Container(
-    //           child: Row(
-    //             children: [
-    //               Padding(
-    //                 padding: const EdgeInsets.all(10),
-    //                 child: boxes(),
-    //               ),
-    //             ],
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // }
+    Widget buildContainer() {
+      return Positioned(
+        top: 0,
+        right: 5,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: boxes(),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -462,6 +462,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                 )
               : Stack(
                   children: [
+                    buildContainer(),
                     Container(
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
@@ -475,9 +476,12 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                         mapToolbarEnabled: true,
                         tiltGesturesEnabled: true,
                         initialCameraPosition: CameraPosition(
-                            target: LatLng(mapaAgendaController.lat.value,
-                                mapaAgendaController.lng.value),
-                            zoom: 16),
+                          target: LatLng(
+                            mapaAgendaController.lat.value,
+                            mapaAgendaController.lng.value,
+                          ),
+                          zoom: 10,
+                        ),
                         onMapCreated: (GoogleMapController controller) async {
                           if (!_controller.isCompleted) {
                             _controller.complete(controller);

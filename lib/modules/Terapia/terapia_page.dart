@@ -78,13 +78,23 @@ class TerapiaPage extends StatelessWidget {
                                               borderRadius:
                                                   BorderRadius.circular(10.0),
                                             ),
-                                            color: terapias.ctlaceito == '0'
+                                            color: terapias.ctlaceito == '0' &&
+                                                    terapias.idstatus == '1'
                                                 ? Colors.amber
-                                                : terapias.ctlaceito == '1'
+                                                : terapias.ctlaceito == '1' &&
+                                                        terapias.idstatus == '1'
                                                     ? Theme.of(context)
                                                         .primaryColor
-                                                    : Colors.red[300],
+                                                    : terapias.idstatus != '1'
+                                                        ? Colors.grey
+                                                        : Colors.red[300],
                                             child: ListTile(
+                                              leading: Icon(
+                                                terapias.idstatus != '1'
+                                                    ? Icons
+                                                        .not_interested_outlined
+                                                    : Icons.person_outline,
+                                              ),
                                               title: Text(
                                                 terapias.nomepac!,
                                                 style: GoogleFonts.montserrat(
@@ -135,13 +145,23 @@ class TerapiaPage extends StatelessWidget {
                                               borderRadius:
                                                   BorderRadius.circular(10.0),
                                             ),
-                                            color: terapias.ctlaceito == '0'
+                                            color: terapias.ctlaceito == '0' &&
+                                                    terapias.idstatus == '1'
                                                 ? Colors.amber
-                                                : terapias.ctlaceito == '1'
+                                                : terapias.ctlaceito == '1' &&
+                                                        terapias.idstatus == '1'
                                                     ? Theme.of(context)
                                                         .primaryColor
-                                                    : Colors.red[300],
+                                                    : terapias.idstatus != '1'
+                                                        ? Colors.grey
+                                                        : Colors.red[300],
                                             child: ListTile(
+                                              leading: Icon(
+                                                terapias.idstatus != '1'
+                                                    ? Icons
+                                                        .not_interested_outlined
+                                                    : Icons.person_outline,
+                                              ),
                                               title: Text(
                                                 terapias.nomepac!,
                                                 style: GoogleFonts.montserrat(

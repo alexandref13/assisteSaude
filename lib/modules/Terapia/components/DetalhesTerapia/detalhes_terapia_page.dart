@@ -274,7 +274,11 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                               CrossAxisAlignment.center,
                                           children: <Widget>[
                                             GestureDetector(
-                                              onTap: () {},
+                                              onTap: () async {
+                                                await detalhesTerapiaController
+                                                    .makePhoneCall(
+                                                        details.tel!, context);
+                                              },
                                               child: Card(
                                                 color: Theme.of(context)
                                                     .primaryColor,
@@ -333,7 +337,11 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                               CrossAxisAlignment.center,
                                           children: <Widget>[
                                             GestureDetector(
-                                              onTap: () {},
+                                              onTap: () async {
+                                                await detalhesTerapiaController
+                                                    .makePhoneCall(
+                                                        details.tel!, context);
+                                              },
                                               child: Card(
                                                 color: Theme.of(context)
                                                     .primaryColor,
@@ -392,7 +400,13 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                               CrossAxisAlignment.center,
                                           children: <Widget>[
                                             GestureDetector(
-                                              onTap: () {},
+                                              onTap: () {
+                                                detalhesTerapiaController
+                                                    .abrirWhatsApp(
+                                                  details.cel!,
+                                                  context,
+                                                );
+                                              },
                                               child: Card(
                                                 color: Theme.of(context)
                                                     .primaryColor,
@@ -449,8 +463,9 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                               CrossAxisAlignment.center,
                                           children: <Widget>[
                                             GestureDetector(
-                                              onTap: () {
-                                                Get.toNamed('/mapacliente');
+                                              onTap: () async {
+                                                await detalhesTerapiaController
+                                                    .goToMap(details.latlng!);
                                               },
                                               child: Card(
                                                 color: Theme.of(context)
