@@ -2,6 +2,7 @@ import 'package:assistsaude/modules/Agenda/agendar_visitas.dart';
 import 'package:assistsaude/modules/AgendarHorario/agendarhorario.dart';
 import 'package:assistsaude/modules/Comunicados/components/detalhes_comunicados_page.dart';
 import 'package:assistsaude/modules/Comunicados/comunicados.dart';
+import 'package:assistsaude/modules/Esqueci/esqueci_senha.dart';
 import 'package:assistsaude/modules/Home/home_page.dart';
 import 'package:assistsaude/modules/Login/components/list_of_clients_page.dart';
 import 'package:assistsaude/modules/MapaAgenda/components/InfoCheck/info_check_page.dart';
@@ -103,6 +104,10 @@ void main() {
         GetPage(
           name: '/dataTableVisitas',
           page: () => DataTableVisitas(),
+        ),
+        GetPage(
+          name: '/esqueci',
+          page: () => Esqueci(),
         ),
       ],
     ),

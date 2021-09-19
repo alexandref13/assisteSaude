@@ -5,15 +5,14 @@ import 'package:http/http.dart' as http;
 
 class ApiSenha {
   static Future senha() async {
-    LoginController loginController = Get.put(LoginController());
+    LoginController loginController = Get.find(tag: 'login');
     SenhaController senhaController = Get.put(SenhaController());
 
     return await http.post(
-      Uri.https(
-          "www.admautopecasbelem.com.br", "/login/flutter/senha_alterar.php"),
+      Uri.https("assistesaude.com.br", "flutter/senha_alterar.php"),
       body: {
-        // 'idusu': loginController.idusu.value,
-        // 'senha': senhaController.senhanova.value.text,
+        'idprof': loginController.idprof.value,
+        'senha': senhaController.senhanova.value.text,
       },
     );
   }

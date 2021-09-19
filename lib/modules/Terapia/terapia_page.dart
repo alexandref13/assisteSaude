@@ -45,18 +45,6 @@ class TerapiaPage extends StatelessWidget {
                       padding: EdgeInsets.all(8),
                       child: Column(
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              loginController.selectedIndex.value = 0;
-                              Get.offAllNamed('/home');
-                            },
-                            child: Container(
-                              child: Text(
-                                'ola',
-                                style: TextStyle(fontSize: 40),
-                              ),
-                            ),
-                          ),
                           Container(
                             child: boxSearch(
                               context,
