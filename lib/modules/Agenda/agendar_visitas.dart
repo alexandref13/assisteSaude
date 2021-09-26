@@ -48,56 +48,85 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 7),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                color: Theme.of(context)
-                                    .textSelectionTheme
-                                    .selectionColor!,
-                                width: 1,
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 7),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor!,
+                                  width: 1,
+                                ),
                               ),
-                            ),
-                            child: DropdownButton<String>(
-                              isExpanded: true,
-                              underline: Container(),
-                              icon: Icon(
-                                Icons.keyboard_arrow_down,
-                                size: 27,
-                              ),
-                              iconEnabledColor: Theme.of(context)
-                                  .textSelectionTheme
-                                  .selectionColor,
-                              dropdownColor: Theme.of(context).accentColor,
-                              style: GoogleFonts.montserrat(
-                                fontSize: 14,
-                                color: Theme.of(context)
+                              child: DropdownButton<String>(
+                                isExpanded: true,
+                                underline: Container(),
+                                icon: Icon(
+                                  Icons.keyboard_arrow_down,
+                                  size: 27,
+                                ),
+                                iconEnabledColor: Theme.of(context)
                                     .textSelectionTheme
                                     .selectionColor,
+                                dropdownColor: Theme.of(context).accentColor,
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 14,
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor,
+                                ),
+                                items: agendaController.tipos
+                                    .map((String dropDownStringItem) {
+                                  return DropdownMenuItem<String>(
+                                    value: dropDownStringItem,
+                                    child: Text("$dropDownStringItem semanas"),
+                                  );
+                                }).toList(),
+                                onChanged: (String? novoItemSelecionado) {
+                                  dropDownFavoriteSelected(
+                                      novoItemSelecionado!);
+                                  agendaController.itemSelecionado.value =
+                                      novoItemSelecionado;
+                                },
+                                value: agendaController.itemSelecionado.value,
                               ),
-                              items: agendaController.tipos
-                                  .map((String dropDownStringItem) {
-                                return DropdownMenuItem<String>(
-                                  value: dropDownStringItem,
-                                  child: Text("$dropDownStringItem semanas"),
-                                );
-                              }).toList(),
-                              onChanged: (String? novoItemSelecionado) {
-                                dropDownFavoriteSelected(novoItemSelecionado!);
-                                agendaController.itemSelecionado.value =
-                                    novoItemSelecionado;
-                              },
-                              value: agendaController.itemSelecionado.value,
                             ),
                           ),
                           SizedBox(
                             height: 15,
                           ),
-                          Container(
-                            child: CheckboxListTile(
+                          Expanded(
+                            child: Container(
+                              child: CheckboxListTile(
+                                  title: Text(
+                                    "Domingo",
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: 14,
+                                      color: Theme.of(context)
+                                          .textSelectionTheme
+                                          .selectionColor,
+                                    ),
+                                  ),
+                                  value: agendaController.checkeddom.value,
+                                  onChanged: (newValue) {
+                                    agendaController.checkeddom.value =
+                                        newValue!;
+                                  },
+                                  activeColor: Theme.of(context).primaryColor,
+                                  controlAffinity:
+                                      ListTileControlAffinity.platform),
+                            ),
+                          ),
+                          Divider(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          Expanded(
+                            child: Container(
+                              child: CheckboxListTile(
                                 title: Text(
-                                  "Domingo",
+                                  "Segunda",
                                   style: GoogleFonts.montserrat(
                                     fontSize: 14,
                                     color: Theme.of(context)
@@ -105,21 +134,25 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                                         .selectionColor,
                                   ),
                                 ),
-                                value: agendaController.checkeddom.value,
+                                value: agendaController.checkedseg.value,
                                 onChanged: (newValue) {
-                                  agendaController.checkeddom.value = newValue!;
+                                  agendaController.checkedseg.value = newValue!;
                                 },
-                                activeColor: Theme.of(context).primaryColor,
                                 controlAffinity:
-                                    ListTileControlAffinity.platform),
+                                    ListTileControlAffinity.platform,
+                                activeColor: Theme.of(context)
+                                    .primaryColor, //  <-- platform Checkbox
+                              ),
+                            ),
                           ),
                           Divider(
                             color: Theme.of(context).primaryColor,
                           ),
-                          Container(
-                            child: CheckboxListTile(
+                          Expanded(
+                            child: Container(
+                                child: CheckboxListTile(
                               title: Text(
-                                "Segunda",
+                                "Terça",
                                 style: GoogleFonts.montserrat(
                                   fontSize: 14,
                                   color: Theme.of(context)
@@ -127,125 +160,111 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                                       .selectionColor,
                                 ),
                               ),
-                              value: agendaController.checkedseg.value,
+                              value: agendaController.checkedter.value,
                               onChanged: (newValue) {
-                                agendaController.checkedseg.value = newValue!;
+                                agendaController.checkedter.value = newValue!;
                               },
-                              controlAffinity: ListTileControlAffinity.platform,
-                              activeColor: Theme.of(context)
-                                  .primaryColor, //  <-- platform Checkbox
-                            ),
+                              activeColor: Theme.of(context).primaryColor,
+                              controlAffinity: ListTileControlAffinity
+                                  .platform, //  <-- platform Checkbox
+                            )),
                           ),
                           Divider(
                             color: Theme.of(context).primaryColor,
                           ),
-                          Container(
-                              child: CheckboxListTile(
-                            title: Text(
-                              "Terça",
-                              style: GoogleFonts.montserrat(
-                                fontSize: 14,
-                                color: Theme.of(context)
-                                    .textSelectionTheme
-                                    .selectionColor,
+                          Expanded(
+                            child: Container(
+                                child: CheckboxListTile(
+                              title: Text(
+                                "Quarta",
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 14,
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor,
+                                ),
                               ),
-                            ),
-                            value: agendaController.checkedter.value,
-                            onChanged: (newValue) {
-                              agendaController.checkedter.value = newValue!;
-                            },
-                            activeColor: Theme.of(context).primaryColor,
-                            controlAffinity: ListTileControlAffinity
-                                .platform, //  <-- platform Checkbox
-                          )),
+                              value: agendaController.checkedqua.value,
+                              onChanged: (newValue) {
+                                agendaController.checkedqua.value = newValue!;
+                              },
+                              activeColor: Theme.of(context).primaryColor,
+                              controlAffinity: ListTileControlAffinity
+                                  .platform, //  <-- platform Checkbox
+                            )),
+                          ),
                           Divider(
                             color: Theme.of(context).primaryColor,
                           ),
-                          Container(
-                              child: CheckboxListTile(
-                            title: Text(
-                              "Quarta",
-                              style: GoogleFonts.montserrat(
-                                fontSize: 14,
-                                color: Theme.of(context)
-                                    .textSelectionTheme
-                                    .selectionColor,
+                          Expanded(
+                            child: Container(
+                                child: CheckboxListTile(
+                              title: Text(
+                                "Quinta",
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 14,
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor,
+                                ),
                               ),
-                            ),
-                            value: agendaController.checkedqua.value,
-                            onChanged: (newValue) {
-                              agendaController.checkedqua.value = newValue!;
-                            },
-                            activeColor: Theme.of(context).primaryColor,
-                            controlAffinity: ListTileControlAffinity
-                                .platform, //  <-- platform Checkbox
-                          )),
+                              value: agendaController.checkedqui.value,
+                              onChanged: (newValue) {
+                                agendaController.checkedqui.value = newValue!;
+                              },
+                              activeColor: Theme.of(context).primaryColor,
+                              controlAffinity: ListTileControlAffinity
+                                  .platform, //  <-- platform Checkbox
+                            )),
+                          ),
                           Divider(
                             color: Theme.of(context).primaryColor,
                           ),
-                          Container(
-                              child: CheckboxListTile(
-                            title: Text(
-                              "Quinta",
-                              style: GoogleFonts.montserrat(
-                                fontSize: 14,
-                                color: Theme.of(context)
-                                    .textSelectionTheme
-                                    .selectionColor,
+                          Expanded(
+                            child: Container(
+                                child: CheckboxListTile(
+                              title: Text(
+                                "Sexta",
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 14,
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor,
+                                ),
                               ),
-                            ),
-                            value: agendaController.checkedqui.value,
-                            onChanged: (newValue) {
-                              agendaController.checkedqui.value = newValue!;
-                            },
-                            activeColor: Theme.of(context).primaryColor,
-                            controlAffinity: ListTileControlAffinity
-                                .platform, //  <-- platform Checkbox
-                          )),
+                              value: agendaController.checkedsex.value,
+                              onChanged: (newValue) {
+                                agendaController.checkedsex.value = newValue!;
+                              },
+                              activeColor: Theme.of(context).primaryColor,
+                              controlAffinity: ListTileControlAffinity
+                                  .platform, //  <-- platform Checkbox
+                            )),
+                          ),
                           Divider(
                             color: Theme.of(context).primaryColor,
                           ),
-                          Container(
-                              child: CheckboxListTile(
-                            title: Text(
-                              "Sexta",
-                              style: GoogleFonts.montserrat(
-                                fontSize: 14,
-                                color: Theme.of(context)
-                                    .textSelectionTheme
-                                    .selectionColor,
+                          Expanded(
+                            child: Container(
+                                child: CheckboxListTile(
+                              title: Text(
+                                "Sábado",
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 14,
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor,
+                                ),
                               ),
-                            ),
-                            value: agendaController.checkedsex.value,
-                            onChanged: (newValue) {
-                              agendaController.checkedsex.value = newValue!;
-                            },
-                            activeColor: Theme.of(context).primaryColor,
-                            controlAffinity: ListTileControlAffinity
-                                .platform, //  <-- platform Checkbox
-                          )),
-                          Divider(
-                            color: Theme.of(context).primaryColor,
+                              value: agendaController.checkedsab.value,
+                              onChanged: (newValue) {
+                                agendaController.checkedsab.value = newValue!;
+                              },
+                              activeColor: Theme.of(context).primaryColor,
+                              controlAffinity: ListTileControlAffinity
+                                  .platform, //  <-- platform Checkbox
+                            )),
                           ),
-                          Container(
-                              child: CheckboxListTile(
-                            title: Text(
-                              "Sábado",
-                              style: GoogleFonts.montserrat(
-                                fontSize: 14,
-                                color: Theme.of(context)
-                                    .textSelectionTheme
-                                    .selectionColor,
-                              ),
-                            ),
-                            value: agendaController.checkedsab.value,
-                            onChanged: (newValue) {
-                              agendaController.checkedsab.value = newValue!;
-                            },
-                            activeColor: Theme.of(context).primaryColor,
-                            controlAffinity: ListTileControlAffinity
-                                .platform, //  <-- platform Checkbox
-                          )),
                           Divider(
                             color: Theme.of(context).primaryColor,
                           ),

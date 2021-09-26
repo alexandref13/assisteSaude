@@ -189,7 +189,7 @@ class _LoginPageState extends State<LoginPage> {
                                             '') {
                                       onAlertButtonPressed(
                                         context,
-                                        'Campo de email ou senha vazios',
+                                        'Campo de E-mail ou Senha Vazios',
                                         () {
                                           Get.back();
                                         },

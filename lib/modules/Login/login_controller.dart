@@ -115,6 +115,15 @@ class LoginController extends GetxController {
           Get.back();
         },
       );
+    } else if (dadosUsuario['valida'] == 0) {
+      onAlertButtonPressed(
+        context,
+        'Login ou Senha Inválidos',
+        () {
+          password.value.text = '';
+          Get.back();
+        },
+      );
     } else {
       onAlertButtonPressed(
         context,

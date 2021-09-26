@@ -333,7 +333,7 @@ class _HomePageState extends State<HomePage> {
                             child: Text(
                               '${loginController.tipousu.value}',
                               style: GoogleFonts.montserrat(
-                                color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).cardColor,
                                 fontSize: 10,
                               ),
                             ),
@@ -352,7 +352,7 @@ class _HomePageState extends State<HomePage> {
                               title: Text(
                                 'Unidades',
                                 style: GoogleFonts.montserrat(
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme.of(context).cardColor,
                                   fontSize: 12,
                                 ),
                               ),
@@ -382,7 +382,7 @@ class _HomePageState extends State<HomePage> {
                         title: Text(
                           'Perfil',
                           style: GoogleFonts.montserrat(
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).cardColor,
                             fontSize: 12,
                           ),
                         ),
@@ -407,7 +407,7 @@ class _HomePageState extends State<HomePage> {
                         title: Text(
                           'Senha',
                           style: GoogleFonts.montserrat(
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).cardColor,
                             fontSize: 12,
                           ),
                         ),
@@ -432,7 +432,7 @@ class _HomePageState extends State<HomePage> {
                         title: Text(
                           'Comunicados',
                           style: GoogleFonts.montserrat(
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).cardColor,
                             fontSize: 12,
                           ),
                         ),
@@ -457,7 +457,7 @@ class _HomePageState extends State<HomePage> {
                         title: Text(
                           'Ajuda',
                           style: GoogleFonts.montserrat(
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).cardColor,
                             fontSize: 12,
                           ),
                         ),
@@ -482,7 +482,7 @@ class _HomePageState extends State<HomePage> {
                         title: Text(
                           'Sair',
                           style: GoogleFonts.montserrat(
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).cardColor,
                             fontSize: 12,
                           ),
                         ),
@@ -506,7 +506,7 @@ class _HomePageState extends State<HomePage> {
                         child: Container(
                           //color: Color(0xfff5f5f5),
                           child: Image.asset(
-                            'images/logo.png',
+                            'images/logobranca.png',
                             width: 80,
                           ),
                         ),
@@ -518,7 +518,7 @@ class _HomePageState extends State<HomePage> {
                           Text(
                             'Versão 1.0.0',
                             style: GoogleFonts.montserrat(
-                              color: Theme.of(context).primaryColor,
+                              color: Theme.of(context).cardColor,
                               fontSize: 9,
                             ),
                           ),

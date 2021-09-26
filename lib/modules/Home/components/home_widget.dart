@@ -22,7 +22,7 @@ class HomeWidget extends StatelessWidget {
         },
         child: Scaffold(
           body: Container(
-            color: Theme.of(context).textSelectionTheme.selectionColor,
+            color: Theme.of(context).bottomAppBarColor,
             child: Column(
               children: [
                 Row(
@@ -36,13 +36,14 @@ class HomeWidget extends StatelessWidget {
                         icon: Icon(
                           Icons.menu,
                           size: 30,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).cardColor,
                         ),
                       ),
                     ),
                   ],
                 ),
                 Container(
+                  padding: EdgeInsets.fromLTRB(5, 150, 5, 0),
                   width: 200,
                   child: Image.network(
                     'https://assistesaude.com.br/downloads/fotoslogomarca/${loginController.imgLogo}',
@@ -55,8 +56,8 @@ class HomeWidget extends StatelessWidget {
                     loginController.slogan.value,
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 16,
+                      color: Theme.of(context).cardColor,
+                      fontSize: 12,
                     ),
                   ),
                 )
