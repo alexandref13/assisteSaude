@@ -47,7 +47,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
         )));
         break;
       } else {
-        final double zoomLevel = await controller.getZoomLevel() - 0.1;
+        final double zoomLevel = await controller.getZoomLevel() - 0.5;
         controller.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
           target: centerBounds,
           zoom: zoomLevel,
@@ -480,7 +480,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                             mapaAgendaController.lat.value,
                             mapaAgendaController.lng.value,
                           ),
-                          zoom: 10,
+                          zoom: 12,
                         ),
                         onMapCreated: (GoogleMapController controller) async {
                           if (!_controller.isCompleted) {
@@ -519,9 +519,9 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                             controller.moveCamera(
                                 CameraUpdate.newCameraPosition(CameraPosition(
                               target: centerBounds,
-                              zoom: 17,
+                              zoom: 16,
                             )));
-                            // zoomToFit(controller, bounds, centerBounds);
+                            zoomToFit(controller, bounds, centerBounds);
                           } else {
                             LatLngBounds bounds = LatLngBounds(
                               southwest: latLatCliente,
@@ -540,7 +540,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                             controller.moveCamera(
                                 CameraUpdate.newCameraPosition(CameraPosition(
                               target: centerBounds,
-                              zoom: 17,
+                              zoom: 16,
                             )));
                             zoomToFit(controller, bounds, centerBounds);
                           }

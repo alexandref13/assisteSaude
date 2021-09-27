@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class AuthController extends GetxController {
@@ -31,7 +30,9 @@ class AuthController extends GetxController {
     await GetStorage.init();
     final box = GetStorage();
     var id = box.read('id');
+    print(id);
     var email = box.read('email');
+
     if (id != null) {
       bool isAuthenticated = await localAuthentication.authenticate(
         localizedReason: "Autenticar para realizar Login na plataforma",

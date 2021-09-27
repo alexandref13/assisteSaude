@@ -14,6 +14,7 @@ import 'package:assistsaude/modules/Terapia/components/DetalhesTerapia/detalhes_
 import 'package:assistsaude/modules/Terapia/components/DetalhesTerapia/mapa_page.dart';
 import 'package:assistsaude/modules/Terapia/terapia_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -26,8 +27,18 @@ import 'modules/Login/login_bindings.dart';
 import 'modules/Login/login_page.dart';
 
 void main() {
-  runApp(
-    GetMaterialApp(
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitDown,
+    DeviceOrientation.portraitUp,
+  ]);
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
       localizationsDelegates: [
         RefreshLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -120,6 +131,6 @@ void main() {
           page: () => DetalhesVisita(),
         ),
       ],
-    ),
-  );
+    );
+  }
 }

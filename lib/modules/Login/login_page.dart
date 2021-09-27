@@ -17,6 +17,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
+    super.initState();
     authController.localAuthentication.isDeviceSupported().then((isSupported) {
       if (isSupported) {
         authController.authenticate(context);
