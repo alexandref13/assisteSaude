@@ -141,7 +141,28 @@ class _InfoStatusPageState extends State<InfoStatusPage> {
                               ),
                             ),
                             onPressed: () async {
-                              await infoStatusController.doInfoStatus(context);
+                              if (infoStatusController.firstId.value == "0") {
+                                onAlertButtonPressed(
+                                  context,
+                                  'Você Precisa Selecionar o Status!',
+                                  () {
+                                    Get.back();
+                                  },
+                                );
+                              } else if (infoStatusController
+                                      .observation.value.text ==
+                                  "") {
+                                onAlertButtonPressed(
+                                  context,
+                                  'Campo Observação Vazio!',
+                                  () {
+                                    Get.back();
+                                  },
+                                );
+                              } else {
+                                await infoStatusController
+                                    .doInfoStatus(context);
+                              }
                             },
                             child: Text(
                               "Informar",

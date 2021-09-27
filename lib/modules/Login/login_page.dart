@@ -44,9 +44,9 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(children: <Widget>[
                       Center(
                         child: Container(
-                          padding: const EdgeInsets.only(top: 120),
+                          padding: const EdgeInsets.only(top: 80),
                           child: Image.asset(
-                            "images/logo2.png",
+                            "images/logobranca.png",
                             fit: BoxFit.fill,
                             width: 120,
                           ),

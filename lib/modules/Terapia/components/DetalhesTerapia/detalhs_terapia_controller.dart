@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:assistsaude/modules/Login/login_controller.dart';
 import 'package:assistsaude/modules/MapaAgenda/mapa_agenda_controller.dart';
 import 'package:assistsaude/modules/Terapia/components/DetalhesTerapia/detalhes_terapia_model.dart';
@@ -6,7 +7,7 @@ import 'package:assistsaude/modules/Terapia/components/DetalhesTerapia/detalhes_
 import 'package:assistsaude/shared/alert_button_pressed.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'dart:async';
 import '../../terapia_controller.dart';
 
 class DetalhesTerapiaController extends GetxController {
@@ -45,7 +46,7 @@ class DetalhesTerapiaController extends GetxController {
         .replaceAll(" ", "");
 
     var celFinal = "tel:$celular";
-
+    print(celFinal);
     if (await canLaunch(celFinal)) {
       await launch(celFinal);
     } else {
@@ -62,18 +63,17 @@ class DetalhesTerapiaController extends GetxController {
         .replaceAll(")", "")
         .replaceAll("-", "")
         .replaceAll(" ", "");
+    // add the [https]
+    var whatsappUrl = "whatsapp://send?phone=55$celular";
+    print(whatsappUrl);
 
-    var whatsappUrl = "whatsapp://send?phone=+55$celular";
-
-    if (await canLaunch(whatsappUrl)) {
-      await launch(whatsappUrl);
-    } else {
-      onAlertButtonPressed(
-          context, 'Erro! Não foi possível ir para o whatsapp.', () {
-        Get.back();
-      });
-    }
-  }
+    await canLaunch(whatsappUrl)
+        ? launch(whatsappUrl)
+        : onAlertButtonPressed(
+            context, 'Erro! Não foi possível ir para o whatsapp.', () {
+            Get.back();
+          });
+  } // new line
 
   goToMap(String latLng) async {
     var newLatLng = latLng.split(',');
@@ -83,7 +83,7 @@ class DetalhesTerapiaController extends GetxController {
 
     await mapaAgendaController.getClientes();
 
-    Get.toNamed('/mapaAgenda');
+    Get.toNamed('/mapapage');
   }
 
   aceitarRecusar() async {

@@ -33,10 +33,16 @@ class DetalhesVisita extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Icon(
-                    Icons.business_sharp,
-                    size: 35,
-                  ),
+                  Icon(Icons.airline_seat_flat,
+                      size: 35,
+                      color: (mapaAgendaController.infocheckin.value == "0" &&
+                              mapaAgendaController.infocheckout.value == "0")
+                          ? Colors.green
+                          : (mapaAgendaController.infocheckin.value == "0" &&
+                                  mapaAgendaController.infocheckout.value ==
+                                      "1")
+                              ? Colors.blue
+                              : Colors.grey),
                   SizedBox(
                     height: 10,
                   ),
@@ -76,7 +82,7 @@ class DetalhesVisita extends StatelessWidget {
                     thickness: 2,
                     indent: 20,
                     endIndent: 20,
-                    color: Theme.of(context).buttonColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                   Center(
                     child: Text(
@@ -108,7 +114,7 @@ class DetalhesVisita extends StatelessWidget {
                       ),
                       Center(
                         child: Text(
-                          getFormatedDate(mapaAgendaController.checkin.value),
+                          mapaAgendaController.checkin.value,
                           style: GoogleFonts.montserrat(
                             fontSize: 12,
                             color: Theme.of(context)
@@ -124,7 +130,7 @@ class DetalhesVisita extends StatelessWidget {
                     thickness: 2,
                     indent: 20,
                     endIndent: 20,
-                    color: Theme.of(context).buttonColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                   Center(
                     child: Text(
@@ -172,19 +178,19 @@ class DetalhesVisita extends StatelessWidget {
                     thickness: 2,
                     indent: 20,
                     endIndent: 20,
-                    color: Theme.of(context).buttonColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                   Container(
                     padding: EdgeInsets.all(15),
                     child: customTextField(
                       context,
-                      "Faça uma Observação...",
+                      "Observação...",
                       mapaAgendaController.obs.value,
                       true,
                       3,
                       true,
                       mapaAgendaController.observacao.value,
-                      false,
+                      true,
                     ),
                   ),
                   ButtonTheme(
@@ -194,7 +200,7 @@ class DetalhesVisita extends StatelessWidget {
                         backgroundColor:
                             MaterialStateProperty.resolveWith<Color>(
                           (Set<MaterialState> states) {
-                            return Theme.of(context).accentColor;
+                            return Theme.of(context).primaryColor;
                           },
                         ),
                         shape:

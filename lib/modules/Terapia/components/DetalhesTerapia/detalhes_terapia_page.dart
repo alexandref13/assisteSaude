@@ -1,3 +1,4 @@
+import 'package:assistsaude/modules/MapaAgenda/mapa_agenda_controller.dart';
 import 'package:assistsaude/modules/Terapia/components/DetalhesTerapia/detalhs_terapia_controller.dart';
 import 'package:assistsaude/shared/circular_progress_indicator.dart';
 import 'package:assistsaude/shared/delete_alert.dart';
@@ -8,6 +9,8 @@ import 'package:google_fonts/google_fonts.dart';
 class DetalhesTerapiaPage extends StatelessWidget {
   final DetalhesTerapiaController detalhesTerapiaController =
       Get.put(DetalhesTerapiaController());
+  final MapaAgendaController mapaAgendaController =
+      Get.put(MapaAgendaController());
 
   @override
   Widget build(BuildContext context) {
@@ -293,7 +296,9 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                                                   .all(6.0),
                                                           child: Icon(
                                                             Icons.phone,
-                                                            color: Colors.black,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .cardColor,
                                                             size: 24,
                                                           ),
                                                         ),
@@ -310,7 +315,7 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                                             style: TextStyle(
                                                               color: Theme.of(
                                                                       context)
-                                                                  .accentColor,
+                                                                  .cardColor,
                                                               fontSize: 10,
                                                               fontWeight:
                                                                   FontWeight
@@ -340,7 +345,7 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                               onTap: () async {
                                                 await detalhesTerapiaController
                                                     .makePhoneCall(
-                                                        details.tel!, context);
+                                                        details.cel!, context);
                                               },
                                               child: Card(
                                                 color: Theme.of(context)
@@ -357,7 +362,9 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                                           child: Icon(
                                                             Icons.phone_iphone,
                                                             size: 24,
-                                                            color: Colors.black,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .cardColor,
                                                           ),
                                                         ),
                                                       ),
@@ -373,7 +380,7 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                                             style: TextStyle(
                                                               color: Theme.of(
                                                                       context)
-                                                                  .accentColor,
+                                                                  .cardColor,
                                                               fontSize: 10,
                                                               fontWeight:
                                                                   FontWeight
@@ -436,7 +443,7 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                                             style: TextStyle(
                                                               color: Theme.of(
                                                                       context)
-                                                                  .accentColor,
+                                                                  .cardColor,
                                                               fontSize: 10,
                                                               fontWeight:
                                                                   FontWeight
@@ -464,8 +471,26 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                           children: <Widget>[
                                             GestureDetector(
                                               onTap: () async {
-                                                await detalhesTerapiaController
-                                                    .goToMap(details.latlng!);
+                                                var newLatLng =
+                                                    details.latlng!.split(',');
+
+                                                mapaAgendaController.lat.value =
+                                                    double.parse(newLatLng[0]);
+                                                mapaAgendaController.lng.value =
+                                                    double.parse(newLatLng[1]);
+                                                mapaAgendaController
+                                                    .name.value = details.nome!;
+
+                                                mapaAgendaController
+                                                        .adress.value =
+                                                    '${details.end} ${details.bairro}\n${details.cidade} - ${details.uf}';
+
+                                                await mapaAgendaController
+                                                    .getClientes();
+
+                                                Get.toNamed('/mapapage');
+
+                                                //await detalhesTerapiaController.goToMap(details.latlng!);
                                               },
                                               child: Card(
                                                 color: Theme.of(context)
@@ -482,7 +507,9 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                                           child: Icon(
                                                             Icons.map,
                                                             size: 24,
-                                                            color: Colors.black,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .cardColor,
                                                           ),
                                                         ),
                                                       ),
@@ -498,7 +525,7 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                                             style: TextStyle(
                                                               color: Theme.of(
                                                                       context)
-                                                                  .accentColor,
+                                                                  .cardColor,
                                                               fontSize: 10,
                                                               fontWeight:
                                                                   FontWeight

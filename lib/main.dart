@@ -1,4 +1,5 @@
 import 'package:assistsaude/modules/Agenda/agendar_visitas.dart';
+import 'package:assistsaude/modules/Agenda/detalhes_visita.dart';
 import 'package:assistsaude/modules/AgendarHorario/agendarhorario.dart';
 import 'package:assistsaude/modules/Comunicados/components/detalhes_comunicados_page.dart';
 import 'package:assistsaude/modules/Comunicados/comunicados.dart';
@@ -10,6 +11,7 @@ import 'package:assistsaude/modules/MapaAgenda/mapa_agenda_page.dart';
 import 'package:assistsaude/modules/Perfil/perfil.dart';
 import 'package:assistsaude/modules/Senha/senha.dart';
 import 'package:assistsaude/modules/Terapia/components/DetalhesTerapia/detalhes_terapia_page.dart';
+import 'package:assistsaude/modules/Terapia/components/DetalhesTerapia/mapa_page.dart';
 import 'package:assistsaude/modules/Terapia/terapia_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -108,6 +110,14 @@ void main() {
         GetPage(
           name: '/esqueci',
           page: () => Esqueci(),
+        ),
+        GetPage(
+          name: '/mapapage',
+          page: () => MapaPage(),
+        ),
+        GetPage(
+          name: '/detalhesvisitas',
+          page: () => DetalhesVisita(),
         ),
       ],
     ),

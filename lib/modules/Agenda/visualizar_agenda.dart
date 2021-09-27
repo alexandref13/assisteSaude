@@ -252,6 +252,12 @@ class VisualizarAgenda extends StatelessWidget {
                                   mapaAgendaController.city.value = e.cidade!;
                                   mapaAgendaController.ctlcheckin.value =
                                       e.ctlCheckin!;
+                                  mapaAgendaController.ctlcheckout.value =
+                                      e.ctlCheckout!;
+                                  mapaAgendaController.infocheckin.value =
+                                      e.infoCheck!;
+                                  mapaAgendaController.infocheckout.value =
+                                      e.infoCheckout!;
                                   mapaAgendaController.idSessao.value =
                                       e.idsecao!;
                                   mapaAgendaController.idPaciente.value =
@@ -292,11 +298,13 @@ class VisualizarAgenda extends StatelessWidget {
                                   } else if (d2.compareTo(d1) < 0 &&
                                       (e.ctlCheckin == '1' &&
                                           e.ctlCheckout == '1')) {
-                                    print('detalhesvisitas');
+                                    print("${e.infoCheck} | ${e.infoCheckout}");
+                                    Get.toNamed('/detalhesvisitas');
 
                                     // Get.toNamed('/detalhesvisitas');
                                   } else {
-                                    print('detalhesvisitas');
+                                    print("${e.infoCheck} | ${e.infoCheckout}");
+                                    Get.toNamed('/detalhesvisitas');
 
                                     // Get.toNamed('/detalhesvisitas');
                                   }

@@ -22,6 +22,9 @@ class MapaAgendaController extends GetxController {
   var uf = ''.obs;
   var number = ''.obs;
   var ctlcheckin = ''.obs;
+  var ctlcheckout = ''.obs;
+  var infocheckin = ''.obs;
+  var infocheckout = ''.obs;
   var dtagenda = ''.obs;
   var idSessao = ''.obs;
   var idPaciente = ''.obs;
@@ -52,8 +55,8 @@ class MapaAgendaController extends GetxController {
 
     var dados = json.decode(response.body);
 
-    if (dados['valida'] == 1) {
-      confirmedButtonPressed(context, 'Observação salva com sucesso!', () {
+    if (dados == 1) {
+      confirmedButtonPressed(context, 'Observação Salva com Sucesso!', () {
         Get.offAllNamed('/home');
       });
     } else {
@@ -61,7 +64,7 @@ class MapaAgendaController extends GetxController {
         context,
         'Houve Algum Problema! Tente Novamente',
         () {
-          Get.offAllNamed('/home');
+          Get.back();
         },
       );
     }

@@ -24,9 +24,9 @@ class MapaAgendaRepository {
     MapaAgendaController mapaAgendaController = Get.put(MapaAgendaController());
 
     return await http.post(
-      Uri.https("assistesaude.com.br", "/flutter/visitas_obs_incluir.php"),
+      Uri.https("assistesaude.com.br", "/flutter/sessao_obs_incluir.php"),
       body: {
-        'idvisita': mapaAgendaController.idSessao.value,
+        'idsessao': mapaAgendaController.idSessao.value,
         'obs': mapaAgendaController.observacao.value.text,
       },
     );
