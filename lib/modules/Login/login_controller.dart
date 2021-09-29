@@ -43,8 +43,8 @@ class LoginController extends GetxController {
     isLoading(true);
 
     await GetStorage.init();
-    final box = GetStorage();
-    box.write('email', emailS);
+    //final box = GetStorage();
+    //box.write('email', emailS);
 
     final response = await LoginRepository.hasMoreEmail(emailS);
 

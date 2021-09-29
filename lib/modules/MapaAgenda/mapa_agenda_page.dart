@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:assistsaude/modules/MapaAgenda/mapa_agenda_controller.dart';
 import 'package:assistsaude/shared/delete_alert.dart';
 import 'package:flutter/material.dart';
@@ -73,31 +75,30 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
         southWestLongitudeCheck;
   }
 
-  // void timer() async {
-  //   Position position = await Geolocator.getCurrentPosition(
-  //       desiredAccuracy: LocationAccuracy.high);
-  //   LatLng latLatAtual = LatLng(position.latitude, position.longitude);
+  void timer() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    LatLng latLatAtual = LatLng(position.latitude, position.longitude);
 
-  //   Future.delayed(Duration(seconds: 2)).then((_) async {
-  //     final Uint8List markerIconCliente =
-  //         await getBytesFromAsset('images/iconUserMap.png', 90);
-  //     if (this.mounted) {
-  //       // check whether the state object is in tree
-  //       setState(() {
-  //         mapaAgendaController.markers.add(Marker(
-  //           markerId: MarkerId('Estou Aqui!'),
-  //           position: latLatAtual,
-  //           infoWindow: InfoWindow(
-  //               title: 'Minha Localização', snippet: "" //"$position",
-  //               ),
-  //           icon: BitmapDescriptor.fromBytes(markerIconCliente),
-  //         ));
-  //       });
-  //     }
+    Future.delayed(Duration(seconds: 2)).then((_) async {
+      if (this.mounted) {
+        // check whether the state object is in tree
+        setState(() {
+          mapaAgendaController.markers.add(Marker(
+            markerId: MarkerId('Estou Aqui!'),
+            position: latLatAtual,
+            infoWindow: InfoWindow(
+                title: 'Minha Localização', snippet: "" //"$position",
+                ),
+            icon: BitmapDescriptor.defaultMarkerWithHue(
+                BitmapDescriptor.hueViolet),
+          ));
+        });
+      }
 
-  //     timer();
-  //   });
-  // }
+      timer();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -380,7 +381,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                     color: Theme.of(context).accentColor,
                   ),
                   onTap: () {
-                    deleteAlert(context, "Deseja deletar o cliente?", () async {
+                    deleteAlert(context, "Deseja deletar a sessão?", () async {
                       await mapaAgendaController.deleteClient(context);
                     });
                   },
@@ -567,7 +568,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                               },
                             );
                           }
-                          // timer();
+                          timer();
                         },
                         circles: Set.from([
                           Circle(

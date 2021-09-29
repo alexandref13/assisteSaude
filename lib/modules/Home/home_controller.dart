@@ -1,4 +1,5 @@
 import 'package:assistsaude/modules/Login/login_controller.dart';
+import 'package:assistsaude/shared/alert_button_pressed.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -23,14 +24,20 @@ class HomeController extends GetxController {
     Get.offAllNamed('/login');
   }
 
-  abrirWhatsApp() async {
-    var whatsappUrl =
-        "whatsapp://send?phone=+5591981220670&text=Olá, preciso de ajuda";
+  abrirWhatsApp(String cel, context) async {
+    var celular = cel
+        .replaceAll("(", "")
+        .replaceAll(")", "")
+        .replaceAll("-", "")
+        .replaceAll(" ", "");
+    // add the [https]
+    var whatsappUrl = "whatsapp://send?phone=$celular";
 
-    if (await canLaunch(whatsappUrl)) {
-      await launch(whatsappUrl);
-    } else {
-      throw 'Could not launch $whatsappUrl';
-    }
-  }
+    await canLaunch(whatsappUrl)
+        ? launch(whatsappUrl)
+        : onAlertButtonPressed(
+            context, 'Erro! Não foi possível ir para o whatsapp.', () {
+            Get.back();
+          });
+  } // new line
 }

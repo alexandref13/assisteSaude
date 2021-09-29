@@ -1,8 +1,10 @@
+import 'package:assistsaude/modules/Home/home_controller.dart';
 import 'package:assistsaude/modules/Login/components/Auth/auth_controller.dart';
 import 'package:assistsaude/shared/alert_button_pressed.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'login_controller.dart';
@@ -14,10 +16,11 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final AuthController authController = Get.put(AuthController());
+  HomeController homeController = Get.put(HomeController());
+  LoginController loginController = Get.put(LoginController());
 
   @override
   void initState() {
-    super.initState();
     authController.localAuthentication.isDeviceSupported().then((isSupported) {
       if (isSupported) {
         authController.authenticate(context);
@@ -235,7 +238,10 @@ class _LoginPageState extends State<LoginPage> {
                                     padding:
                                         const EdgeInsets.fromLTRB(0, 30, 0, 20),
                                     child: GestureDetector(
-                                      onTap: () {},
+                                      onTap: () {
+                                        homeController.abrirWhatsApp(
+                                            '5591981220670', context);
+                                      },
                                       child: Text(
                                         "Fale com o Suporte",
                                         style: GoogleFonts.montserrat(

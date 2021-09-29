@@ -467,7 +467,8 @@ class _HomePageState extends State<HomePage> {
                           size: 22,
                         ),
                         onTap: () {
-                          homeController.abrirWhatsApp();
+                          homeController.abrirWhatsApp(
+                              '5591981220670', context);
                         },
                       ),
                     ),
