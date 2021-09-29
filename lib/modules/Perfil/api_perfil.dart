@@ -9,6 +9,7 @@ class ApiPerfil {
     LoginController loginController = Get.find(tag: 'login');
     PerfilController perfilController = Get.put(PerfilController());
 
+    print("Datanas: ${perfilController.newDate.value}");
     return await http.post(
       Uri.https("assistesaude.com.br", "flutter/editar_perfil.php"),
       body: {

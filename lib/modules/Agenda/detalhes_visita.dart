@@ -77,19 +77,12 @@ class DetalhesVisita extends StatelessWidget {
                           Theme.of(context).textSelectionTheme.selectionColor,
                     ),
                   )),
-                  Divider(
-                    height: 40,
-                    thickness: 2,
-                    indent: 20,
-                    endIndent: 20,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  divider(context),
                   Center(
                     child: Text(
                       'Check-in realizado em:',
                       style: GoogleFonts.montserrat(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
                         color:
                             Theme.of(context).textSelectionTheme.selectionColor,
                       ),
@@ -110,34 +103,48 @@ class DetalhesVisita extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        width: 5,
+                        width: 8,
                       ),
                       Center(
                         child: Text(
-                          mapaAgendaController.checkin.value,
+                          "${mapaAgendaController.checkin.value}h",
                           style: GoogleFonts.montserrat(
-                            fontSize: 12,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
                             color: Theme.of(context)
                                 .textSelectionTheme
                                 .selectionColor,
                           ),
                         ),
                       ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      mapaAgendaController.infocheckin.value == "1"
+                          ? GestureDetector(
+                              onTap: () {
+                                mapaAgendaController.ctlcheckin.value = '0';
+                                Get.toNamed('/infoCheck');
+                              },
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.edit,
+                                    size: 16,
+                                    color: Theme.of(context).cardColor,
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Container(),
                     ],
                   ),
-                  Divider(
-                    height: 40,
-                    thickness: 2,
-                    indent: 20,
-                    endIndent: 20,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  divider(context),
                   Center(
                     child: Text(
-                      'Check-out realizado em:',
+                      'Check-out realizado às:',
                       style: GoogleFonts.montserrat(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
                         color:
                             Theme.of(context).textSelectionTheme.selectionColor,
                       ),
@@ -158,28 +165,43 @@ class DetalhesVisita extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        width: 5,
+                        width: 8,
                       ),
                       Center(
                         child: Text(
-                          mapaAgendaController.checkout.value,
+                          "${mapaAgendaController.checkout.value}h",
                           style: GoogleFonts.montserrat(
-                            fontSize: 12,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
                             color: Theme.of(context)
                                 .textSelectionTheme
                                 .selectionColor,
                           ),
                         ),
                       ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      mapaAgendaController.infocheckout.value == "1"
+                          ? GestureDetector(
+                              onTap: () {
+                                mapaAgendaController.ctlcheckin.value = '1';
+                                Get.toNamed('/infoCheck');
+                              },
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.edit,
+                                    size: 16,
+                                    color: Theme.of(context).cardColor,
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Container(),
                     ],
                   ),
-                  Divider(
-                    height: 40,
-                    thickness: 2,
-                    indent: 20,
-                    endIndent: 20,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  divider(context),
                   Container(
                     padding: EdgeInsets.all(15),
                     child: customTextField(
@@ -233,10 +255,18 @@ class DetalhesVisita extends StatelessWidget {
         }));
   }
 
-  getFormatedDate(_date) {
-    var inputFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
-    var inputDate = inputFormat.parse(_date);
-    var outputFormat = DateFormat('dd/MM/yyyy HH:mm');
-    return outputFormat.format(inputDate);
+  Widget divider(context) {
+    return Divider(
+        height: 40,
+        thickness: 2,
+        indent: 20,
+        endIndent: 20,
+        color: (mapaAgendaController.infocheckin.value == "0" &&
+                mapaAgendaController.infocheckout.value == "0")
+            ? Colors.green
+            : (mapaAgendaController.infocheckin.value == "0" &&
+                    mapaAgendaController.infocheckout.value == "1")
+                ? Colors.blue
+                : Colors.grey);
   }
 }

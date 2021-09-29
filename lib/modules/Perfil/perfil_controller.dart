@@ -63,14 +63,14 @@ class PerfilController extends GetxController {
       // loginController.genero.value = itemSelecionado.value;
 
       var date = birthdate.value.text.split('/');
-      newDate.value = '${date[0]}-${date[1]}-${date[2]}';
+      newDate.value = '${date[2]}-${date[1]}-${date[0]}';
       print(newDate);
       var response = await ApiPerfil.editPerfil();
       var dados = json.decode(response.body);
 
       isLoading(false);
 
-      // loginController.birthdate.value = '${date[2]}/${date[1]}/${date[0]}';
+      birthdate.value.text = '${date[2]}/${date[1]}/${date[0]}';
       return dados;
     }
   }

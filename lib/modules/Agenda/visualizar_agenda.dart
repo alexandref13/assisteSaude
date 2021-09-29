@@ -114,7 +114,7 @@ class VisualizarAgenda extends StatelessWidget {
                               calendarStyle: CalendarStyle(
                                 outsideDaysVisible: true,
                                 todayDecoration: BoxDecoration(
-                                  color: Theme.of(context).buttonColor,
+                                  color: Colors.red[900],
                                   shape: BoxShape.circle,
                                 ),
                                 defaultTextStyle: TextStyle(
@@ -265,7 +265,7 @@ class VisualizarAgenda extends StatelessWidget {
                                   mapaAgendaController.dtagenda.value =
                                       e.dtAgenda!;
                                   mapaAgendaController.checkin.value =
-                                      e.checkout!;
+                                      e.checkin!;
                                   mapaAgendaController.checkout.value =
                                       e.checkout!;
                                   mapaAgendaController.obs.value = e.obs!;
@@ -286,24 +286,22 @@ class VisualizarAgenda extends StatelessWidget {
                                   } else if ((e.ctlCheckin != '1' ||
                                           e.ctlCheckout != '1') &&
                                       d2.compareTo(d1) > 0) {
-                                    print('agendarhorario');
+                                    Get.toNamed('/agendarhorario');
 
                                     // Get.toNamed('/agendarhorario');
                                   } else if ((d2.compareTo(d1) < 0) &&
                                       (e.ctlCheckin == '0' ||
                                           e.ctlCheckout == '0')) {
-                                    print('infoCheck');
+                                    Get.toNamed('/infoCheck');
 
                                     // Get.toNamed('/infoCheck');
                                   } else if (d2.compareTo(d1) < 0 &&
                                       (e.ctlCheckin == '1' &&
                                           e.ctlCheckout == '1')) {
-                                    print("${e.infoCheck} | ${e.infoCheckout}");
                                     Get.toNamed('/detalhesvisitas');
 
                                     // Get.toNamed('/detalhesvisitas');
                                   } else {
-                                    print("${e.infoCheck} | ${e.infoCheckout}");
                                     Get.toNamed('/detalhesvisitas');
 
                                     // Get.toNamed('/detalhesvisitas');
