@@ -176,8 +176,7 @@ class _InfoCheckPageState extends State<InfoCheckPage> {
                                 ),
                               ),
                               onPressed: () async {
-                                infoCheckController.hour.value.text =
-                                    "${startSelectedTime!.hour.toString()}:${startSelectedTime!.minute.toString()}";
+                                //infoCheckController.hour.value.text = "${startSelectedTime!.hour.toString()}:${startSelectedTime!.minute.toString()}";
 
                                 await infoCheckController.changeHours(context);
                               },

@@ -25,6 +25,7 @@ import 'modules/Session/session_page.dart';
 import 'theme/theme.dart';
 import 'modules/Login/login_bindings.dart';
 import 'modules/Login/login_page.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,6 +39,36 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+
+    OneSignal.shared.setAppId("7e568fea-1c24-4463-a5bc-c5ede3c5c90a");
+
+// The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
+    OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
+      print("Accepted permission: $accepted");
+    });
+
+    OneSignal.shared
+        .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+      var titulo = result.notification.title;
+      print('NOTIFICACAO ABERTA: $titulo');
+      if (titulo == 'CONVITE TERAPIA') {
+        Get.toNamed('/terapia');
+      } else if (titulo == 'Alteração Status') {
+        Get.toNamed('/terapia');
+      } else if (titulo == 'GPS DE PACIENTE ATUALIZADO') {
+        Get.toNamed('/visualizarAgenda');
+      } else if (titulo == 'CHECK-IN AUTORIZADO') {
+        Get.toNamed('/visualizarAgenda');
+      } else if (titulo == 'COMUNICADO') {
+        Get.toNamed('/comunicados');
+      } else if (titulo == 'Recusa Status') {
+        Get.toNamed('/terapia');
+      } else if (titulo == 'LOCAL RECUSADO') {
+        Get.toNamed('/visualizarAgenda');
+      } else {}
+    });
+
     return GetMaterialApp(
       localizationsDelegates: [
         RefreshLocalizations.delegate,

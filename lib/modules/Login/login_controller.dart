@@ -7,6 +7,7 @@ import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class LoginController extends GetxController {
   var listOfClients = <ListOfClientsModel>[].obs;
@@ -45,7 +46,7 @@ class LoginController extends GetxController {
 
     var newEmail = box.read('email');
 
-    if (newEmail) {
+    if (newEmail != "") {
       email.value.text = newEmail;
     }
   }
@@ -80,6 +81,18 @@ class LoginController extends GetxController {
     isLoading(false);
 
     if (dadosUsuario['valida'] == 1) {
+      var sendTags = {
+        'idusu': dadosUsuario['idprof'],
+        'nome': dadosUsuario['nome'],
+        'sobrenome': dadosUsuario['sobrenome'],
+        'tipousu': dadosUsuario['tipousu'],
+      };
+
+      OneSignal.shared.sendTags(sendTags).then((response) {
+        print("Successfully sent tags with response: $response");
+      }).catchError((error) {
+        print("Encountered an error sending tags: $error");
+      });
       hasMoreEmail(email.value.text).then(
         (value) async {
           await GetStorage.init();
