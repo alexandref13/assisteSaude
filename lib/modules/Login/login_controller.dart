@@ -39,12 +39,23 @@ class LoginController extends GetxController {
 
   final formKey = GlobalKey<FormState>();
 
+  getEmail() async {
+    await GetStorage.init();
+    final box = GetStorage();
+
+    var newEmail = box.read('email');
+
+    if (newEmail) {
+      email.value.text = newEmail;
+    }
+  }
+
   hasMoreEmail(String? emailS) async {
     isLoading(true);
 
     await GetStorage.init();
-    //final box = GetStorage();
-    //box.write('email', emailS);
+    final box = GetStorage();
+    box.write('email', emailS);
 
     final response = await LoginRepository.hasMoreEmail(emailS);
 
@@ -65,8 +76,6 @@ class LoginController extends GetxController {
     final response = await LoginRepository.login();
 
     var dadosUsuario = json.decode(response.body);
-
-    print(dadosUsuario);
 
     isLoading(false);
 
@@ -152,6 +161,7 @@ class LoginController extends GetxController {
   @override
   void onInit() async {
     deviceId = await getId();
+    getEmail();
     super.onInit();
   }
 }
