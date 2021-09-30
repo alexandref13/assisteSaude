@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:assistsaude/modules/MapaAgenda/mapa_agenda_controller.dart';
 import 'package:assistsaude/shared/delete_alert.dart';
 import 'package:flutter/material.dart';
@@ -115,116 +114,120 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
       getJsonFile("images/mapa_style.json").then(setMapStyle);
     }
 
-    // Widget buildGoogleMap(BuildContext context) {
-    //   return Container(
-    //     height: MediaQuery.of(context).size.height,
-    //     width: MediaQuery.of(context).size.width,
-    //     child: GoogleMap(
-    //       mapType: MapType.normal,
-    //       zoomControlsEnabled: false,
-    //       zoomGesturesEnabled: true,
-    //       scrollGesturesEnabled: true,
-    //       compassEnabled: true,
-    //       rotateGesturesEnabled: true,
-    //       mapToolbarEnabled: true,
-    //       tiltGesturesEnabled: true,
-    //       initialCameraPosition: CameraPosition(
-    //           target: LatLng(mapaAgendaController.lat.value,
-    //               mapaAgendaController.lng.value),
-    //           zoom: 16),
-    //       onMapCreated: (GoogleMapController controller) async {
-    //         if (!_controller.isCompleted) {
-    //           _controller.complete(controller);
-    //         } else {}
-    //         changeMapMode();
+    Widget buildGoogleMap(BuildContext context) {
+      return Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: GoogleMap(
+          mapType: MapType.normal,
+          zoomControlsEnabled: false,
+          zoomGesturesEnabled: true,
+          scrollGesturesEnabled: true,
+          compassEnabled: true,
+          rotateGesturesEnabled: true,
+          mapToolbarEnabled: true,
+          tiltGesturesEnabled: true,
+          initialCameraPosition: CameraPosition(
+            target: LatLng(
+              mapaAgendaController.lat.value,
+              mapaAgendaController.lng.value,
+            ),
+            zoom: 12,
+          ),
+          onMapCreated: (GoogleMapController controller) async {
+            if (!_controller.isCompleted) {
+              _controller.complete(controller);
+            } else {}
+            changeMapMode();
 
-    //         Position position = await Geolocator.getCurrentPosition(
-    //             desiredAccuracy: LocationAccuracy.high);
+            Position position = await Geolocator.getCurrentPosition(
+                desiredAccuracy: LocationAccuracy.high);
 
-    //         LatLng latLatPosition =
-    //             LatLng(position.latitude, position.longitude);
+            LatLng latLatPosition =
+                LatLng(position.latitude, position.longitude);
 
-    //         LatLng latLatCliente = LatLng(
-    //             mapaAgendaController.lat.value, mapaAgendaController.lng.value);
+            LatLng latLatCliente = LatLng(
+                mapaAgendaController.lat.value, mapaAgendaController.lng.value);
 
-    //         //condição para o reposicionamemto
-    //         if (latLatPosition.latitude <= latLatCliente.latitude) {
-    //           LatLngBounds bounds = LatLngBounds(
-    //             southwest: latLatPosition,
-    //             northeast: latLatCliente,
-    //           );
-    //           controller
-    //               .animateCamera(CameraUpdate.newLatLngBounds(bounds, 50));
-    //           final LatLng centerBounds = LatLng(
-    //               (bounds.northeast.latitude + bounds.southwest.latitude) / 2,
-    //               (bounds.northeast.longitude + bounds.southwest.longitude) /
-    //                   2);
+            //condição para o reposicionamemto
+            if (latLatPosition.latitude <= latLatCliente.latitude) {
+              LatLngBounds bounds = LatLngBounds(
+                southwest: latLatPosition,
+                northeast: latLatCliente,
+              );
+              controller
+                  .animateCamera(CameraUpdate.newLatLngBounds(bounds, 50));
+              final LatLng centerBounds = LatLng(
+                  (bounds.northeast.latitude + bounds.southwest.latitude) / 2,
+                  (bounds.northeast.longitude + bounds.southwest.longitude) /
+                      2);
 
-    //           controller
-    //               .moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
-    //             target: centerBounds,
-    //             zoom: 17,
-    //           )));
-    //           // zoomToFit(controller, bounds, centerBounds);
-    //         } else {
-    //           LatLngBounds bounds = LatLngBounds(
-    //             southwest: latLatCliente,
-    //             northeast: latLatPosition,
-    //           );
-    //           controller
-    //               .animateCamera(CameraUpdate.newLatLngBounds(bounds, 50));
-    //           final LatLng centerBounds = LatLng(
-    //               (bounds.northeast.latitude + bounds.southwest.latitude) / 2,
-    //               (bounds.northeast.longitude + bounds.southwest.longitude) /
-    //                   2);
+              controller
+                  .moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
+                target: centerBounds,
+                zoom: 16,
+              )));
+              zoomToFit(controller, bounds, centerBounds);
+            } else {
+              LatLngBounds bounds = LatLngBounds(
+                southwest: latLatCliente,
+                northeast: latLatPosition,
+              );
+              controller
+                  .animateCamera(CameraUpdate.newLatLngBounds(bounds, 50));
+              final LatLng centerBounds = LatLng(
+                  (bounds.northeast.latitude + bounds.southwest.latitude) / 2,
+                  (bounds.northeast.longitude + bounds.southwest.longitude) /
+                      2);
 
-    //           controller
-    //               .moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
-    //             target: centerBounds,
-    //             zoom: 17,
-    //           )));
-    //           // zoomToFit(controller, bounds, centerBounds);
-    //         }
+              controller
+                  .moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
+                target: centerBounds,
+                zoom: 16,
+              )));
+              zoomToFit(controller, bounds, centerBounds);
+            }
 
-    //         // final Uint8List markerIconCliente =
-    //         //     await getBytesFromAsset('images/iconUserMap.png', 90);
-
-    //       //   if (this.mounted) {
-    //       //     mapaAgendaController.ourLat.value = position.latitude;
-    //       //     mapaAgendaController.ourLng.value = position.longitude;
-    //       //     setState(() {
-    //       //       mapaAgendaController.markers.add(
-    //       //         Marker(
-    //       //           markerId: MarkerId('Estou Aqui!'),
-    //       //           position: latLatPosition,
-    //       //           infoWindow: InfoWindow(
-    //       //             title: 'Minha Localização',
-    //       //             snippet: "",
-    //       //           ),
-    //       //         ),
-    //       //       );
-    //       //     });
-    //       //   }
-    //       //   // timer();
-    //       // },
-    //       // circles: Set.from([
-    //       //   Circle(
-    //       //     circleId: CircleId('circle'),
-    //       //     center: LatLng(mapaAgendaController.lat.value,
-    //       //         mapaAgendaController.lng.value),
-    //       //     radius: 80,
-    //       //     strokeColor: mapaAgendaController.ctlcheckin.value == '0'
-    //       //         ? Colors.yellow.withOpacity(0.2)
-    //       //         : Colors.red.withOpacity(0.2),
-    //       //     fillColor: mapaAgendaController.ctlcheckin.value == '0'
-    //       //         ? Colors.yellow.withOpacity(0.3)
-    //       //         : Colors.red.withOpacity(0.3),
-    //       //   )
-    //       // ]),
-    //       // markers: mapaAgendaController.markers,
-    //     ),
-    //   );
-    // }
+            if (this.mounted) {
+              mapaAgendaController.ourLat.value = position.latitude;
+              mapaAgendaController.ourLng.value = position.longitude;
+              setState(
+                () {
+                  mapaAgendaController.markers.add(
+                    Marker(
+                      markerId: MarkerId('Estou Aqui!'),
+                      position: latLatPosition,
+                      infoWindow: InfoWindow(
+                        title: 'Minha Localização',
+                        snippet: "",
+                      ),
+                      icon: BitmapDescriptor.defaultMarkerWithHue(
+                          BitmapDescriptor.hueViolet),
+                    ),
+                  );
+                },
+              );
+            }
+            timer();
+          },
+          circles: Set.from([
+            Circle(
+              circleId: CircleId('circle'),
+              center: LatLng(mapaAgendaController.lat.value,
+                  mapaAgendaController.lng.value),
+              radius: 80,
+              strokeColor: mapaAgendaController.ctlcheckin.value == '0'
+                  ? Colors.yellow.withOpacity(0.2)
+                  : Colors.red.withOpacity(0.2),
+              fillColor: mapaAgendaController.ctlcheckin.value == '0'
+                  ? Colors.yellow.withOpacity(0.3)
+                  : Colors.red.withOpacity(0.3),
+            )
+          ]),
+          markers: mapaAgendaController.markers,
+        ),
+      );
+    }
 
     Widget boxes() {
       return Container(
@@ -463,132 +466,8 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                 )
               : Stack(
                   children: [
+                    buildGoogleMap(context),
                     buildContainer(),
-                    Container(
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      child: GoogleMap(
-                        mapType: MapType.normal,
-                        zoomControlsEnabled: false,
-                        zoomGesturesEnabled: true,
-                        scrollGesturesEnabled: true,
-                        compassEnabled: true,
-                        rotateGesturesEnabled: true,
-                        mapToolbarEnabled: true,
-                        tiltGesturesEnabled: true,
-                        initialCameraPosition: CameraPosition(
-                          target: LatLng(
-                            mapaAgendaController.lat.value,
-                            mapaAgendaController.lng.value,
-                          ),
-                          zoom: 12,
-                        ),
-                        onMapCreated: (GoogleMapController controller) async {
-                          if (!_controller.isCompleted) {
-                            _controller.complete(controller);
-                          } else {}
-                          changeMapMode();
-
-                          Position position =
-                              await Geolocator.getCurrentPosition(
-                                  desiredAccuracy: LocationAccuracy.high);
-
-                          LatLng latLatPosition =
-                              LatLng(position.latitude, position.longitude);
-
-                          LatLng latLatCliente = LatLng(
-                              mapaAgendaController.lat.value,
-                              mapaAgendaController.lng.value);
-
-                          //condição para o reposicionamemto
-                          if (latLatPosition.latitude <=
-                              latLatCliente.latitude) {
-                            LatLngBounds bounds = LatLngBounds(
-                              southwest: latLatPosition,
-                              northeast: latLatCliente,
-                            );
-                            controller.animateCamera(
-                                CameraUpdate.newLatLngBounds(bounds, 50));
-                            final LatLng centerBounds = LatLng(
-                                (bounds.northeast.latitude +
-                                        bounds.southwest.latitude) /
-                                    2,
-                                (bounds.northeast.longitude +
-                                        bounds.southwest.longitude) /
-                                    2);
-
-                            controller.moveCamera(
-                                CameraUpdate.newCameraPosition(CameraPosition(
-                              target: centerBounds,
-                              zoom: 16,
-                            )));
-                            zoomToFit(controller, bounds, centerBounds);
-                          } else {
-                            LatLngBounds bounds = LatLngBounds(
-                              southwest: latLatCliente,
-                              northeast: latLatPosition,
-                            );
-                            controller.animateCamera(
-                                CameraUpdate.newLatLngBounds(bounds, 50));
-                            final LatLng centerBounds = LatLng(
-                                (bounds.northeast.latitude +
-                                        bounds.southwest.latitude) /
-                                    2,
-                                (bounds.northeast.longitude +
-                                        bounds.southwest.longitude) /
-                                    2);
-
-                            controller.moveCamera(
-                                CameraUpdate.newCameraPosition(CameraPosition(
-                              target: centerBounds,
-                              zoom: 16,
-                            )));
-                            zoomToFit(controller, bounds, centerBounds);
-                          }
-
-                          if (this.mounted) {
-                            mapaAgendaController.ourLat.value =
-                                position.latitude;
-                            mapaAgendaController.ourLng.value =
-                                position.longitude;
-                            setState(
-                              () {
-                                mapaAgendaController.markers.add(
-                                  Marker(
-                                    markerId: MarkerId('Estou Aqui!'),
-                                    position: latLatPosition,
-                                    infoWindow: InfoWindow(
-                                      title: 'Minha Localização',
-                                      snippet: "",
-                                    ),
-                                    icon: BitmapDescriptor.defaultMarkerWithHue(
-                                        BitmapDescriptor.hueViolet),
-                                  ),
-                                );
-                              },
-                            );
-                          }
-                          timer();
-                        },
-                        circles: Set.from([
-                          Circle(
-                            circleId: CircleId('circle'),
-                            center: LatLng(mapaAgendaController.lat.value,
-                                mapaAgendaController.lng.value),
-                            radius: 80,
-                            strokeColor:
-                                mapaAgendaController.ctlcheckin.value == '0'
-                                    ? Colors.yellow.withOpacity(0.2)
-                                    : Colors.red.withOpacity(0.2),
-                            fillColor:
-                                mapaAgendaController.ctlcheckin.value == '0'
-                                    ? Colors.yellow.withOpacity(0.3)
-                                    : Colors.red.withOpacity(0.3),
-                          )
-                        ]),
-                        markers: mapaAgendaController.markers,
-                      ),
-                    ),
                   ],
                 );
         },
