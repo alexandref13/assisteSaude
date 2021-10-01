@@ -94,26 +94,34 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                 ),
                                 Column(
                                   children: [
-                                    Text(
-                                      'Registro',
-                                      style: GoogleFonts.montserrat(
-                                        fontSize: 12,
-                                        color: Theme.of(context)
-                                            .textSelectionTheme
-                                            .selectionColor,
+                                    Center(
+                                      child: Text(
+                                        'Diagnóstico',
+                                        style: GoogleFonts.montserrat(
+                                          fontSize: 12,
+                                          color: Theme.of(context)
+                                              .textSelectionTheme
+                                              .selectionColor,
+                                        ),
                                       ),
                                     ),
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Text(
-                                      details.reg!,
-                                      style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                        color: Theme.of(context)
-                                            .textSelectionTheme
-                                            .selectionColor,
+                                    Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            10, 0, 10, 0),
+                                        child: Text(
+                                          details.diagnostico!,
+                                          style: GoogleFonts.montserrat(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                            color: Theme.of(context)
+                                                .textSelectionTheme
+                                                .selectionColor,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -159,30 +167,26 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                       ),
                                       Column(
                                         children: [
-                                          Center(
-                                            child: Text(
-                                              'Diagnóstico',
-                                              style: GoogleFonts.montserrat(
-                                                fontSize: 12,
-                                                color: Theme.of(context)
-                                                    .textSelectionTheme
-                                                    .selectionColor,
-                                              ),
+                                          Text(
+                                            'Registro',
+                                            style: GoogleFonts.montserrat(
+                                              fontSize: 12,
+                                              color: Theme.of(context)
+                                                  .textSelectionTheme
+                                                  .selectionColor,
                                             ),
                                           ),
                                           SizedBox(
                                             height: 5,
                                           ),
-                                          Center(
-                                            child: Text(
-                                              details.diagnostico!,
-                                              style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
-                                                color: Theme.of(context)
-                                                    .textSelectionTheme
-                                                    .selectionColor,
-                                              ),
+                                          Text(
+                                            details.reg!,
+                                            style: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                              color: Theme.of(context)
+                                                  .textSelectionTheme
+                                                  .selectionColor,
                                             ),
                                           ),
                                         ],
