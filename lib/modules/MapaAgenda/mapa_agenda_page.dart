@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:assistsaude/modules/MapaAgenda/mapa_agenda_controller.dart';
 import 'package:assistsaude/shared/delete_alert.dart';
 import 'package:flutter/material.dart';
@@ -138,6 +137,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
             if (!_controller.isCompleted) {
               _controller.complete(controller);
             } else {}
+
             changeMapMode();
 
             Position position = await Geolocator.getCurrentPosition(
