@@ -232,6 +232,12 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
     Widget boxes() {
       return Container(
         child: FloatingActionButton(
+          shape: CircleBorder(
+            side: BorderSide(
+              color: Colors.white,
+              width: 4.0,
+            ),
+          ),
           backgroundColor: Theme.of(context).primaryColor,
           onPressed: () {
             gotoLocation();
@@ -293,8 +299,13 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
               curve: Curves.elasticInOut,
               overlayColor: Colors.black,
               overlayOpacity: 0.5,
-              shape: CircleBorder(),
-              elevation: 5,
+              shape: CircleBorder(
+                side: BorderSide(
+                  color: Colors.white,
+                  width: 4.0,
+                ),
+              ),
+              //elevation: 5,
               children: [
                 SpeedDialChild(
                   labelBackgroundColor:

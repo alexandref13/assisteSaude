@@ -19,6 +19,7 @@ class ApiPerfil {
         'dtnasc': perfilController.newDate.value,
         'end': perfilController.endereco.value.text,
         'comp': perfilController.complemento.value.text,
+        'bairro': perfilController.bairro.value.text,
         'cidade': perfilController.cidade.value.text,
         'cel': perfilController.phone.value.text,
         'cep': perfilController.cep.value.text,

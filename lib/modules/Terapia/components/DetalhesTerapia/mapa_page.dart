@@ -153,10 +153,10 @@ class _MapaPageState extends State<MapaPage> {
 
   Widget _boxes() {
     return Positioned(
-      bottom: 10,
+      bottom: 15,
       right: 10,
       child: FloatingActionButton(
-        elevation: 10,
+        elevation: 0,
         onPressed: () {
           _gotoLocation(
             mapaAgendaController.lat.value,
