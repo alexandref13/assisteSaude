@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>$(FLUTTER_BUILD_NAME)</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -29,12 +29,18 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCalendarsUsageDescription</key>
+	<string>O calendário é necessário para definir datas dos eventos.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Este aplicativo requer acesso à sua câmera de fotos para alterar a imagem no perfil ou inserir imagem nas ocorrências.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Para sua segurança utilizamos o face id</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>A localização é necessária para termos sua localização pontual pelo app.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Sua localização é necessária para benefícios para você</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Este aplicativo requer acesso à sua biblioteca de fotos para alterar a imagem no perfil ou inserir imagem nas ocorrências.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

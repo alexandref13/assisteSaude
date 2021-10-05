@@ -25,6 +25,8 @@ PODS:
   - OneSignalXCFramework (3.7.0)
   - path_provider (0.0.1):
     - Flutter
+  - "permission_handler (5.1.0+2)":
+    - Flutter
   - shared_preferences (0.0.1):
     - Flutter
   - TOCropViewController (2.6.0)
@@ -42,6 +44,7 @@ DEPENDENCIES:
   - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
   - OneSignalXCFramework (< 4.0, >= 3.0.0)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
 
@@ -70,6 +73,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/onesignal_flutter/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  permission_handler:
+    :path: ".symlinks/plugins/permission_handler/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
   url_launcher:
@@ -82,11 +87,12 @@ SPEC CHECKSUMS:
   google_maps_flutter: abdb8dee6c52d4be36ad131ee6ebfacd14417c5a
   GoogleMaps: eb03e327edfd70b06de1e6e321653f73712df7ad
   image_cropper: f1668dd8d2cad2d357955caad15a40547856edcb
-  image_picker: e06f7a68f000bd36f552c1847e33cda96ed31f1f
+  image_picker: 9aa50e1d8cdacdbed739e925b7eea16d014367e6
   local_auth: ef62030a2731330b95df7ef1331bd15f6a64b8a6
   onesignal_flutter: abfc75e8d08a0d9c977aacfab9454af58f4f4fcc
   OneSignalXCFramework: 974dc438d68910cf04f3c8ab034e0131d41438c1
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
+  permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
   shared_preferences: 5033afbb22d372e15aff8ff766df9021b845f273
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
   url_launcher: b6e016d912f04be9f5bf6e8e82dc599b7ba59649

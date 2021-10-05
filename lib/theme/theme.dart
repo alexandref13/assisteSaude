@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 ThemeData admin = ThemeData(
   brightness: Brightness.dark,
-  cardColor: Color(0xffffffff),
   accentColor: Color(0xff333333),
   primaryColor: Color(0xff00A859),
   buttonColor: Color(0xffffacf3),

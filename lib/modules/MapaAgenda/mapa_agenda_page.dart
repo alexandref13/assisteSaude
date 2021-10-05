@@ -193,18 +193,15 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
               mapaAgendaController.ourLng.value = position.longitude;
               setState(
                 () {
-                  mapaAgendaController.markers.add(
-                    Marker(
-                      markerId: MarkerId('Estou Aqui!'),
-                      position: latLatPosition,
-                      infoWindow: InfoWindow(
-                        title: 'Minha Localização',
-                        snippet: "",
-                      ),
-                      icon: BitmapDescriptor.defaultMarkerWithHue(
-                          BitmapDescriptor.hueViolet),
-                    ),
-                  );
+                  mapaAgendaController.markers.add(Marker(
+                    markerId: MarkerId('Estou Aqui!'),
+                    position: latLatPosition,
+                    infoWindow: InfoWindow(
+                        title: 'Minha Localização', snippet: "" //"$position",
+                        ),
+                    icon: BitmapDescriptor.defaultMarkerWithHue(
+                        BitmapDescriptor.hueViolet),
+                  ));
                 },
               );
             }
@@ -305,7 +302,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                   width: 4.0,
                 ),
               ),
-              //elevation: 5,
+              elevation: 5,
               children: [
                 SpeedDialChild(
                   labelBackgroundColor:
@@ -413,7 +410,12 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
               curve: Curves.elasticInOut,
               overlayColor: Colors.black,
               overlayOpacity: 0.5,
-              shape: CircleBorder(),
+              shape: CircleBorder(
+                side: BorderSide(
+                  color: Colors.white,
+                  width: 4.0,
+                ),
+              ),
               elevation: 5,
               children: [
                 SpeedDialChild(

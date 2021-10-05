@@ -15,7 +15,7 @@ class DetalhesVisita extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            'Detalhes Visita',
+            'Detalhes da Sessão',
             style: GoogleFonts.montserrat(
               fontSize: 16,
               color: Theme.of(context).textSelectionTheme.selectionColor,
@@ -131,7 +131,9 @@ class DetalhesVisita extends StatelessWidget {
                                   Icon(
                                     Icons.edit,
                                     size: 16,
-                                    color: Theme.of(context).cardColor,
+                                    color: Theme.of(context)
+                                        .textSelectionTheme
+                                        .selectionColor,
                                   ),
                                 ],
                               ),
@@ -193,7 +195,9 @@ class DetalhesVisita extends StatelessWidget {
                                   Icon(
                                     Icons.edit,
                                     size: 16,
-                                    color: Theme.of(context).cardColor,
+                                    color: Theme.of(context)
+                                        .textSelectionTheme
+                                        .selectionColor,
                                   ),
                                 ],
                               ),

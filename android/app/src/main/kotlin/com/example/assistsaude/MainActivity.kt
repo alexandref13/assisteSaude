@@ -1,4 +1,4 @@
-package com.example.assistsaude
+package com.assistesaude
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine

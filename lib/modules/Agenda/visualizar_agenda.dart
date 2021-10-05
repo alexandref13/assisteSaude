@@ -270,7 +270,8 @@ class VisualizarAgenda extends StatelessWidget {
                                       e.checkout!;
                                   mapaAgendaController.obs.value = e.obs!;
 
-                                  var temp = DateTime.now().toUtc();
+                                  var temp = DateTime.now();
+
                                   var d1 = DateTime.utc(
                                       temp.year, temp.month, temp.day);
 

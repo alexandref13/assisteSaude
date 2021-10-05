@@ -46,7 +46,7 @@ class LoginController extends GetxController {
 
     var newEmail = box.read('email');
 
-    if (newEmail != "") {
+    if (newEmail != null) {
       email.value.text = newEmail;
     }
   }

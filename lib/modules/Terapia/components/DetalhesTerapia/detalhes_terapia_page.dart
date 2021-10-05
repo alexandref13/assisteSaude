@@ -302,7 +302,8 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                                             Icons.phone,
                                                             color: Theme.of(
                                                                     context)
-                                                                .cardColor,
+                                                                .textSelectionTheme
+                                                                .selectionColor,
                                                             size: 24,
                                                           ),
                                                         ),
@@ -319,7 +320,8 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                                             style: TextStyle(
                                                               color: Theme.of(
                                                                       context)
-                                                                  .cardColor,
+                                                                  .textSelectionTheme
+                                                                  .selectionColor,
                                                               fontSize: 10,
                                                               fontWeight:
                                                                   FontWeight
@@ -368,7 +370,8 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                                             size: 24,
                                                             color: Theme.of(
                                                                     context)
-                                                                .cardColor,
+                                                                .textSelectionTheme
+                                                                .selectionColor,
                                                           ),
                                                         ),
                                                       ),
@@ -384,7 +387,8 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                                             style: TextStyle(
                                                               color: Theme.of(
                                                                       context)
-                                                                  .cardColor,
+                                                                  .textSelectionTheme
+                                                                  .selectionColor,
                                                               fontSize: 10,
                                                               fontWeight:
                                                                   FontWeight
@@ -447,7 +451,8 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                                             style: TextStyle(
                                                               color: Theme.of(
                                                                       context)
-                                                                  .cardColor,
+                                                                  .textSelectionTheme
+                                                                  .selectionColor,
                                                               fontSize: 10,
                                                               fontWeight:
                                                                   FontWeight
@@ -513,7 +518,8 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                                             size: 24,
                                                             color: Theme.of(
                                                                     context)
-                                                                .cardColor,
+                                                                .textSelectionTheme
+                                                                .selectionColor,
                                                           ),
                                                         ),
                                                       ),
@@ -529,7 +535,8 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                                             style: TextStyle(
                                                               color: Theme.of(
                                                                       context)
-                                                                  .cardColor,
+                                                                  .textSelectionTheme
+                                                                  .selectionColor,
                                                               fontSize: 10,
                                                               fontWeight:
                                                                   FontWeight

@@ -188,7 +188,6 @@ class _HomePageState extends State<HomePage> {
   getImage(ImageSource source) async {
     this.setState(() {});
     XFile? image = await _picker.pickImage(source: source);
-
     if (image != null) {
       File? cropped = await ImageCropper.cropImage(
           sourcePath: image.path,
@@ -333,7 +332,9 @@ class _HomePageState extends State<HomePage> {
                             child: Text(
                               '${loginController.tipousu.value}',
                               style: GoogleFonts.montserrat(
-                                color: Theme.of(context).cardColor,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
                                 fontSize: 10,
                               ),
                             ),
@@ -352,7 +353,9 @@ class _HomePageState extends State<HomePage> {
                               title: Text(
                                 'Unidades',
                                 style: GoogleFonts.montserrat(
-                                  color: Theme.of(context).cardColor,
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor,
                                   fontSize: 12,
                                 ),
                               ),
@@ -382,7 +385,9 @@ class _HomePageState extends State<HomePage> {
                         title: Text(
                           'Perfil',
                           style: GoogleFonts.montserrat(
-                            color: Theme.of(context).cardColor,
+                            color: Theme.of(context)
+                                .textSelectionTheme
+                                .selectionColor,
                             fontSize: 12,
                           ),
                         ),
@@ -407,7 +412,9 @@ class _HomePageState extends State<HomePage> {
                         title: Text(
                           'Senha',
                           style: GoogleFonts.montserrat(
-                            color: Theme.of(context).cardColor,
+                            color: Theme.of(context)
+                                .textSelectionTheme
+                                .selectionColor,
                             fontSize: 12,
                           ),
                         ),
@@ -432,7 +439,9 @@ class _HomePageState extends State<HomePage> {
                         title: Text(
                           'Comunicados',
                           style: GoogleFonts.montserrat(
-                            color: Theme.of(context).cardColor,
+                            color: Theme.of(context)
+                                .textSelectionTheme
+                                .selectionColor,
                             fontSize: 12,
                           ),
                         ),
@@ -457,7 +466,9 @@ class _HomePageState extends State<HomePage> {
                         title: Text(
                           'Ajuda',
                           style: GoogleFonts.montserrat(
-                            color: Theme.of(context).cardColor,
+                            color: Theme.of(context)
+                                .textSelectionTheme
+                                .selectionColor,
                             fontSize: 12,
                           ),
                         ),
@@ -483,7 +494,9 @@ class _HomePageState extends State<HomePage> {
                         title: Text(
                           'Sair',
                           style: GoogleFonts.montserrat(
-                            color: Theme.of(context).cardColor,
+                            color: Theme.of(context)
+                                .textSelectionTheme
+                                .selectionColor,
                             fontSize: 12,
                           ),
                         ),
@@ -519,7 +532,9 @@ class _HomePageState extends State<HomePage> {
                           Text(
                             'Versão 1.0.0',
                             style: GoogleFonts.montserrat(
-                              color: Theme.of(context).cardColor,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
                               fontSize: 9,
                             ),
                           ),

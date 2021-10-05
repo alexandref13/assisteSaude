@@ -22,7 +22,7 @@ class HomeWidget extends StatelessWidget {
         },
         child: Scaffold(
           body: Container(
-            color: Theme.of(context).bottomAppBarColor,
+            color: Theme.of(context).scaffoldBackgroundColor,
             child: Column(
               children: [
                 Row(
@@ -36,7 +36,9 @@ class HomeWidget extends StatelessWidget {
                         icon: Icon(
                           Icons.menu,
                           size: 30,
-                          color: Theme.of(context).cardColor,
+                          color: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionColor,
                         ),
                       ),
                     ),
@@ -56,7 +58,8 @@ class HomeWidget extends StatelessWidget {
                     loginController.slogan.value,
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).cardColor,
+                      color:
+                          Theme.of(context).textSelectionTheme.selectionColor,
                       fontSize: 12,
                     ),
                   ),
