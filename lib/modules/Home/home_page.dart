@@ -15,6 +15,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 import 'home_controller.dart';
 
@@ -115,73 +116,87 @@ class _HomePageState extends State<HomePage> {
       );
     } else {
       return GestureDetector(
-        onTap: () {
-          _configurandoModalBottomSheet(context);
-        },
-        child: loginController.imgperfil.value == ''
-            ? Container(
-                child: Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 40, bottom: 5),
-                      child: Center(
-                        child: Icon(
-                          Icons.edit,
-                          size: 20,
-                          color: Theme.of(context)
-                              .textSelectionTheme
-                              .selectionColor,
+          onTap: () {
+            _configurandoModalBottomSheet(context);
+          },
+          child: loginController.imgperfil.value == ''
+              ? Container(
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 40, bottom: 5),
+                        child: Center(
+                          child: Icon(
+                            Icons.edit,
+                            size: 20,
+                            color: Theme.of(context)
+                                .textSelectionTheme
+                                .selectionColor,
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Theme.of(context).primaryColor,
+                    ],
+                  ),
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: AssetImage('images/user.png'),
+                    ),
+                  ),
+                )
+              : Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        width: 70,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(35),
+                          child: FadeInImage.memoryNetwork(
+                            placeholder: kTransparentImage,
+                            image:
+                                'https://assistesaude.com.br/downloads/fotosprofissionais/${loginController.imgperfil.value}',
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                              margin: EdgeInsets.only(left: 40),
+                              child: Center(
+                                child: Icon(
+                                  Icons.edit,
+                                  size: 20,
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor,
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
-                ),
-                width: 70,
-                height: 70,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: AssetImage('images/user.png'),
-                  ),
-                ),
-              )
-            : Container(
-                child: Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 40, bottom: 5),
-                      child: Center(
-                        child: Icon(
-                          Icons.edit,
-                          size: 20,
-                          color: Theme.of(context)
-                              .textSelectionTheme
-                              .selectionColor,
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ],
-                ),
-                width: 70,
-                height: 70,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      'https://assistesaude.com.br/downloads/fotosprofissionais/${loginController.imgperfil.value}',
-                    ),
-                  ),
-                ),
-              ),
-      );
+                ));
     }
   }
 
@@ -308,7 +323,7 @@ class _HomePageState extends State<HomePage> {
                           Container(
                             padding: EdgeInsets.only(top: 8),
                             child: Text(
-                              "${loginController.nome.value} ${loginController.sobrenome.value}",
+                              "${loginController.nome.value}",
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               softWrap: false,
@@ -321,7 +336,7 @@ class _HomePageState extends State<HomePage> {
                           Container(
                             padding: EdgeInsets.only(top: 2),
                             child: Text(
-                              "${loginController.email.value.text}",
+                              "${loginController.emailprof.value}",
                               style: GoogleFonts.montserrat(
                                 fontSize: 10,
                               ),
@@ -330,7 +345,7 @@ class _HomePageState extends State<HomePage> {
                           Container(
                             padding: EdgeInsets.only(top: 2),
                             child: Text(
-                              '${loginController.tipousu.value}',
+                              '${loginController.especialidade.value}',
                               style: GoogleFonts.montserrat(
                                 color: Theme.of(context)
                                     .textSelectionTheme
@@ -351,7 +366,7 @@ class _HomePageState extends State<HomePage> {
                               contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
                               dense: true,
                               title: Text(
-                                'Unidades',
+                                'Empresas',
                                 style: GoogleFonts.montserrat(
                                   color: Theme.of(context)
                                       .textSelectionTheme
@@ -530,7 +545,7 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         children: [
                           Text(
-                            'Versão 1.0.0',
+                            'Versão 1.3',
                             style: GoogleFonts.montserrat(
                               color: Theme.of(context)
                                   .textSelectionTheme

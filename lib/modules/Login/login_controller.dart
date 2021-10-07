@@ -25,6 +25,7 @@ class LoginController extends GetxController {
   var especialidade = ''.obs;
   var nomeCliente = ''.obs;
   var imgLogo = ''.obs;
+  var imgLogoBranca = ''.obs;
   var slogan = ''.obs;
   var deviceId = '';
   var endereco = ''.obs;
@@ -37,6 +38,7 @@ class LoginController extends GetxController {
   var genero = ''.obs;
   var datanas = ''.obs;
   var selectedIndex = 0.obs;
+  var emailprof = ''.obs;
 
   final formKey = GlobalKey<FormState>();
 
@@ -86,6 +88,7 @@ class LoginController extends GetxController {
         'nome': dadosUsuario['nome'],
         'sobrenome': dadosUsuario['sobrenome'],
         'tipousu': dadosUsuario['tipousu'],
+        'idcliente': dadosUsuario['idcliente'],
       };
 
       OneSignal.shared.sendTags(sendTags).then((response) {
@@ -102,12 +105,13 @@ class LoginController extends GetxController {
           idprof.value = dadosUsuario['idprof'];
           nome.value = dadosUsuario['nome'];
           sobrenome.value = dadosUsuario['sobrenome'];
-          tipousu.value = dadosUsuario['tipousu'];
+          especialidade.value = dadosUsuario['tipousu'];
           imgperfil.value = dadosUsuario['imgperfil'];
           especialidade.value = dadosUsuario['especialidade'];
           idCliente.value = dadosUsuario['idcliente'];
           nomeCliente.value = dadosUsuario['nomecliente'];
           imgLogo.value = dadosUsuario['imglogo'];
+          imgLogoBranca.value = dadosUsuario['imglogobranca'];
           slogan.value = dadosUsuario['slogan'];
           endereco.value = dadosUsuario['endereco'];
           complemento.value = dadosUsuario['complemento'];
@@ -118,7 +122,10 @@ class LoginController extends GetxController {
           cel.value = dadosUsuario['cel'];
           genero.value = dadosUsuario['genero'];
           datanas.value = dadosUsuario['datanas'];
+          emailprof.value = dadosUsuario['email'];
 
+          print(dadosUsuario['imglogobranca']);
+          print(dadosUsuario['imglogo']);
           if (value.length > 1) {
             Get.toNamed('listOfClients');
             isMoreThanOneEmail(true);

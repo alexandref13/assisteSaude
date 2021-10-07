@@ -11,7 +11,16 @@ class ListOfClients extends StatelessWidget {
     LoginController loginController = Get.find(tag: 'login');
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          'Escolha a Empresa',
+          style: GoogleFonts.montserrat(
+            fontSize: 16,
+            color: Theme.of(context).textSelectionTheme.selectionColor,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: Obx(
         () {
           return loginController.isLoading.value
@@ -27,8 +36,16 @@ class ListOfClients extends StatelessWidget {
                           loginController.nomeCliente.value =
                               clients.nomecliente!;
                           loginController.imgLogo.value = clients.imglogo!;
+                          loginController.imgLogoBranca.value =
+                              clients.imglogobranca!;
                           loginController.slogan.value = clients.slogan!;
                           loginController.idCliente.value = clients.idcliente!;
+                          loginController.idprof.value = clients.idprof!;
+                          loginController.nome.value = clients.nomeprof!;
+                          loginController.emailprof.value = clients.emailprof!;
+                          loginController.especialidade.value =
+                              clients.especialidade!;
+                          loginController.imgperfil.value = clients.imgperfil!;
 
                           Get.offAllNamed('/home');
                         },

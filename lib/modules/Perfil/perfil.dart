@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:transparent_image/transparent_image.dart';
 
 class Perfil extends StatefulWidget {
   @override
@@ -68,46 +69,16 @@ class _PerfilState extends State<Perfil> {
       );
     } else {
       return GestureDetector(
-        onTap: () {
-          _configurandoModalBottomSheet(context);
-          //Navigator.pushNamed(context, '/Home');
-        },
-        child: loginController.imgperfil.value == ''
-            ? Container(
-                child: Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 40, bottom: 5),
-                      child: Center(
-                        child: Icon(
-                          Icons.edit,
-                          size: 20,
-                          color: Theme.of(context)
-                              .textSelectionTheme
-                              .selectionColor,
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Theme.of(context).accentColor,
-                      ),
-                    ),
-                  ],
-                ),
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: AssetImage('images/user.png'),
-                  ),
-                ),
-              )
-            : Container(
-                child: Column(
-                  children: [
-                    Container(
-                        margin: EdgeInsets.only(left: 40),
+          onTap: () {
+            _configurandoModalBottomSheet(context);
+            //Navigator.pushNamed(context, '/Home');
+          },
+          child: loginController.imgperfil.value == ''
+              ? Container(
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 40, bottom: 5),
                         child: Center(
                           child: Icon(
                             Icons.edit,
@@ -120,21 +91,66 @@ class _PerfilState extends State<Perfil> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: Theme.of(context).accentColor,
-                        )),
-                  ],
-                ),
-                width: 70,
-                height: 70,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      'https://assistesaude.com.br/downloads/fotosprofissionais/${loginController.imgperfil.value}',
+                        ),
+                      ),
+                    ],
+                  ),
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: AssetImage('images/user.png'),
                     ),
                   ),
-                ),
-              ),
-      );
+                )
+              : Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        width: 70,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(35),
+                          child: FadeInImage.memoryNetwork(
+                            placeholder: kTransparentImage,
+                            image:
+                                'https://assistesaude.com.br/downloads/fotosprofissionais/${loginController.imgperfil.value}',
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                              margin: EdgeInsets.only(left: 40),
+                              child: Center(
+                                child: Icon(
+                                  Icons.edit,
+                                  size: 20,
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor,
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ));
     }
   }
 

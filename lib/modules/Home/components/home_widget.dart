@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../home_controller.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class HomeWidget extends StatelessWidget {
   @override
@@ -45,15 +46,16 @@ class HomeWidget extends StatelessWidget {
                   ],
                 ),
                 Container(
+                  height: MediaQuery.of(context).size.height * 0.4,
                   padding: EdgeInsets.fromLTRB(5, 150, 5, 0),
                   width: 200,
-                  child: Image.network(
-                    'https://assistesaude.com.br/downloads/fotoslogomarca/${loginController.imgLogo}',
-                    fit: BoxFit.contain,
+                  child: FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image:
+                        'https://assistesaude.com.br/downloads/fotoslogomarca/${loginController.imgLogoBranca}',
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: 16),
                   child: Text(
                     loginController.slogan.value,
                     style: GoogleFonts.montserrat(
