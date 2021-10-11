@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:assistsaude/modules/Login/login_controller.dart';
 import 'package:assistsaude/modules/Perfil/perfil_controller.dart';
@@ -191,8 +192,11 @@ class _PerfilState extends State<Perfil> {
     request.files.add(pic);
     var response = await request.send();
     if (response.statusCode == 200) {
-      Navigator.of(context).pop();
-      onAlertButtonCheck(context, 'Imagem Atualizada', null);
+      response.stream.transform(utf8.decoder).listen((value) {
+        setState(() {
+          loginController.imgperfil.value = value.trim();
+        });
+      });
     } else {
       Navigator.of(context).pop();
       onAlertButtonPressed(

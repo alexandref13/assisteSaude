@@ -1,4 +1,3 @@
-import 'package:assistsaude/modules/Agenda/calendario_controller.dart';
 import 'package:assistsaude/modules/Login/login_controller.dart';
 import 'package:assistsaude/modules/Terapia/components/DetalhesTerapia/detalhs_terapia_controller.dart';
 import 'package:assistsaude/modules/Terapia/terapia_controller.dart';
@@ -38,43 +37,43 @@ class TerapiaPage extends StatelessWidget {
         ),
         body: Obx(
           () {
-            if (terapiaController.terapias.length == 0) {
-              return Stack(
-                children: <Widget>[
-                  Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    child: Image.asset(
-                      'images/semregistro.png',
-                      fit: BoxFit.fitWidth,
-                    ),
-                  ),
-                  Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+            if (terapiaController.isLoading.value == true) {
+              return CircularProgressIndicatorWidget();
+            } else {
+              return terapiaController.terapias.length == 0
+                  ? Stack(
                       children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(top: 100),
-                          //child: Icon(Icons.block, size: 34, color: Colors.red[900]),
-                        ),
-                        Text(
-                          'Sem registros',
-                          style: GoogleFonts.montserrat(
-                            fontSize: 14.0,
-                            color: Theme.of(context)
-                                .textSelectionTheme
-                                .selectionColor,
-                            fontWeight: FontWeight.bold,
+                        Container(
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                          child: Image.asset(
+                            'images/semregistro.png',
+                            fit: BoxFit.fitWidth,
                           ),
                         ),
+                        Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(top: 100),
+                                //child: Icon(Icons.block, size: 34, color: Colors.red[900]),
+                              ),
+                              Text(
+                                'Sem registros',
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 14.0,
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
                       ],
-                    ),
-                  )
-                ],
-              );
-            } else {
-              return terapiaController.isLoading.value
-                  ? CircularProgressIndicatorWidget()
+                    )
                   : SafeArea(
                       child: Container(
                         padding: EdgeInsets.all(8),

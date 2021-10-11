@@ -1,8 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:assistsaude/modules/Agenda/visualizar_agenda.dart';
 import 'package:assistsaude/modules/Session/session_page.dart';
 import 'package:assistsaude/modules/Terapia/terapia_page.dart';
-import 'package:assistsaude/shared/alert_button_check.dart';
 import 'package:assistsaude/shared/alert_button_pressed.dart';
 import 'package:assistsaude/shared/delete_alert.dart';
 import 'package:flutter/services.dart';
@@ -51,6 +51,8 @@ class _HomePageState extends State<HomePage> {
     loginController.idprof.value = '';
     loginController.nome.value = '';
     loginController.tipousu.value = '';
+    loginController.imgperfil.value = '';
+    loginController.idCliente.value = '';
 
     Get.offAllNamed('/login');
   }
@@ -61,9 +63,11 @@ class _HomePageState extends State<HomePage> {
     var pic = await http.MultipartFile.fromPath("image", _selectedFile!.path);
     request.files.add(pic);
     var response = await request.send();
+
     if (response.statusCode == 200) {
-      Navigator.of(context).pop();
-      onAlertButtonCheck(context, 'Imagem Atualizada', null);
+      response.stream.transform(utf8.decoder).listen((value) {
+        loginController.imgperfil.value = value.trim();
+      });
     } else if (response.statusCode == 404) {
       loginController.imgperfil.value = '';
     } else {
@@ -150,53 +154,53 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 )
-              : Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                        width: 70,
-                        height: 70,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(35),
-                          child: FadeInImage.memoryNetwork(
-                            placeholder: kTransparentImage,
-                            image:
-                                'https://assistesaude.com.br/downloads/fotosprofissionais/${loginController.imgperfil.value}',
+              : Obx(() => Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          width: 70,
+                          height: 70,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
                           ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      child: Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.center,
-                            child: Container(
-                              margin: EdgeInsets.only(left: 40),
-                              child: Center(
-                                child: Icon(
-                                  Icons.edit,
-                                  size: 20,
-                                  color: Theme.of(context)
-                                      .textSelectionTheme
-                                      .selectionColor,
-                                ),
-                              ),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Theme.of(context).primaryColor,
-                              ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(35),
+                            child: FadeInImage.memoryNetwork(
+                              placeholder: kTransparentImage,
+                              image:
+                                  'https://assistesaude.com.br/downloads/fotosprofissionais/${loginController.imgperfil.value}',
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
-                ));
+                      Container(
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.center,
+                              child: Container(
+                                margin: EdgeInsets.only(left: 40),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.edit,
+                                    size: 20,
+                                    color: Theme.of(context)
+                                        .textSelectionTheme
+                                        .selectionColor,
+                                  ),
+                                ),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )));
     }
   }
 

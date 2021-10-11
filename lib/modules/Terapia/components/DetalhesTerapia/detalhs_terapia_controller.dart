@@ -64,11 +64,22 @@ class DetalhesTerapiaController extends GetxController {
         .replaceAll("-", "")
         .replaceAll(" ", "");
     // add the [https]
-    var whatsappUrl = "whatsapp://send?phone=55$celular";
-    print(whatsappUrl);
 
-    await canLaunch(whatsappUrl)
-        ? launch(whatsappUrl)
+    String url() {
+      if (Platform.isAndroid) {
+        // add the [https]
+        return "whatsapp://send?phone=$celular"; // new line
+      } else {
+        // add the [https]
+        return "https://wa.me/$celular"; // new line
+      }
+    }
+    //var whatsappUrl = "whatsapp://send?phone=$celular";
+
+    await canLaunch(
+      url(),
+    )
+        ? launch(url(), forceSafariVC: false)
         : onAlertButtonPressed(
             context, 'Erro! Não foi possível ir para o whatsapp.', () {
             Get.back();
