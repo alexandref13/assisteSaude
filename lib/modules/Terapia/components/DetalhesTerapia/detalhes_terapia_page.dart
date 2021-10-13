@@ -1,5 +1,6 @@
 import 'package:assistsaude/modules/MapaAgenda/mapa_agenda_controller.dart';
 import 'package:assistsaude/modules/Terapia/components/DetalhesTerapia/detalhs_terapia_controller.dart';
+import 'package:assistsaude/shared/alert_button_pressed.dart';
 import 'package:assistsaude/shared/circular_progress_indicator.dart';
 import 'package:assistsaude/shared/delete_alert.dart';
 import 'package:flutter/material.dart';
@@ -784,8 +785,19 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                                       ),
                                                     ),
                                                     onPressed: () {
-                                                      Get.toNamed(
-                                                          '/agendaVisitas');
+                                                      if (details.status ==
+                                                          "NORMAL") {
+                                                        Get.toNamed(
+                                                            '/agendaVisitas');
+                                                      } else {
+                                                        onAlertButtonPressed(
+                                                          context,
+                                                          'Paciente ${details.status}. Agendamento Não Permitido',
+                                                          () {
+                                                            Get.back();
+                                                          },
+                                                        );
+                                                      }
                                                     },
                                                     child: Text(
                                                       "Agendar",
