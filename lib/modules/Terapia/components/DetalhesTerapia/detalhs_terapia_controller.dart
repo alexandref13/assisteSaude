@@ -68,10 +68,10 @@ class DetalhesTerapiaController extends GetxController {
     String url() {
       if (Platform.isAndroid) {
         // add the [https]
-        return "whatsapp://send?phone=$celular"; // new line
+        return "whatsapp://send?phone=55$celular"; // new line
       } else {
         // add the [https]
-        return "https://wa.me/$celular"; // new line
+        return "https://wa.me/55$celular"; // new line
       }
     }
     //var whatsappUrl = "whatsapp://send?phone=$celular";

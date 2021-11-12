@@ -8,6 +8,7 @@ class InfoCheckRepository {
     MapaAgendaController mapaAgendaController = Get.put(MapaAgendaController());
     InfoCheckController infoCheckController = Get.put(InfoCheckController());
 
+    print(infoCheckController.hour.value.text);
     return await http.post(
       Uri.https("assistesaude.com.br", "/flutter/info_check.php"),
       body: {
