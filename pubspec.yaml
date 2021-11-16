@@ -23,7 +23,7 @@ dependencies:
   get_storage: ^2.0.3
   google_fonts: ^2.1.0
   google_maps_flutter: ^2.0.11
-  http: ^0.13.3
+  http: ^0.13.4
   image_cropper: ^1.4.1
   image_picker: ^0.8.4+2
   permission_handler: ^6.1.1
@@ -34,7 +34,7 @@ dependencies:
   table_calendar: ^3.0.2
   url_launcher: ^6.0.12
   shared_preferences: ^2.0.8
-  onesignal_flutter: ^3.2.3
+  onesignal_flutter: ^3.2.7
   intl: ^0.17.0
   transparent_image: ^2.0.0
   cached_network_marker: ^0.1.1
