@@ -22,10 +22,10 @@ PODS:
     - Flutter
   - local_auth (0.0.1):
     - Flutter
-  - onesignal_flutter (3.2.3):
+  - onesignal_flutter (3.2.7):
     - Flutter
-    - OneSignalXCFramework (= 3.7.0)
-  - OneSignalXCFramework (3.7.0)
+    - OneSignalXCFramework (= 3.9.1)
+  - OneSignalXCFramework (3.9.1)
   - path_provider (0.0.1):
     - Flutter
   - "permission_handler (5.1.0+2)":
@@ -100,8 +100,8 @@ SPEC CHECKSUMS:
   image_cropper: f1668dd8d2cad2d357955caad15a40547856edcb
   image_picker: 9aa50e1d8cdacdbed739e925b7eea16d014367e6
   local_auth: ef62030a2731330b95df7ef1331bd15f6a64b8a6
-  onesignal_flutter: abfc75e8d08a0d9c977aacfab9454af58f4f4fcc
-  OneSignalXCFramework: 974dc438d68910cf04f3c8ab034e0131d41438c1
+  onesignal_flutter: be350169f5b07461e7b1e9c978d8a39908c5cf37
+  OneSignalXCFramework: 27159b0a150cdfe528c85325215c9d78b2f973c7
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
   shared_preferences: 5033afbb22d372e15aff8ff766df9021b845f273

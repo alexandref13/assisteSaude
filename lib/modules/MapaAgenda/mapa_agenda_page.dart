@@ -94,19 +94,19 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
         .circleAvatar(CircleAvatarParams(color: Colors.lightBlue));
 
     Future.delayed(Duration(seconds: 2)).then((_) async {
-      if (this.mounted) {
-        // check whether the state object is in tree
-        setState(() {
-          mapaAgendaController.markers.add(Marker(
-            markerId: MarkerId('Estou Aqui!'),
-            position: latLatAtual,
-            infoWindow: InfoWindow(
-                title: 'Minha Localização', snippet: "" //"$position",
-                ),
-            icon: BitmapDescriptor.fromBytes(bitmap),
-          ));
-        });
-      }
+      //if (this.mounted) {
+      // check whether the state object is in tree
+      setState(() {
+        mapaAgendaController.markers.add(Marker(
+          markerId: MarkerId('Estou Aqui!'),
+          position: latLatAtual,
+          infoWindow:
+              InfoWindow(title: 'Minha Localização', snippet: "" //"$position",
+                  ),
+          icon: BitmapDescriptor.fromBytes(bitmap),
+        ));
+      });
+      //}
 
       timer();
     });
@@ -212,22 +212,22 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
             final bitmap = await generator
                 .circleAvatar(CircleAvatarParams(color: Colors.lightBlue));
 
-            if (this.mounted) {
-              mapaAgendaController.ourLat.value = position.latitude;
-              mapaAgendaController.ourLng.value = position.longitude;
-              setState(
-                () {
-                  mapaAgendaController.markers.add(Marker(
-                    markerId: MarkerId('Estou Aqui!'),
-                    position: latLatPosition,
-                    infoWindow: InfoWindow(
-                        title: 'Minha Localização', snippet: "" //"$position",
-                        ),
-                    icon: BitmapDescriptor.fromBytes(bitmap),
-                  ));
-                },
-              );
-            }
+            //if (this.mounted) {
+            mapaAgendaController.ourLat.value = position.latitude;
+            mapaAgendaController.ourLng.value = position.longitude;
+            setState(
+              () {
+                mapaAgendaController.markers.add(Marker(
+                  markerId: MarkerId('Estou Aqui!'),
+                  position: latLatPosition,
+                  infoWindow: InfoWindow(
+                      title: 'Minha Localização', snippet: "" //"$position",
+                      ),
+                  icon: BitmapDescriptor.fromBytes(bitmap),
+                ));
+              },
+            );
+            //}
             timer();
           },
           circles: Set.from([

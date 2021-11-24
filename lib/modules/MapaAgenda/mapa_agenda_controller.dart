@@ -133,8 +133,22 @@ class MapaAgendaController extends GetxController {
           Get.offAllNamed('/home');
         },
       );
-    } else {
+
+      //Solicitação desta sessão já enviada anteriormente! Aguarde o aceite da administração.
+    } else if (dados['valida'] == 2) {
+      onAlertButtonPressed(
+          context, 'Solicitação já enviada!\nAguarde retorno da administração.',
+          () {
+        Get.offAllNamed('/home');
+      });
+    } else if (dados['valida'] == 1) {
       confirmedButtonPressed(context, 'Alteração de GPS realizado com sucesso!',
+          () {
+        Get.offAllNamed('/home');
+      });
+    } else {
+      confirmedButtonPressed(context,
+          'Solicitação enviada com sucesso!\nAguarde o retorno da avaliação da administração.',
           () {
         Get.offAllNamed('/home');
       });

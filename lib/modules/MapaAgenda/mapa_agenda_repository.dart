@@ -35,10 +35,13 @@ class MapaAgendaRepository {
   static Future doChangeGps() async {
     MapaAgendaController mapaAgendaController = Get.put(MapaAgendaController());
 
+    print("idsessao: ${mapaAgendaController.idSessao.value}");
+
     return await http.post(
-      Uri.https("assistesaude.com.br", "/flutter/alterargps.php"),
+      Uri.https("assistesaude.com.br", "/flutter/alterargpsNovo.php"),
       body: {
         'idpac': mapaAgendaController.idPaciente.value,
+        'idsessao': mapaAgendaController.idSessao.value,
         'lat': mapaAgendaController.ourLat.value.toString(),
         'lng': mapaAgendaController.ourLng.value.toString(),
       },
