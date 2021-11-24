@@ -14,7 +14,6 @@ class VisualizarAgenda extends StatelessWidget {
       Get.put(CalendarioController());
   final MapaAgendaController mapaAgendaController =
       Get.put(MapaAgendaController());
-  //const VisualizarAgenda ({ Key? key }) : super(key: key);
 
   Widget buildEventsMarker(context, DateTime date, List events) {
     return AnimatedContainer(
@@ -59,6 +58,17 @@ class VisualizarAgenda extends StatelessWidget {
               color: Theme.of(context).textSelectionTheme.selectionColor,
             ),
           ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                mapaAgendaController.getClientes().then((value) => value);
+              },
+              icon: Icon(
+                Icons.refresh_outlined,
+                color: Theme.of(context).textSelectionTheme.selectionColor,
+              ),
+            )
+          ],
         ),
         backgroundColor: Theme.of(context).accentColor,
         body: Obx(

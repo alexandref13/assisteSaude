@@ -12,7 +12,6 @@ import 'package:google_fonts/google_fonts.dart';
 class TerapiaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    LoginController loginController = Get.find(tag: 'login');
     TerapiaController terapiaController = Get.put(TerapiaController());
     DetalhesTerapiaController detalhesTerapiaController =
         Get.put(DetalhesTerapiaController());
@@ -34,6 +33,17 @@ class TerapiaPage extends StatelessWidget {
               color: Theme.of(context).textSelectionTheme.selectionColor,
             ),
           ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                terapiaController.getTerapias().then((value) => value);
+              },
+              icon: Icon(
+                Icons.refresh_outlined,
+                color: Theme.of(context).textSelectionTheme.selectionColor,
+              ),
+            )
+          ],
         ),
         body: Obx(
           () {

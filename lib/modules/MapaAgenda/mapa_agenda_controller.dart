@@ -36,6 +36,7 @@ class MapaAgendaController extends GetxController {
   var markers = <Marker>{}.obs;
 
   getClientes() async {
+    print('mapa agenda');
     markers.assign(
       Marker(
         markerId: MarkerId(name.value),

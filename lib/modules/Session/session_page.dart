@@ -70,6 +70,17 @@ class _SessionPageState extends State<SessionPage> {
               color: Theme.of(context).textSelectionTheme.selectionColor,
             ),
           ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                sessionController.getSessions().then((value) => value);
+              },
+              icon: Icon(
+                Icons.refresh_outlined,
+                color: Theme.of(context).textSelectionTheme.selectionColor,
+              ),
+            )
+          ],
         ),
         body: Obx(
           () {

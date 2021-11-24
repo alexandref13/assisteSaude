@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:assistsaude/modules/Agenda/visualizar_agenda.dart';
+import 'package:assistsaude/modules/MapaAgenda/mapa_agenda_controller.dart';
+import 'package:assistsaude/modules/Session/session_controller.dart';
 import 'package:assistsaude/modules/Session/session_page.dart';
+import 'package:assistsaude/modules/Terapia/terapia_controller.dart';
 import 'package:assistsaude/modules/Terapia/terapia_page.dart';
 import 'package:assistsaude/shared/alert_button_pressed.dart';
 import 'package:assistsaude/shared/delete_alert.dart';
@@ -27,11 +30,24 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   LoginController loginController = Get.find(tag: 'login');
   HomeController homeController = Get.put(HomeController());
+  SessionController sessionController = Get.put(SessionController());
+  TerapiaController terapiaController = Get.put(TerapiaController());
+  MapaAgendaController mapaAgendaController = Get.put(MapaAgendaController());
 
   void onItemTapped(int index) {
     setState(() {
       loginController.selectedIndex.value = index;
     });
+
+    if (loginController.selectedIndex.value == 1) {
+      sessionController.getSessions().then((value) => value);
+    }
+    if (loginController.selectedIndex.value == 2) {
+      terapiaController.getTerapias().then((value) => value);
+    }
+    if (loginController.selectedIndex.value == 3) {
+      mapaAgendaController.getClientes().then((value) => value);
+    }
   }
 
   final ImagePicker _picker = ImagePicker();
