@@ -31,7 +31,7 @@ class CalendarioController extends GetxController {
     var dados = json.decode(response.body);
 
     print('dados: $dados');
-
+    events = {};
     if (dados != null) {
       for (var eventos in dados) {
         events

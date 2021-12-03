@@ -58,7 +58,7 @@ class VisualizarAgenda extends StatelessWidget {
               color: Theme.of(context).textSelectionTheme.selectionColor,
             ),
           ),
-          actions: [
+          /*actions: [
             IconButton(
               onPressed: () {
                 mapaAgendaController.getClientes().then((value) => value);
@@ -68,7 +68,7 @@ class VisualizarAgenda extends StatelessWidget {
                 color: Theme.of(context).textSelectionTheme.selectionColor,
               ),
             )
-          ],
+          ],*/
         ),
         backgroundColor: Theme.of(context).accentColor,
         body: Obx(

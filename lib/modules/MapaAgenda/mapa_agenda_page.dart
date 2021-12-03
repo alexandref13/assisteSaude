@@ -1,3 +1,4 @@
+import 'package:assistsaude/modules/Agenda/calendario_controller.dart';
 import 'package:assistsaude/modules/Login/login_controller.dart';
 import 'package:assistsaude/modules/MapaAgenda/mapa_agenda_controller.dart';
 import 'package:assistsaude/shared/delete_alert.dart';
@@ -20,6 +21,7 @@ class MapaAgendaPage extends StatefulWidget {
 }
 
 class _MapaAgendaPageState extends State<MapaAgendaPage> {
+  CalendarioController calendarioController = Get.put(CalendarioController());
   final MapaAgendaController mapaAgendaController =
       Get.put(MapaAgendaController());
   Completer<GoogleMapController> _controller = Completer();
@@ -87,26 +89,27 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
       url: loginController.imgperfil.value == ""
           ? 'https://assistesaude.com.br/dist/img/user.png'
           : 'https://assistesaude.com.br/downloads/fotosprofissionais/${loginController.imgperfil.value}',
-      dpr: MediaQuery.of(context).devicePixelRatio,
+      //dpr: MediaQuery.of(context).devicePixelRatio,
+      dpr: 90,
     );
 
     final bitmap = await generator
         .circleAvatar(CircleAvatarParams(color: Colors.lightBlue));
 
     Future.delayed(Duration(seconds: 2)).then((_) async {
-      //if (this.mounted) {
-      // check whether the state object is in tree
-      setState(() {
-        mapaAgendaController.markers.add(Marker(
-          markerId: MarkerId('Estou Aqui!'),
-          position: latLatAtual,
-          infoWindow:
-              InfoWindow(title: 'Minha Localização', snippet: "" //"$position",
-                  ),
-          icon: BitmapDescriptor.fromBytes(bitmap),
-        ));
-      });
-      //}
+      if (this.mounted) {
+        // check whether the state object is in tree
+        setState(() {
+          mapaAgendaController.markers.add(Marker(
+            markerId: MarkerId('Estou Aqui!'),
+            position: latLatAtual,
+            infoWindow: InfoWindow(
+                title: 'Minha Localização', snippet: "" //"$position",
+                ),
+            icon: BitmapDescriptor.fromBytes(bitmap),
+          ));
+        });
+      }
 
       timer();
     });
@@ -206,28 +209,29 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
               url: loginController.imgperfil.value == ""
                   ? 'https://assistesaude.com.br/dist/img/user.png'
                   : 'https://assistesaude.com.br/downloads/fotosprofissionais/${loginController.imgperfil.value}',
-              dpr: MediaQuery.of(context).devicePixelRatio,
+              dpr: 90,
+              //dpr: MediaQuery.of(context).devicePixelRatio,
             );
 
             final bitmap = await generator
                 .circleAvatar(CircleAvatarParams(color: Colors.lightBlue));
 
-            //if (this.mounted) {
-            mapaAgendaController.ourLat.value = position.latitude;
-            mapaAgendaController.ourLng.value = position.longitude;
-            setState(
-              () {
-                mapaAgendaController.markers.add(Marker(
-                  markerId: MarkerId('Estou Aqui!'),
-                  position: latLatPosition,
-                  infoWindow: InfoWindow(
-                      title: 'Minha Localização', snippet: "" //"$position",
-                      ),
-                  icon: BitmapDescriptor.fromBytes(bitmap),
-                ));
-              },
-            );
-            //}
+            if (this.mounted) {
+              mapaAgendaController.ourLat.value = position.latitude;
+              mapaAgendaController.ourLng.value = position.longitude;
+              setState(
+                () {
+                  mapaAgendaController.markers.add(Marker(
+                    markerId: MarkerId('Estou Aqui!'),
+                    position: latLatPosition,
+                    infoWindow: InfoWindow(
+                        title: 'Minha Localização', snippet: "" //"$position",
+                        ),
+                    icon: BitmapDescriptor.fromBytes(bitmap),
+                  ));
+                },
+              );
+            }
             timer();
           },
           circles: Set.from([
@@ -305,6 +309,18 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
             fontSize: 16,
             color: Theme.of(context).textSelectionTheme.selectionColor,
           ),
+        ),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                calendarioController.agenda().then((value) => value);
+                Get.offAllNamed('/home');
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
         ),
       ),
       floatingActionButton: mapaAgendaController.ctlcheckin.value == '0'

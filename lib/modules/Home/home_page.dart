@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:assistsaude/modules/Agenda/calendario_controller.dart';
 import 'package:assistsaude/modules/Agenda/visualizar_agenda.dart';
 import 'package:assistsaude/modules/MapaAgenda/mapa_agenda_controller.dart';
 import 'package:assistsaude/modules/Session/session_controller.dart';
@@ -33,6 +34,7 @@ class _HomePageState extends State<HomePage> {
   SessionController sessionController = Get.put(SessionController());
   TerapiaController terapiaController = Get.put(TerapiaController());
   MapaAgendaController mapaAgendaController = Get.put(MapaAgendaController());
+  CalendarioController calendarioController = Get.put(CalendarioController());
 
   void onItemTapped(int index) {
     setState(() {
@@ -47,6 +49,7 @@ class _HomePageState extends State<HomePage> {
     }
     if (loginController.selectedIndex.value == 3) {
       mapaAgendaController.getClientes().then((value) => value);
+      calendarioController.agenda().then((value) => value);
     }
   }
 
