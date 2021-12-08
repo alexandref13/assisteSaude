@@ -1,3 +1,7 @@
+import 'dart:io';
+import 'dart:async';
+import 'dart:typed_data';
+import 'dart:ui';
 import 'package:assistsaude/modules/Agenda/calendario_controller.dart';
 import 'package:assistsaude/modules/Login/login_controller.dart';
 import 'package:assistsaude/modules/MapaAgenda/mapa_agenda_controller.dart';
@@ -8,10 +12,10 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:cached_network_marker/cached_network_marker.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class MapaAgendaPage extends StatefulWidget {
   const MapaAgendaPage({Key? key}) : super(key: key);
@@ -80,21 +84,32 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
   }
 
   void timer() async {
+    String url;
+    final int targetWidth = 120;
+
+    loginController.imgperfil.value == ""
+        ? url = 'https://assistesaude.com.br/dist/img/user.png'
+        : url =
+            'https://assistesaude.com.br/downloads/fotosprofissionais/${loginController.imgperfil.value}';
+
+    final File markerImageFile = await DefaultCacheManager().getSingleFile(url);
+    final Uint8List markerImageBytes = await markerImageFile.readAsBytes();
+
+    final Codec markerImageCodec = await instantiateImageCodec(
+      markerImageBytes,
+      targetWidth: targetWidth,
+    );
+
+    final FrameInfo frameInfo = await markerImageCodec.getNextFrame();
+    final ByteData? byteData = await frameInfo.image.toByteData(
+      format: ImageByteFormat.png,
+    );
+    final Uint8List resizedMarkerImageBytes = byteData!.buffer.asUint8List();
+
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     LatLng latLatAtual = LatLng(position.latitude, position.longitude);
     // create the instance of CachedNetworkMarker
-
-    final generator = CachedNetworkMarker(
-      url: loginController.imgperfil.value == ""
-          ? 'https://assistesaude.com.br/dist/img/user.png'
-          : 'https://assistesaude.com.br/downloads/fotosprofissionais/${loginController.imgperfil.value}',
-      //dpr: MediaQuery.of(context).devicePixelRatio,
-      dpr: 90,
-    );
-
-    final bitmap = await generator
-        .circleAvatar(CircleAvatarParams(color: Colors.lightBlue));
 
     Future.delayed(Duration(seconds: 2)).then((_) async {
       if (this.mounted) {
@@ -106,7 +121,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
             infoWindow: InfoWindow(
                 title: 'Minha Localização', snippet: "" //"$position",
                 ),
-            icon: BitmapDescriptor.fromBytes(bitmap),
+            icon: BitmapDescriptor.fromBytes(resizedMarkerImageBytes),
           ));
         });
       }
