@@ -116,6 +116,12 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
   }
 
   @override
+  void initState() {
+    loginController.getDevicePixel(context);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Future<String> getJsonFile(String path) async {
       return await rootBundle.loadString(path);
@@ -131,6 +137,8 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
     }
 
     Widget buildGoogleMap(BuildContext context) {
+      var deviceRadio = MediaQuery.of(context).devicePixelRatio.obs;
+
       return Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -209,8 +217,8 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
               url: loginController.imgperfil.value == ""
                   ? 'https://assistesaude.com.br/dist/img/user.png'
                   : 'https://assistesaude.com.br/downloads/fotosprofissionais/${loginController.imgperfil.value}',
-              dpr: 90,
-              //dpr: MediaQuery.of(context).devicePixelRatio,
+              // dpr: loginController.deviceRadio.value,
+              dpr: deviceRadio.value,
             );
 
             final bitmap = await generator
