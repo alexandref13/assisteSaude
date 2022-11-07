@@ -155,7 +155,7 @@ class _PerfilState extends State<Perfil> {
     }
   }
 
-  getImage(ImageSource source) async {
+  /*getImage(ImageSource source) async {
     this.setState(() {});
     XFile? image = await _picker.pickImage(source: source);
 
@@ -183,7 +183,7 @@ class _PerfilState extends State<Perfil> {
         }
       });
     }
-  }
+  }*/
 
   Future uploadImage() async {
     var request = http.MultipartRequest('POST', uri);
@@ -241,7 +241,9 @@ class _PerfilState extends State<Perfil> {
                       color:
                           Theme.of(context).textSelectionTheme.selectionColor,
                     ),
-                    onTap: () => {getImage(ImageSource.camera)}),
+                    onTap: () => {
+                          // getImage(ImageSource.camera)
+                        }),
                 Divider(
                   height: 20,
                   color: Theme.of(context).textSelectionTheme.selectionColor,
@@ -256,7 +258,9 @@ class _PerfilState extends State<Perfil> {
                         color: Theme.of(context)
                             .textSelectionTheme
                             .selectionColor),
-                    onTap: () => {getImage(ImageSource.gallery)}),
+                    onTap: () => {
+                          //getImage(ImageSource.gallery)
+                        }),
                 Divider(
                   height: 20,
                   color: Theme.of(context).textSelectionTheme.selectionColor,

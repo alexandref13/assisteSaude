@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  final ImagePicker _picker = ImagePicker();
+  final _picker = ImagePicker();
   File? _selectedFile;
 
   final uri =
@@ -225,6 +225,35 @@ class _HomePageState extends State<HomePage> {
 
   getImage(ImageSource source) async {
     this.setState(() {});
+    PickedFile image = await _picker.getImage(source: source);
+    if (image != null) {
+      File cropped = await ImageCropper().cropImage(
+          sourcePath: image.path,
+          aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+          compressQuality: 80,
+          maxWidth: 400,
+          maxHeight: 400,
+          compressFormat: ImageCompressFormat.jpg,
+          androidUiSettings: AndroidUiSettings(
+            toolbarColor: Colors.deepOrange,
+            toolbarTitle: "Imagem para o Perfil",
+            statusBarColor: Colors.deepOrange.shade900,
+            backgroundColor: Colors.white,
+          ));
+
+      this.setState(() {
+        _selectedFile = File(image.path);
+        _selectedFile = cropped;
+        if (cropped != null) {
+          uploadImage();
+          Get.back();
+        }
+      });
+    }
+  }
+
+  /*getImage(ImageSource source) async {
+    this.setState(() {});
     XFile? image = await _picker.pickImage(source: source);
     if (image != null) {
       File? cropped = await ImageCropper.cropImage(
@@ -250,7 +279,7 @@ class _HomePageState extends State<HomePage> {
         }
       });
     }
-  }
+  }*/
 
   void _configurandoModalBottomSheet(context) {
     showModalBottomSheet(
