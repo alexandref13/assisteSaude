@@ -3,10 +3,8 @@ import 'package:assistsaude/modules/Login/login_controller.dart';
 import 'package:assistsaude/shared/alert_button_pressed.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
 import 'dart:convert';
-
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class AuthController extends GetxController {
@@ -38,7 +36,7 @@ class AuthController extends GetxController {
     if (id != null) {
       bool isAuthenticated = await localAuthentication.authenticate(
         localizedReason: "Autenticar para realizar Login na plataforma",
-        biometricOnly: true,
+        /*biometricOnly: true,
         stickyAuth: true,
         useErrorDialogs: true,
         iOSAuthStrings: IOSAuthMessages(
@@ -48,7 +46,7 @@ class AuthController extends GetxController {
           biometricHint: "Para acesso rapido entre com sua biometria",
           signInTitle: "Entre com a biometria",
           cancelButton: "Cancelar",
-        ),
+        ),*/
       );
       if (isAuthenticated) {
         loginController.isLoading.value = true;

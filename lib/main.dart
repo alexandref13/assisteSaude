@@ -40,7 +40,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
-    OneSignal.shared.setAppId('7e568fea-1c24-4463-a5bc-c5ede3c5c90a');
     // final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
     OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {

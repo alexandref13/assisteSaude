@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  final _picker = ImagePicker();
+  final ImagePicker _picker = ImagePicker();
   File? _selectedFile;
 
   final uri =
@@ -225,26 +225,48 @@ class _HomePageState extends State<HomePage> {
 
   getImage(ImageSource source) async {
     this.setState(() {});
-    PickedFile image = await _picker.getImage(source: source);
-    if (image != null) {
-      File cropped = await ImageCropper().cropImage(
-          sourcePath: image.path,
-          aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
-          compressQuality: 80,
-          maxWidth: 400,
-          maxHeight: 400,
-          compressFormat: ImageCompressFormat.jpg,
-          androidUiSettings: AndroidUiSettings(
-            toolbarColor: Colors.deepOrange,
-            toolbarTitle: "Imagem para o Perfil",
-            statusBarColor: Colors.deepOrange.shade900,
-            backgroundColor: Colors.white,
-          ));
+    // ignore: deprecated_member_use
+    PickedFile? image = await _picker.getImage(source: source);
 
+    if (image != null) {
+      final croppedFile = await ImageCropper().cropImage(
+        sourcePath: image.path,
+        compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 20,
+        maxWidth: 400,
+        maxHeight: 400,
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarColor: Colors.deepOrange,
+              toolbarTitle: "Imagem para o Perfil",
+              statusBarColor: Colors.deepOrange.shade900,
+              backgroundColor: Colors.white,
+              toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.ratio4x3,
+              cropGridStrokeWidth: 400,
+              lockAspectRatio: false),
+          IOSUiSettings(
+            title: 'Cropper',
+          ),
+          /*WebUiSettings(
+            context: context,
+            presentStyle: CropperPresentStyle.dialog,
+            boundary: const CroppieBoundary(
+              width: 400,
+              height: 400,
+            ),
+            viewPort:
+                const CroppieViewPort(width: 400, height: 400, type: 'circle'),
+            enableExif: true,
+            enableZoom: true,
+            showZoomer: true,
+          ),*/
+        ],
+      );
       this.setState(() {
         _selectedFile = File(image.path);
-        _selectedFile = cropped;
-        if (cropped != null) {
+        _selectedFile = _selectedFile;
+        if (croppedFile != null) {
           uploadImage();
           Get.back();
         }
