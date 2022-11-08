@@ -55,6 +55,7 @@ class _HomePageState extends State<HomePage> {
 
   final ImagePicker _picker = ImagePicker();
   File? _selectedFile;
+  CroppedFile? _croppedFile;
 
   final uri =
       Uri.parse("https://assistesaude.com.br/flutter/upload_imagem.php");
@@ -79,7 +80,7 @@ class _HomePageState extends State<HomePage> {
   Future uploadImage() async {
     var request = http.MultipartRequest('POST', uri);
     request.fields['idprof'] = loginController.idprof.value;
-    var pic = await http.MultipartFile.fromPath("image", _selectedFile!.path);
+    var pic = await http.MultipartFile.fromPath("image", _croppedFile!.path);
     request.files.add(pic);
     var response = await request.send();
 
@@ -99,6 +100,7 @@ class _HomePageState extends State<HomePage> {
         },
       );
     }
+    _croppedFile = null;
     _selectedFile = null;
   }
 
@@ -232,9 +234,10 @@ class _HomePageState extends State<HomePage> {
       final croppedFile = await ImageCropper().cropImage(
         sourcePath: image.path,
         compressFormat: ImageCompressFormat.jpg,
-        compressQuality: 20,
+        compressQuality: 80,
         maxWidth: 400,
         maxHeight: 400,
+        aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
         uiSettings: [
           AndroidUiSettings(
               toolbarColor: Colors.deepOrange,
@@ -246,7 +249,7 @@ class _HomePageState extends State<HomePage> {
               cropGridStrokeWidth: 400,
               lockAspectRatio: false),
           IOSUiSettings(
-            title: 'Cropper',
+            title: 'Imagem para o Perfil',
           ),
           /*WebUiSettings(
             context: context,
@@ -264,8 +267,9 @@ class _HomePageState extends State<HomePage> {
         ],
       );
       this.setState(() {
-        _selectedFile = File(image.path);
-        _selectedFile = _selectedFile;
+        _croppedFile = croppedFile;
+        //_selectedFile = croppedFile;
+        //_selectedFile = _selectedFile;
         if (croppedFile != null) {
           uploadImage();
           Get.back();
