@@ -1,9 +1,9 @@
+import 'package:assistsaude/modules/Login/login_controller.dart';
 import 'package:assistsaude/shared/circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../login_controller.dart';
 
 class ListOfClients extends StatelessWidget {
   @override
@@ -32,7 +32,7 @@ class ListOfClients extends StatelessWidget {
                       var clients = loginController.listOfClients[i];
 
                       return GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           loginController.nomeCliente.value =
                               clients.nomecliente!;
                           loginController.imgLogo.value = clients.imglogo!;
@@ -46,8 +46,13 @@ class ListOfClients extends StatelessWidget {
                           loginController.especialidade.value =
                               clients.especialidade!;
                           loginController.imgperfil.value = clients.imgperfil!;
+                          await GetStorage.init();
+                          final box = GetStorage();
+                          box.write('id', loginController.idprof.value);
 
-                          Get.offAllNamed('/home');
+                          loginController.newLogin();
+
+                          //Get.offAllNamed('/home');
                         },
                         child: Card(
                           shape: RoundedRectangleBorder(

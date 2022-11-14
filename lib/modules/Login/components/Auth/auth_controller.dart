@@ -30,7 +30,7 @@ class AuthController extends GetxController {
     await GetStorage.init();
     final box = GetStorage();
     var id = box.read('id');
-    print(id);
+    var idCliente = box.read('idCliente');
     var email = box.read('email');
 
     if (id != null) {
@@ -55,7 +55,7 @@ class AuthController extends GetxController {
 
         var dadosUsuario = json.decode(response.body);
 
-        print(dadosUsuario);
+        //print(dadosUsuario);
 
         if (dadosUsuario['valida'] == 1) {
           var sendTags = {
@@ -77,6 +77,7 @@ class AuthController extends GetxController {
               await GetStorage.init();
               final box = GetStorage();
               box.write('id', dadosUsuario['idprof']);
+              box.write('idCliente', dadosUsuario['idcliente']);
 
               loginController.email.value.text = email;
               loginController.idprof.value = dadosUsuario['idprof'];
@@ -89,6 +90,8 @@ class AuthController extends GetxController {
               loginController.idCliente.value = dadosUsuario['idcliente'];
               loginController.nomeCliente.value = dadosUsuario['nomecliente'];
               loginController.imgLogo.value = dadosUsuario['imglogo'];
+              loginController.imgLogoBranca.value =
+                  dadosUsuario['imglogobranca'];
               loginController.slogan.value = dadosUsuario['slogan'];
               loginController.endereco.value = dadosUsuario['endereco'];
               loginController.complemento.value = dadosUsuario['complemento'];
@@ -101,12 +104,16 @@ class AuthController extends GetxController {
               loginController.datanas.value = dadosUsuario['datanas'];
               loginController.idCliente.value = dadosUsuario['idcliente'];
 
-              if (value.length > 1) {
+              if (value.length > 1 && idCliente == '') {
                 Get.toNamed('listOfClients');
                 loginController.isMoreThanOneEmail(true);
               } else {
+                if (value.length > 1) {
+                  loginController.isMoreThanOneEmail(true);
+                } else {
+                  loginController.isMoreThanOneEmail(false);
+                }
                 Get.offNamed('/home');
-                loginController.isMoreThanOneEmail(false);
               }
             },
           );

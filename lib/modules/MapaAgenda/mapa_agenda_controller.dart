@@ -36,7 +36,10 @@ class MapaAgendaController extends GetxController {
   var markers = <Marker>{}.obs;
 
   getClientes() async {
-    print('mapa agenda');
+    BitmapDescriptor markerbitmap = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(),
+      "images/paciente.png",
+    );
     markers.assign(
       Marker(
         markerId: MarkerId(name.value),
@@ -45,7 +48,7 @@ class MapaAgendaController extends GetxController {
           title: name.value,
           snippet: "$adress",
         ),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+        icon: markerbitmap,
       ),
     );
     isLoading(false);
@@ -81,7 +84,7 @@ class MapaAgendaController extends GetxController {
     if (dados['valida'] == 0) {
       onAlertButtonPressed(
         context,
-        'Paciente Fora do Raio de Check-in!',
+        'Local fora do raio\npermitido para ação!',
         () {
           Get.offAllNamed('/home');
         },
@@ -93,7 +96,7 @@ class MapaAgendaController extends GetxController {
     } else {
       onAlertButtonPressed(
         context,
-        'Houve Algum Problema! Tente Novamente',
+        'Houve algum problema! Tente Novamente',
         () {
           Get.offAllNamed('/home');
         },

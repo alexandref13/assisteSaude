@@ -23,132 +23,118 @@ class Comunicados extends StatelessWidget {
       ),
       body: Obx(
         () {
-          if (comunicadosController.comunicados.length == 0) {
-            return Stack(
-              children: <Widget>[
-                Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child: Image.asset(
-                    'images/semregistro.png',
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-                Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(top: 100),
-                        //child: Icon(Icons.block, size: 34, color: Colors.red[900]),
-                      ),
-                      Text(
-                        'Sem registros',
-                        style: GoogleFonts.montserrat(
-                          fontSize: 16.0,
-                          color: Theme.of(context)
-                              .textSelectionTheme
-                              .selectionColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            );
-          } else {
-            return comunicadosController.isLoading.value
-                ? CircularProgressIndicatorWidget()
-                : SafeArea(
-                    child: Container(
-                      padding: EdgeInsets.all(8),
-                      child: Column(
-                        children: [
-                          Container(
-                            child: boxSearch(
-                              context,
-                              comunicadosController.search.value,
-                              comunicadosController.onSearchTextChanged,
-                              "Pesquise os Comunicados...",
+          return comunicadosController.isLoading.value
+              ? CircularProgressIndicatorWidget()
+              : comunicadosController.comunicados.length != 0
+                  ? SafeArea(
+                      child: Container(
+                        padding: EdgeInsets.all(8),
+                        child: Column(
+                          children: [
+                            Container(
+                              child: boxSearch(
+                                context,
+                                comunicadosController.search.value,
+                                comunicadosController.onSearchTextChanged,
+                                "Pesquise os Comunicados...",
+                              ),
                             ),
-                          ),
-                          Expanded(
-                            child: comunicadosController
-                                        .searchResult.isNotEmpty ||
-                                    comunicadosController
-                                        .search.value.text.isNotEmpty
-                                ? Container(
-                                    padding: EdgeInsets.all(8),
-                                    child: RefreshIndicator(
-                                      onRefresh:
-                                          comunicadosController.onRefresh,
-                                      child: ListView.builder(
-                                          itemCount: comunicadosController
-                                              .searchResult.length,
-                                          itemBuilder: (context, index) {
-                                            var comunicados =
-                                                comunicadosController
-                                                    .searchResult[index];
-                                            return GestureDetector(
-                                              onTap: () {
-                                                comunicadosController.title
-                                                    .value = comunicados.titulo;
-                                                comunicadosController
-                                                        .description.value =
-                                                    comunicados.descricao;
+                            Expanded(
+                              child: comunicadosController
+                                          .searchResult.isNotEmpty ||
+                                      comunicadosController
+                                          .search.value.text.isNotEmpty
+                                  ? Container(
+                                      padding: EdgeInsets.all(8),
+                                      child: RefreshIndicator(
+                                        onRefresh:
+                                            comunicadosController.onRefresh,
+                                        child: ListView.builder(
+                                            itemCount: comunicadosController
+                                                .searchResult.length,
+                                            itemBuilder: (context, index) {
+                                              var comunicados =
+                                                  comunicadosController
+                                                      .searchResult[index];
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  comunicadosController
+                                                          .title.value =
+                                                      comunicados.titulo;
+                                                  comunicadosController
+                                                          .description.value =
+                                                      comunicados.descricao;
 
-                                                Get.toNamed(
-                                                    '/detalhesComunicados');
-                                              },
-                                              child: Card(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
-                                                ),
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                                child: ListTile(
-                                                  leading: RichText(
-                                                    text: TextSpan(
-                                                      style: GoogleFonts
-                                                          .montserrat(
-                                                        fontSize: 12,
-                                                        color: Theme.of(context)
-                                                            .textSelectionTheme
-                                                            .selectionColor,
-                                                      ),
-                                                      children: <TextSpan>[
-                                                        TextSpan(
-                                                            text: comunicados
-                                                                    .dia +
-                                                                "  ",
-                                                            style: GoogleFonts
-                                                                .montserrat(
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold)),
-                                                        TextSpan(
-                                                          text:
-                                                              comunicados.mes +
-                                                                  ' ',
-                                                          style: GoogleFonts.montserrat(
-                                                              fontSize: 14,
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .textSelectionTheme
-                                                                  .selectionColor,
-                                                              letterSpacing: 2),
+                                                  Get.toNamed(
+                                                      '/detalhesComunicados');
+                                                },
+                                                child: Card(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                  child: ListTile(
+                                                    leading: RichText(
+                                                      text: TextSpan(
+                                                        style: GoogleFonts
+                                                            .montserrat(
+                                                          fontSize: 12,
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .textSelectionTheme
+                                                              .selectionColor,
                                                         ),
-                                                        TextSpan(
-                                                          text:
-                                                              comunicados.ano +
-                                                                  ' ',
+                                                        children: <TextSpan>[
+                                                          TextSpan(
+                                                              text: comunicados
+                                                                      .dia +
+                                                                  "  ",
+                                                              style: GoogleFonts
+                                                                  .montserrat(
+                                                                      fontSize:
+                                                                          14,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold)),
+                                                          TextSpan(
+                                                            text: comunicados
+                                                                    .mes +
+                                                                ' ',
+                                                            style: GoogleFonts.montserrat(
+                                                                fontSize: 14,
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .textSelectionTheme
+                                                                    .selectionColor,
+                                                                letterSpacing:
+                                                                    2),
+                                                          ),
+                                                          TextSpan(
+                                                            text: comunicados
+                                                                    .ano +
+                                                                ' ',
+                                                            style: GoogleFonts.montserrat(
+                                                                fontSize: 14,
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .textSelectionTheme
+                                                                    .selectionColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    title: Container(
+                                                      child: Center(
+                                                        child: Text(
+                                                          comunicados.titulo,
                                                           style: GoogleFonts.montserrat(
-                                                              fontSize: 14,
+                                                              fontSize: 12,
                                                               color: Theme.of(
                                                                       context)
                                                                   .textSelectionTheme
@@ -157,15 +143,84 @@ class Comunicados extends StatelessWidget {
                                                                   FontWeight
                                                                       .bold),
                                                         ),
-                                                      ],
+                                                      ),
+                                                    ),
+                                                    trailing: Icon(
+                                                      Icons.arrow_right,
+                                                      color: Theme.of(context)
+                                                          .textSelectionTheme
+                                                          .selectionColor,
+                                                      size: 26,
                                                     ),
                                                   ),
-                                                  title: Container(
-                                                    child: Center(
-                                                      child: Text(
-                                                        comunicados.titulo,
+                                                ),
+                                              );
+                                            }),
+                                      ))
+                                  : RefreshIndicator(
+                                      onRefresh:
+                                          comunicadosController.onRefresh,
+                                      child: ListView.builder(
+                                        itemCount: comunicadosController
+                                            .comunicados.length,
+                                        itemBuilder: (context, index) {
+                                          var comunicados =
+                                              comunicadosController
+                                                  .comunicados[index];
+
+                                          return GestureDetector(
+                                            onTap: () {
+                                              comunicadosController.title
+                                                  .value = comunicados.titulo!;
+                                              comunicadosController
+                                                      .description.value =
+                                                  comunicados.descricao!;
+
+                                              Get.toNamed(
+                                                  '/detalhesComunicados');
+                                            },
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                              ),
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              child: ListTile(
+                                                leading: RichText(
+                                                  text: TextSpan(
+                                                    style: GoogleFonts.montserrat(
+                                                        fontSize: 12,
+                                                        color: Theme.of(context)
+                                                            .textSelectionTheme
+                                                            .selectionColor),
+                                                    children: <TextSpan>[
+                                                      TextSpan(
+                                                          text:
+                                                              comunicados.dia! +
+                                                                  "  ",
+                                                          style: GoogleFonts
+                                                              .montserrat(
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold)),
+                                                      TextSpan(
+                                                        text: comunicados.mes! +
+                                                            ' ',
                                                         style: GoogleFonts.montserrat(
-                                                            fontSize: 12,
+                                                            fontSize: 14,
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .textSelectionTheme
+                                                                .selectionColor,
+                                                            letterSpacing: 2),
+                                                      ),
+                                                      TextSpan(
+                                                        text: comunicados.ano! +
+                                                            ' ',
+                                                        style: GoogleFonts.montserrat(
+                                                            fontSize: 14,
                                                             color: Theme.of(
                                                                     context)
                                                                 .textSelectionTheme
@@ -174,79 +229,15 @@ class Comunicados extends StatelessWidget {
                                                                 FontWeight
                                                                     .bold),
                                                       ),
-                                                    ),
-                                                  ),
-                                                  trailing: Icon(
-                                                    Icons.arrow_right,
-                                                    color: Theme.of(context)
-                                                        .textSelectionTheme
-                                                        .selectionColor,
-                                                    size: 26,
+                                                    ],
                                                   ),
                                                 ),
-                                              ),
-                                            );
-                                          }),
-                                    ))
-                                : RefreshIndicator(
-                                    onRefresh: comunicadosController.onRefresh,
-                                    child: ListView.builder(
-                                      itemCount: comunicadosController
-                                          .comunicados.length,
-                                      itemBuilder: (context, index) {
-                                        var comunicados = comunicadosController
-                                            .comunicados[index];
-
-                                        return GestureDetector(
-                                          onTap: () {
-                                            comunicadosController.title.value =
-                                                comunicados.titulo!;
-                                            comunicadosController.description
-                                                .value = comunicados.descricao!;
-
-                                            Get.toNamed('/detalhesComunicados');
-                                          },
-                                          child: Card(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                            ),
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            child: ListTile(
-                                              leading: RichText(
-                                                text: TextSpan(
-                                                  style: GoogleFonts.montserrat(
-                                                      fontSize: 12,
-                                                      color: Theme.of(context)
-                                                          .textSelectionTheme
-                                                          .selectionColor),
-                                                  children: <TextSpan>[
-                                                    TextSpan(
-                                                        text: comunicados.dia! +
-                                                            "  ",
-                                                        style: GoogleFonts
-                                                            .montserrat(
-                                                                fontSize: 14,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold)),
-                                                    TextSpan(
-                                                      text: comunicados.mes! +
-                                                          ' ',
+                                                title: Container(
+                                                  child: Center(
+                                                    child: Text(
+                                                      comunicados.titulo!,
                                                       style: GoogleFonts.montserrat(
-                                                          fontSize: 14,
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .textSelectionTheme
-                                                              .selectionColor,
-                                                          letterSpacing: 2),
-                                                    ),
-                                                    TextSpan(
-                                                      text: comunicados.ano! +
-                                                          ' ',
-                                                      style: GoogleFonts.montserrat(
-                                                          fontSize: 14,
+                                                          fontSize: 12,
                                                           color: Theme.of(
                                                                   context)
                                                               .textSelectionTheme
@@ -254,42 +245,59 @@ class Comunicados extends StatelessWidget {
                                                           fontWeight:
                                                               FontWeight.bold),
                                                     ),
-                                                  ],
-                                                ),
-                                              ),
-                                              title: Container(
-                                                child: Center(
-                                                  child: Text(
-                                                    comunicados.titulo!,
-                                                    style: GoogleFonts.montserrat(
-                                                        fontSize: 12,
-                                                        color: Theme.of(context)
-                                                            .textSelectionTheme
-                                                            .selectionColor,
-                                                        fontWeight:
-                                                            FontWeight.bold),
                                                   ),
                                                 ),
-                                              ),
-                                              trailing: Icon(
-                                                Icons.arrow_right,
-                                                color: Theme.of(context)
-                                                    .textSelectionTheme
-                                                    .selectionColor,
-                                                size: 26,
+                                                trailing: Icon(
+                                                  Icons.arrow_right,
+                                                  color: Theme.of(context)
+                                                      .textSelectionTheme
+                                                      .selectionColor,
+                                                  size: 26,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        );
-                                      },
+                                          );
+                                        },
+                                      ),
                                     ),
-                                  ),
-                          ),
-                        ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-          }
+                    )
+                  : Stack(
+                      children: <Widget>[
+                        Container(
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                          child: Image.asset(
+                            'images/semregistro.png',
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                        Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(top: 100),
+                                //child: Icon(Icons.block, size: 34, color: Colors.red[900]),
+                              ),
+                              Text(
+                                'Sem registros',
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 16.0,
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    );
         },
       ),
     );

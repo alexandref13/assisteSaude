@@ -33,7 +33,7 @@ class TerapiaController extends GetxController {
 
     Iterable dados = json.decode(response.body);
 
-    print('terapias: $dados');
+    //print('terapias: $dados');
 
     terapias.assignAll(
       dados.map((model) => TerapiaModel.fromJson(model)).toList(),

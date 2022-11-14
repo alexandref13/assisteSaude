@@ -49,6 +49,7 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Expanded(
+                            flex: -2,
                             child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 7),
                               decoration: BoxDecoration(
@@ -98,6 +99,7 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                             height: 15,
                           ),
                           Expanded(
+                            flex: -2,
                             child: Container(
                               child: CheckboxListTile(
                                   title: Text(
@@ -123,6 +125,7 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                             color: Theme.of(context).primaryColor,
                           ),
                           Expanded(
+                            flex: -2,
                             child: Container(
                               child: CheckboxListTile(
                                 title: Text(
@@ -149,6 +152,7 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                             color: Theme.of(context).primaryColor,
                           ),
                           Expanded(
+                            flex: -2,
                             child: Container(
                                 child: CheckboxListTile(
                               title: Text(
@@ -173,6 +177,7 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                             color: Theme.of(context).primaryColor,
                           ),
                           Expanded(
+                            flex: -2,
                             child: Container(
                                 child: CheckboxListTile(
                               title: Text(
@@ -197,6 +202,7 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                             color: Theme.of(context).primaryColor,
                           ),
                           Expanded(
+                            flex: -2,
                             child: Container(
                                 child: CheckboxListTile(
                               title: Text(
@@ -221,6 +227,7 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                             color: Theme.of(context).primaryColor,
                           ),
                           Expanded(
+                            flex: -2,
                             child: Container(
                                 child: CheckboxListTile(
                               title: Text(
@@ -245,6 +252,7 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                             color: Theme.of(context).primaryColor,
                           ),
                           Expanded(
+                            flex: -2,
                             child: Container(
                                 child: CheckboxListTile(
                               title: Text(

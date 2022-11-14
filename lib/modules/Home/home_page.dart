@@ -458,6 +458,7 @@ class _HomePageState extends State<HomePage> {
                                 size: 22,
                               ),
                               onTap: () async {
+                                loginController.idCliente.value = '';
                                 await loginController.hasMoreEmail(
                                   loginController.email.value.text,
                                 );
@@ -652,7 +653,7 @@ class _HomePageState extends State<HomePage> {
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.notification_add,
+                Icons.description_outlined,
               ),
               label: 'Sessões',
             ),

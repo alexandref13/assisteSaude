@@ -1,4 +1,4 @@
-buildscript {
+/*buildscript {
     repositories {
        
         maven { url 'https://plugins.gradle.org/m2/' } // Gradle Plugin Portal
@@ -8,7 +8,7 @@ buildscript {
         classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.10, 0.99.99]'
     }
 }
-apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin' */
 
 
 def localProperties = new Properties()
@@ -26,12 +26,12 @@ if (flutterRoot == null) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '2'
+    flutterVersionCode = '3'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.0.1'
+    flutterVersionName = '2.0'
 }
 
 apply plugin: 'com.android.application'
@@ -39,22 +39,30 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
+
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.assistesaude"
         minSdkVersion 20
-        targetSdkVersion 30
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        targetSdkVersion 31
+        versionCode 3
+        versionName '2.0'
         multiDexEnabled true
-        versionCode 8
-        versionName "1.6"
 
     }
 
@@ -65,6 +73,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    namespace 'com.assistesaude' 
 }
 
 flutter {
@@ -72,7 +81,6 @@ flutter {
 }
 
 dependencies {
-    //implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.0"
-     implementation "androidx.multidex:multidex:2.0.1"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support:multidex:1.0.3'
 }

@@ -20,7 +20,7 @@ class SessionController extends GetxController {
 
     var dados = json.decode(response.body);
 
-    print('sessoes: $dados');
+    //print('sessoes: $dados');
 
     clientes.assignAll(dados);
 

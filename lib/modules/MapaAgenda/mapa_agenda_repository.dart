@@ -7,6 +7,7 @@ class MapaAgendaRepository {
   static Future doCheckin() async {
     MapaAgendaController mapaAgendaController = Get.put(MapaAgendaController());
 
+    print('Lat:${mapaAgendaController.ourLat.value.toString()}');
     return await http.post(
       Uri.https("assistesaude.com.br", "/flutter/check.php"),
       body: {

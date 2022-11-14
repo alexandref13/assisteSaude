@@ -22,6 +22,7 @@ class HomeController extends GetxController {
     loginController.password.value.text = '';
     loginController.nome.value = '';
     loginController.tipousu.value = '';
+    loginController.idCliente.value = '';
 
     Get.offAllNamed('/login');
   }

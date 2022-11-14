@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:async';
 import 'package:assistsaude/modules/Login/components/list_of_clients_model.dart';
 import 'package:assistsaude/modules/Login/login_repository.dart';
 import 'package:assistsaude/shared/alert_button_pressed.dart';
@@ -45,13 +46,21 @@ class LoginController extends GetxController {
   getEmail() async {
     await GetStorage.init();
     final box = GetStorage();
-
     var newEmail = box.read('email');
+    var newId = box.read('id');
 
     if (newEmail != null) {
       email.value.text = newEmail;
+      idprof.value = newId;
     }
   }
+
+  /*storageId() async {
+    await GetStorage.init();
+    final box = GetStorage();
+    box.write('email', email);
+    box.write('idCliente', idCliente);
+  }*/
 
   hasMoreEmail(String? emailS) async {
     isLoading(true);
@@ -96,11 +105,13 @@ class LoginController extends GetxController {
       }).catchError((error) {
         print("Encountered an error sending tags: $error");
       });
+
       hasMoreEmail(email.value.text).then(
         (value) async {
           await GetStorage.init();
           final box = GetStorage();
           box.write('id', dadosUsuario['idprof']);
+          box.write('idCliente', dadosUsuario['idcliente']);
 
           idprof.value = dadosUsuario['idprof'];
           nome.value = dadosUsuario['nome'];
@@ -124,15 +135,20 @@ class LoginController extends GetxController {
           datanas.value = dadosUsuario['datanas'];
           emailprof.value = dadosUsuario['email'];
 
-          print(dadosUsuario['imglogobranca']);
-          print(dadosUsuario['imglogo']);
           if (value.length > 1) {
             Get.toNamed('listOfClients');
             isMoreThanOneEmail(true);
           } else {
-            Get.offNamed('/home');
+            /*if (value.length > 1) {
+              isMoreThanOneEmail(true);
+            } else {
+              isMoreThanOneEmail(false);
+            }*/
             isMoreThanOneEmail(false);
+            Get.offNamed('/home');
           }
+          //Get.offNamed('/home');
+          //storageId();
         },
       );
     } else if (dadosUsuario['valida'] == 2) {
@@ -176,6 +192,56 @@ class LoginController extends GetxController {
       var androidDeviceInfo = await deviceInfo.androidInfo;
       return androidDeviceInfo.androidId;
     }
+  }
+
+  storageId() async {
+    await GetStorage.init();
+    final box = GetStorage();
+    box.write('id', idprof.value);
+    box.write('idCliente', idCliente.value);
+  }
+
+  newLogin() async {
+    await GetStorage.init();
+    final box = GetStorage();
+    var id = box.read('id');
+
+    isLoading(true);
+
+    final response = await LoginRepository.Newlogin(id);
+
+    var dados = json.decode(response.body);
+
+    isLoading(false);
+
+    email(dados['email']);
+    idprof(dados['idprof']);
+    nome(dados['nome']);
+    sobrenome(dados['sobrenome']);
+    tipousu(dados['tipousu']);
+    imgperfil(dados['imgperfil']);
+    especialidade(dados['especialidade']);
+    idCliente(dados['idcliente']);
+    nomeCliente(dados['nomecliente']);
+    imgLogo(dados['imglogo']);
+    imgLogoBranca(dados['imglogobranca']);
+    slogan(dados['slogan']);
+    endereco(dados['endereco']);
+    complemento(dados['complemento']);
+    cidade(dados['cidade']);
+    bairro(dados['bairro']);
+    cep(dados['cep']);
+    uf(dados['uf']);
+    cel(dados['cel']);
+    genero(dados['genero']);
+    datanas(dados['datanas']);
+    idCliente(dados['idcliente']);
+
+    storageId();
+
+    Get.offNamed('/home');
+
+    isLoading(false);
   }
 
   @override

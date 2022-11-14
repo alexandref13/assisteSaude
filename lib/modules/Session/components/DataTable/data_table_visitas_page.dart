@@ -39,7 +39,7 @@ class DataTableVisitas extends StatelessWidget {
                   ),
                   DataColumn(
                     label: Text(
-                      'CLIENTE',
+                      'PACIENTE',
                       style: GoogleFonts.montserrat(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -66,7 +66,7 @@ class DataTableVisitas extends StatelessWidget {
                   ),
                   DataColumn(
                     label: Text(
-                      'TEMPO',
+                      'PERMANÊNCIA',
                       style: GoogleFonts.montserrat(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,

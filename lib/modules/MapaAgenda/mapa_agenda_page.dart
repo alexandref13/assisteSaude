@@ -1,7 +1,4 @@
-import 'dart:io';
 import 'dart:async';
-import 'dart:typed_data';
-import 'dart:ui';
 import 'package:assistsaude/modules/Agenda/calendario_controller.dart';
 import 'package:assistsaude/modules/Login/login_controller.dart';
 import 'package:assistsaude/modules/MapaAgenda/mapa_agenda_controller.dart';
@@ -12,10 +9,11 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:cached_network_marker/cached_network_marker.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+
+//import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+//import 'dart:io';
+//import 'dart:ui';
 
 class MapaAgendaPage extends StatefulWidget {
   const MapaAgendaPage({Key? key}) : super(key: key);
@@ -43,6 +41,19 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
     )));
   }
 
+  Future<void> gotoLocationProf() async {
+    final GoogleMapController controller = await _controller.future;
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+      target: LatLng(position.latitude, position.longitude),
+      zoom: 18,
+      tilt: 20,
+      bearing: 45,
+    )));
+  }
+
   Future<void> zoomToFit(GoogleMapController controller, LatLngBounds bounds,
       LatLng centerBounds) async {
     bool keepZoomingOut = true;
@@ -50,7 +61,9 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
       final LatLngBounds screenBounds = await controller.getVisibleRegion();
       if (fits(bounds, screenBounds)) {
         keepZoomingOut = false;
+
         final double zoomLevel = await controller.getZoomLevel() - 0.5;
+
         controller.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
           target: centerBounds,
           zoom: zoomLevel,
@@ -85,14 +98,14 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
 
   void timer() async {
     String url;
-    final int targetWidth = 120;
+    //final int targetWidth = 120;
 
     loginController.imgperfil.value == ""
         ? url = 'https://assistesaude.com.br/dist/img/user.png'
         : url =
             'https://assistesaude.com.br/downloads/fotosprofissionais/${loginController.imgperfil.value}';
 
-    final File markerImageFile = await DefaultCacheManager().getSingleFile(url);
+    /* final File markerImageFile = await DefaultCacheManager().getSingleFile(url);
     final Uint8List markerImageBytes = await markerImageFile.readAsBytes();
 
     final Codec markerImageCodec = await instantiateImageCodec(
@@ -104,28 +117,36 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
     final ByteData? byteData = await frameInfo.image.toByteData(
       format: ImageByteFormat.png,
     );
-    final Uint8List resizedMarkerImageBytes = byteData!.buffer.asUint8List();
+    final Uint8List resizedMarkerImageBytes = byteData!.buffer.asUint8List();*/
 
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     LatLng latLatAtual = LatLng(position.latitude, position.longitude);
     // create the instance of CachedNetworkMarker
+    BitmapDescriptor markerbitmapprof = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(), "images/profissional.png");
+
+    // final _platform = Theme.of(context).platform;
 
     Future.delayed(Duration(seconds: 2)).then((_) async {
       if (this.mounted) {
-        // check whether the state object is in tree
         setState(() {
+          mapaAgendaController.ourLat.value = position.latitude;
+          mapaAgendaController.ourLng.value = position.longitude;
           mapaAgendaController.markers.add(Marker(
             markerId: MarkerId('Estou Aqui!'),
             position: latLatAtual,
             infoWindow: InfoWindow(
-                title: 'Minha Localização', snippet: "" //"$position",
+                title: 'Sua localização atual', snippet: "" //"$position",
                 ),
-            icon: BitmapDescriptor.fromBytes(resizedMarkerImageBytes),
+            icon: markerbitmapprof,
+
+            /*_platform == TargetPlatform.iOS
+                ? BitmapDescriptor.fromBytes(resizedMarkerImageBytes)
+                : markerbitmapprof,*/
           ));
         });
       }
-
       timer();
     });
   }
@@ -151,13 +172,14 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
         width: MediaQuery.of(context).size.width,
         child: GoogleMap(
           mapType: MapType.normal,
-          zoomControlsEnabled: false,
+          zoomControlsEnabled: true,
           zoomGesturesEnabled: true,
           scrollGesturesEnabled: true,
           compassEnabled: true,
           rotateGesturesEnabled: true,
           mapToolbarEnabled: true,
           tiltGesturesEnabled: true,
+          myLocationButtonEnabled: false,
           initialCameraPosition: CameraPosition(
             target: LatLng(
               mapaAgendaController.lat.value,
@@ -187,6 +209,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                 southwest: latLatPosition,
                 northeast: latLatCliente,
               );
+
               controller
                   .animateCamera(CameraUpdate.newLatLngBounds(bounds, 50));
               final LatLng centerBounds = LatLng(
@@ -199,6 +222,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                 target: centerBounds,
                 zoom: 16,
               )));
+
               zoomToFit(controller, bounds, centerBounds);
             } else {
               LatLngBounds bounds = LatLngBounds(
@@ -217,37 +241,29 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                 target: centerBounds,
                 zoom: 16,
               )));
+
               zoomToFit(controller, bounds, centerBounds);
             }
-            // create the instance of CachedNetworkMarker
-            final generator = CachedNetworkMarker(
-              url: loginController.imgperfil.value == ""
-                  ? 'https://assistesaude.com.br/dist/img/user.png'
-                  : 'https://assistesaude.com.br/downloads/fotosprofissionais/${loginController.imgperfil.value}',
-              // dpr: loginController.deviceRadio.value,
-              dpr: 90,
-            );
-
-            final bitmap = await generator
-                .circleAvatar(CircleAvatarParams(color: Colors.lightBlue));
-
+            BitmapDescriptor markerbitmapprof =
+                await BitmapDescriptor.fromAssetImage(
+                    ImageConfiguration(), "images/profissional.png");
             if (this.mounted) {
-              mapaAgendaController.ourLat.value = position.latitude;
-              mapaAgendaController.ourLng.value = position.longitude;
-              setState(
-                () {
-                  mapaAgendaController.markers.add(Marker(
-                    markerId: MarkerId('Estou Aqui!'),
-                    position: latLatPosition,
-                    infoWindow: InfoWindow(
-                        title: 'Minha Localização', snippet: "" //"$position",
-                        ),
-                    icon: BitmapDescriptor.fromBytes(bitmap),
-                  ));
+              setState(() {
+                mapaAgendaController.ourLat.value = position.latitude;
+                mapaAgendaController.ourLng.value = position.longitude;
+                mapaAgendaController.markers.add(Marker(
+                  markerId: MarkerId('Estou Aqui!'),
+                  position: latLatPosition,
+                  infoWindow: InfoWindow(
+                      title: 'Sua localização atual', snippet: "" //"$position",
+                      ),
+                  icon: markerbitmapprof,
 
-                  print('markers ${mapaAgendaController.markers}');
-                },
-              );
+                  /*_platform == TargetPlatform.iOS
+                ? BitmapDescriptor.fromBytes(resizedMarkerImageBytes)
+                : markerbitmapprof,*/
+                ));
+              });
             }
             timer();
           },
@@ -279,7 +295,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
               width: 4.0,
             ),
           ),
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Colors.blue,
           onPressed: () {
             gotoLocation();
           },
@@ -296,10 +312,36 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
       );
     }
 
+    Widget boxesProf() {
+      return Container(
+        child: FloatingActionButton(
+          shape: CircleBorder(
+            side: BorderSide(
+              color: Colors.white,
+              width: 4.0,
+            ),
+          ),
+          backgroundColor: Colors.red,
+          onPressed: () {
+            gotoLocationProf();
+          },
+          child: Container(
+            child: Container(
+              padding: const EdgeInsets.all(5),
+              child: Icon(
+                Icons.my_location_outlined,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     Widget buildContainer() {
       return Positioned(
-        top: 0,
-        right: 5,
+        bottom: 40,
+        right: 80,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -309,6 +351,10 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: boxes(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: boxesProf(),
                   ),
                 ],
               ),
@@ -364,7 +410,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                   labelBackgroundColor:
                       Theme.of(context).textSelectionTheme.selectionColor,
                   child: Icon(
-                    Icons.check,
+                    Icons.check_circle_outline,
                     color: Theme.of(context).textSelectionTheme.selectionColor,
                   ),
                   backgroundColor: Colors.green,
@@ -402,7 +448,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                   labelBackgroundColor:
                       Theme.of(context).textSelectionTheme.selectionColor,
                   child: Icon(
-                    Icons.info,
+                    Icons.info_outline_rounded,
                     color: Theme.of(context).textSelectionTheme.selectionColor,
                   ),
                   backgroundColor: Colors.grey,
@@ -438,7 +484,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                   labelBackgroundColor:
                       Theme.of(context).textSelectionTheme.selectionColor,
                   child: Icon(
-                    Icons.delete,
+                    Icons.delete_outline,
                     color: Theme.of(context).textSelectionTheme.selectionColor,
                   ),
                   backgroundColor: Colors.red,
