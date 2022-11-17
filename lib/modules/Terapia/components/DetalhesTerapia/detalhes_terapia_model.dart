@@ -18,6 +18,8 @@ class DetalhesTerapiaModel {
   String? status;
   String? idStatus;
   String? ctlAceito;
+  String? obs;
+  String? dataocorre;
 
   DetalhesTerapiaModel(
       {this.id,
@@ -38,7 +40,9 @@ class DetalhesTerapiaModel {
       this.idade,
       this.status,
       this.idStatus,
-      this.ctlAceito});
+      this.ctlAceito,
+      this.obs,
+      this.dataocorre});
 
   DetalhesTerapiaModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -60,6 +64,8 @@ class DetalhesTerapiaModel {
     status = json['status'];
     idStatus = json['id_status'];
     ctlAceito = json['ctl_aceito'];
+    obs = json['obs'];
+    dataocorre = json['dataocorre'];
   }
 
   Map<String, dynamic> toJson() {
@@ -83,6 +89,8 @@ class DetalhesTerapiaModel {
     data['status'] = this.status;
     data['id_status'] = this.idStatus;
     data['ctl_aceito'] = this.ctlAceito;
+    data['obs'] = this.obs;
+    data['dataocorre'] = this.dataocorre;
     return data;
   }
 }

@@ -212,6 +212,20 @@ class LoginController extends GetxController {
 
     var dados = json.decode(response.body);
 
+    var sendTags = {
+      'idusu': dados['idprof'],
+      'nome': dados['nome'],
+      'sobrenome': dados['sobrenome'],
+      'tipousu': dados['tipousu'],
+      'idcliente': dados['idcliente'],
+    };
+
+    OneSignal.shared.sendTags(sendTags).then((response) {
+      print("Successfully sent tags with response: $response");
+    }).catchError((error) {
+      print("Encountered an error sending tags: $error");
+    });
+
     isLoading(false);
 
     email(dados['email']);

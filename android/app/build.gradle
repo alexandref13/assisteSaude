@@ -60,7 +60,7 @@ android {
         applicationId "com.assistesaude"
         minSdkVersion 20
         targetSdkVersion 31
-        versionCode 3
+        versionCode 9
         versionName '2.0'
         multiDexEnabled true
 

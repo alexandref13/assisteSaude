@@ -1,4 +1,3 @@
-import 'package:assistsaude/modules/Login/login_controller.dart';
 import 'package:assistsaude/modules/Terapia/components/DetalhesTerapia/detalhs_terapia_controller.dart';
 import 'package:assistsaude/modules/Terapia/terapia_controller.dart';
 import 'package:assistsaude/shared/box_search.dart';

@@ -287,24 +287,28 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
     }
 
     Widget boxes() {
-      return Container(
-        child: FloatingActionButton(
-          shape: CircleBorder(
-            side: BorderSide(
-              color: Colors.white,
-              width: 4.0,
-            ),
-          ),
-          backgroundColor: Colors.blue,
-          onPressed: () {
-            gotoLocation();
-          },
-          child: Container(
-            child: Container(
-              padding: const EdgeInsets.all(5),
-              child: Icon(
-                Icons.my_location_outlined,
+      return Positioned(
+        top: 80,
+        right: 5,
+        child: Container(
+          child: FloatingActionButton(
+            shape: CircleBorder(
+              side: BorderSide(
                 color: Colors.white,
+                width: 4.0,
+              ),
+            ),
+            backgroundColor: Colors.blue,
+            onPressed: () {
+              gotoLocation();
+            },
+            child: Container(
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                child: Icon(
+                  Icons.my_location_outlined,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
@@ -313,24 +317,28 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
     }
 
     Widget boxesProf() {
-      return Container(
-        child: FloatingActionButton(
-          shape: CircleBorder(
-            side: BorderSide(
-              color: Colors.white,
-              width: 4.0,
-            ),
-          ),
-          backgroundColor: Colors.red,
-          onPressed: () {
-            gotoLocationProf();
-          },
-          child: Container(
-            child: Container(
-              padding: const EdgeInsets.all(5),
-              child: Icon(
-                Icons.my_location_outlined,
+      return Positioned(
+        top: 160,
+        right: 5,
+        child: Container(
+          child: FloatingActionButton(
+            shape: CircleBorder(
+              side: BorderSide(
                 color: Colors.white,
+                width: 4.0,
+              ),
+            ),
+            backgroundColor: Colors.red,
+            onPressed: () {
+              gotoLocationProf();
+            },
+            child: Container(
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                child: Icon(
+                  Icons.my_location_outlined,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
@@ -339,28 +347,13 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
     }
 
     Widget buildContainer() {
-      return Positioned(
-        bottom: 40,
-        right: 80,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: boxes(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: boxesProf(),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+      return Stack(
+        //alignment: Alignment.bottomRight,
+        textDirection: TextDirection.ltr,
+        children: [
+          boxes(),
+          boxesProf(),
+        ],
       );
     }
 

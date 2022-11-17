@@ -1,3 +1,4 @@
+import 'package:assistsaude/shared/alert_button_pressed.dart';
 import 'package:assistsaude/shared/circular_progress_indicator.dart';
 import 'package:assistsaude/shared/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -176,10 +177,81 @@ class _InfoCheckPageState extends State<InfoCheckPage> {
                                 ),
                               ),
                               onPressed: () async {
+                                // calcular com hora e minutos
+                                var horaSel;
+                                var minutoSel;
+
                                 infoCheckController.hour.value.text =
                                     "${startSelectedTime!.hour.toString()}:${startSelectedTime!.minute.toString()}";
 
-                                await infoCheckController.changeHours(context);
+                                var hourSel =
+                                    int.parse("${startSelectedTime!.hour}");
+                                var minuteSel =
+                                    int.parse("${startSelectedTime!.minute}");
+
+                                if (hourSel < 10) {
+                                  horaSel = "0${startSelectedTime!.hour}";
+                                } else {
+                                  horaSel = "${startSelectedTime!.hour}";
+                                }
+
+                                if (minuteSel < 10) {
+                                  minutoSel = "0${startSelectedTime!.minute}";
+                                } else {
+                                  minutoSel = "${startSelectedTime!.minute}";
+                                }
+
+                                var hora =
+                                    "${startSelectedDate!.year}-${startSelectedDate!.month}-${startSelectedDate!.day} $horaSel:$minutoSel";
+
+                                var temp = DateTime.now();
+                                var d1 = DateTime.utc(temp.year, temp.month,
+                                    temp.day, temp.hour, temp.minute);
+
+                                var data = DateTime.parse(hora);
+                                var dt =
+                                    DateFormat("yyyy-MM-dd HH:mm").format(data);
+
+                                var data2 = DateTime.parse(dt);
+                                var d2 = DateTime.utc(data2.year, data2.month,
+                                    data2.day, data2.hour, data2.minute);
+
+                                // termina aqui
+
+                                // Calcular apenas a DATA
+                                var temp2 =
+                                    "${mapaAgendaController.dtagenda.value}";
+                                var dataAg = DateTime.parse(temp2);
+
+                                var dataAgenda = DateTime.utc(
+                                    dataAg.year, dataAg.month, dataAg.day);
+                                var dataRaiz =
+                                    "${startSelectedDate!.year}-${startSelectedDate!.month}-${startSelectedDate!.day}";
+                                var dataRaizDate = DateTime.parse(dataRaiz);
+
+                                var dataInformada = DateTime.utc(
+                                    dataRaizDate.year,
+                                    dataRaizDate.month,
+                                    dataRaizDate.day);
+
+                                print(dataInformada);
+                                print('ola $dataAgenda');
+
+                                if (d2.compareTo(d1) > 0 &&
+                                    (dataInformada.compareTo(dataAgenda)) <=
+                                        0) {
+                                  onAlertButtonPressed(
+                                    context,
+                                    'Horário não permitido!\nMaior que o atual',
+                                    () {
+                                      Get.back();
+                                    },
+                                  );
+                                } else {
+                                  print('foi');
+                                  await infoCheckController
+                                      .changeHours(context);
+                                }
                               },
                               child: Text(
                                 "Incluir Horário",

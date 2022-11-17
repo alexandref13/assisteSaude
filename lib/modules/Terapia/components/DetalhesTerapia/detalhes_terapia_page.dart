@@ -42,11 +42,11 @@ class DetalhesTerapiaPage extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                Icon(
-                                  Icons.airline_seat_flat,
-                                  size: 35,
-                                  color: Theme.of(context).primaryColor,
-                                ),
+                                Icon(Icons.airline_seat_flat,
+                                    size: 35,
+                                    color: details.status != 'NORMAL'
+                                        ? Theme.of(context).errorColor
+                                        : Theme.of(context).primaryColor),
                                 SizedBox(
                                   height: 10,
                                 ),
@@ -270,6 +270,52 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                   endIndent: 20,
                                   color: Theme.of(context).primaryColor,
                                 ),
+                                details.obs != ''
+                                    ? Column(
+                                        children: [
+                                          Center(
+                                            child: Text(
+                                              'Observação do dia ${details.dataocorre}',
+                                              style: GoogleFonts.montserrat(
+                                                fontSize: 12,
+                                                color: Theme.of(context)
+                                                    .textSelectionTheme
+                                                    .selectionColor,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Center(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      10, 0, 10, 0),
+                                              child: Text(
+                                                details.obs!,
+                                                style: GoogleFonts.montserrat(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14,
+                                                  color: Theme.of(context)
+                                                      .textSelectionTheme
+                                                      .selectionColor,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
+                                details.obs != ''
+                                    ? Divider(
+                                        height: 40,
+                                        thickness: 2,
+                                        indent: 20,
+                                        endIndent: 20,
+                                        color: Theme.of(context).primaryColor,
+                                      )
+                                    : Container(),
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: <Widget>[
