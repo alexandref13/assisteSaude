@@ -36,6 +36,8 @@ class MapaAgendaController extends GetxController {
   var markers = <Marker>{}.obs;
 
   getClientes() async {
+    final MapaAgendaController mapaAgendaController =
+        Get.put(MapaAgendaController());
     BitmapDescriptor markerbitmap = await BitmapDescriptor.fromAssetImage(
       ImageConfiguration(),
       "images/paciente.png",
@@ -46,7 +48,9 @@ class MapaAgendaController extends GetxController {
         position: LatLng(lat.value, lng.value),
         infoWindow: InfoWindow(
           title: name.value,
-          snippet: "$adress",
+          snippet: mapaAgendaController.ctlcheckin.value == '0'
+              ? "$adress"
+              : "$adress\nCheck-in:${mapaAgendaController.checkin.value}",
         ),
         icon: markerbitmap,
       ),

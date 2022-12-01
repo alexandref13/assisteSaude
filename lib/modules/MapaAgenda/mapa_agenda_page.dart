@@ -11,10 +11,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
-//import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-//import 'dart:io';
-//import 'dart:ui';
-
 class MapaAgendaPage extends StatefulWidget {
   const MapaAgendaPage({Key? key}) : super(key: key);
 
@@ -24,11 +20,37 @@ class MapaAgendaPage extends StatefulWidget {
 
 class _MapaAgendaPageState extends State<MapaAgendaPage> {
   CalendarioController calendarioController = Get.put(CalendarioController());
+  LoginController loginController = Get.find(tag: 'login');
   final MapaAgendaController mapaAgendaController =
       Get.put(MapaAgendaController());
   Completer<GoogleMapController> _controller = Completer();
 
-  LoginController loginController = Get.find(tag: 'login');
+  Position? _position;
+
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Serviços de localização desabilitados!');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Permissão de localização negada!');
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'As permissões de localização estão permanentemente negadas!');
+    }
+
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+  }
 
   Future<void> gotoLocation() async {
     final GoogleMapController controller = await _controller.future;
@@ -97,13 +119,13 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
   }
 
   void timer() async {
-    String url;
+    //String url;
     //final int targetWidth = 120;
 
-    loginController.imgperfil.value == ""
-        ? url = 'https://assistesaude.com.br/dist/img/user.png'
+    /*loginController.imgperfil.value == ""
+       ? url = 'https://assistesaude.com.br/dist/img/user.png'
         : url =
-            'https://assistesaude.com.br/downloads/fotosprofissionais/${loginController.imgperfil.value}';
+            'https://assistesaude.com.br/downloads/fotosprofissionais/${loginController.imgperfil.value}';*/
 
     /* final File markerImageFile = await DefaultCacheManager().getSingleFile(url);
     final Uint8List markerImageBytes = await markerImageFile.readAsBytes();
@@ -118,9 +140,13 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
       format: ImageByteFormat.png,
     );
     final Uint8List resizedMarkerImageBytes = byteData!.buffer.asUint8List();*/
+    //_determinePosition();
 
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+    Position position = await _determinePosition();
+    setState(() {
+      _position = position;
+    });
+
     LatLng latLatAtual = LatLng(position.latitude, position.longitude);
     // create the instance of CachedNetworkMarker
     BitmapDescriptor markerbitmapprof = await BitmapDescriptor.fromAssetImage(
@@ -194,8 +220,10 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
 
             changeMapMode();
 
-            Position position = await Geolocator.getCurrentPosition(
-                desiredAccuracy: LocationAccuracy.high);
+            Position position = await _determinePosition();
+            setState(() {
+              _position = position;
+            });
 
             LatLng latLatPosition =
                 LatLng(position.latitude, position.longitude);
@@ -346,6 +374,21 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
       );
     }
 
+    Widget ContadorTime() {
+      return Positioned(
+        top: 20,
+        left: 10,
+        child: Container(
+          child: FloatingActionButton.extended(
+            onPressed: () {},
+            label: const Text('00:10:23'),
+            icon: const Icon(Icons.timer),
+            backgroundColor: Colors.amber[900],
+          ),
+        ),
+      );
+    }
+
     Widget buildContainer() {
       return Stack(
         //alignment: Alignment.bottomRight,
@@ -353,6 +396,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
         children: [
           boxes(),
           boxesProf(),
+          //ContadorTime(),
         ],
       );
     }

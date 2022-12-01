@@ -177,9 +177,13 @@ class _InfoCheckPageState extends State<InfoCheckPage> {
                                 ),
                               ),
                               onPressed: () async {
+                                //var now = new DateTime.now();
+                                //print(new DateFormat("yyyy-MM-dd").format(now));
                                 // calcular com hora e minutos
                                 var horaSel;
                                 var minutoSel;
+                                var monthSel = "";
+                                var daySel = "";
 
                                 infoCheckController.hour.value.text =
                                     "${startSelectedTime!.hour.toString()}:${startSelectedTime!.minute.toString()}";
@@ -201,10 +205,30 @@ class _InfoCheckPageState extends State<InfoCheckPage> {
                                   minutoSel = "${startSelectedTime!.minute}";
                                 }
 
+                                if (minuteSel < 10) {
+                                  minutoSel = "0${startSelectedTime!.minute}";
+                                } else {
+                                  minutoSel = "${startSelectedTime!.minute}";
+                                }
+
+                                if (startSelectedDate!.month < 10) {
+                                  monthSel = "0${startSelectedDate!.month}";
+                                } else {
+                                  monthSel = "${startSelectedDate!.month}";
+                                }
+                                if (startSelectedDate!.day < 10) {
+                                  daySel = "0${startSelectedDate!.day}";
+                                } else {
+                                  daySel = "${startSelectedDate!.day}";
+                                }
+
                                 var hora =
-                                    "${startSelectedDate!.year}-${startSelectedDate!.month}-${startSelectedDate!.day} $horaSel:$minutoSel";
+                                    "${startSelectedDate!.year}-$monthSel-$daySel $horaSel:$minutoSel";
+
+                                print('hora: $hora');
 
                                 var temp = DateTime.now();
+
                                 var d1 = DateTime.utc(temp.year, temp.month,
                                     temp.day, temp.hour, temp.minute);
 
@@ -215,18 +239,20 @@ class _InfoCheckPageState extends State<InfoCheckPage> {
                                 var data2 = DateTime.parse(dt);
                                 var d2 = DateTime.utc(data2.year, data2.month,
                                     data2.day, data2.hour, data2.minute);
-
+                                print('D1=$d1');
                                 // termina aqui
 
                                 // Calcular apenas a DATA
+
                                 var temp2 =
                                     "${mapaAgendaController.dtagenda.value}";
                                 var dataAg = DateTime.parse(temp2);
 
                                 var dataAgenda = DateTime.utc(
                                     dataAg.year, dataAg.month, dataAg.day);
+
                                 var dataRaiz =
-                                    "${startSelectedDate!.year}-${startSelectedDate!.month}-${startSelectedDate!.day}";
+                                    "${startSelectedDate!.year}-$monthSel-$daySel";
                                 var dataRaizDate = DateTime.parse(dataRaiz);
 
                                 var dataInformada = DateTime.utc(
@@ -234,8 +260,8 @@ class _InfoCheckPageState extends State<InfoCheckPage> {
                                     dataRaizDate.month,
                                     dataRaizDate.day);
 
-                                print(dataInformada);
-                                print('ola $dataAgenda');
+                                //print(dataInformada);
+                                //print('ola $dataAgenda2');
 
                                 if (d2.compareTo(d1) > 0 &&
                                     (dataInformada.compareTo(dataAgenda)) <=
