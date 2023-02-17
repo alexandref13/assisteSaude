@@ -130,6 +130,7 @@ class _AgendarHorarioState extends State<AgendarHorario> {
                                 false,
                                 startTime,
                                 false,
+                                300,
                               ),
                             ),
                           ),

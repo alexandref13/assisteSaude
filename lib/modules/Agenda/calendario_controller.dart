@@ -34,6 +34,8 @@ class CalendarioController extends GetxController {
     events = {};
     if (dados != null) {
       for (var eventos in dados) {
+        print(eventos['evolcao']);
+
         events
             .putIfAbsent(
                 DateTime.parse('${eventos['dt_agenda']} 00:00:00.000Z'),
@@ -50,6 +52,7 @@ class CalendarioController extends GetxController {
                 idsecao: eventos['idsecao'],
                 idpftr: eventos['idpftr'],
                 obs: eventos['obs'],
+                evolcao: eventos['evolcao'],
                 idStatus: eventos['id_status'],
                 dtAgenda: eventos['dt_agenda'],
                 checkin: eventos['checkin'],
@@ -65,6 +68,7 @@ class CalendarioController extends GetxController {
             );
       }
     }
+
     isLoading(false);
   }
 

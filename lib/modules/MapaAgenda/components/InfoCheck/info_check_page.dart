@@ -150,6 +150,7 @@ class _InfoCheckPageState extends State<InfoCheckPage> {
                                 false,
                                 startTime,
                                 false,
+                                300,
                               ),
                             ),
                           ),

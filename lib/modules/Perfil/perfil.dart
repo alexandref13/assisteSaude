@@ -352,6 +352,7 @@ class _PerfilState extends State<Perfil> {
                             true,
                             perfilController.name.value,
                             false,
+                            300,
                           ),
                           Container(
                             padding: EdgeInsets.symmetric(
@@ -377,6 +378,7 @@ class _PerfilState extends State<Perfil> {
                             true,
                             perfilController.secondName.value,
                             false,
+                            300,
                           ),
                           Container(
                             padding: EdgeInsets.symmetric(

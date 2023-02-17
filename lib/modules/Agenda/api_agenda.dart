@@ -1,5 +1,4 @@
 import 'package:assistsaude/modules/Agenda/agenda_controller.dart';
-import 'package:assistsaude/modules/Login/login_controller.dart';
 import 'package:assistsaude/modules/Terapia/components/DetalhesTerapia/detalhs_terapia_controller.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;

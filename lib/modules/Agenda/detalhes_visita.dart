@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../shared/alert_button_pressed.dart';
+
 class DetalhesVisita extends StatelessWidget {
   final MapaAgendaController mapaAgendaController =
       Get.put(MapaAgendaController());
@@ -210,16 +212,17 @@ class DetalhesVisita extends StatelessWidget {
                   ),
                   divider(context),
                   Container(
-                    padding: EdgeInsets.all(15),
+                    padding: EdgeInsets.all(10),
                     child: customTextField(
                       context,
-                      "Observação...",
+                      "Observação",
                       mapaAgendaController.obs.value,
                       true,
                       3,
                       true,
                       mapaAgendaController.observacao.value,
                       true,
+                      300,
                     ),
                   ),
                   ButtonTheme(
@@ -229,7 +232,9 @@ class DetalhesVisita extends StatelessWidget {
                         backgroundColor:
                             MaterialStateProperty.resolveWith<Color>(
                           (Set<MaterialState> states) {
-                            return Theme.of(context).primaryColor;
+                            return mapaAgendaController.obs.value == ""
+                                ? Theme.of(context).primaryColor
+                                : Colors.amber;
                           },
                         ),
                         shape:
@@ -242,19 +247,97 @@ class DetalhesVisita extends StatelessWidget {
                         ),
                       ),
                       onPressed: () async {
-                        await mapaAgendaController.doObs(context);
+                        if (mapaAgendaController.observacao.value.text == "") {
+                          onAlertButtonPressed(
+                            context,
+                            "Campo Vazio\nTente novamente.",
+                            () {
+                              Get.back();
+                            },
+                          );
+                        } else {
+                          await mapaAgendaController.doObs(context);
+                        }
                       },
                       child: Text(
-                        "Enviar Observação",
+                        mapaAgendaController.obs.value == ""
+                            ? "Enviar Observação"
+                            : "Editar Observação",
                         style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.bold,
-                          color: Theme.of(context)
-                              .textSelectionTheme
-                              .selectionColor,
+                          color: mapaAgendaController.obs.value == ""
+                              ? Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor
+                              : Colors.black87,
                         ),
                       ),
                     ),
-                  )
+                  ),
+                  divider(context),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: customTextField(
+                      context,
+                      "Descrição Clínica (Evolução)",
+                      mapaAgendaController.evolcao.value,
+                      true,
+                      8,
+                      true,
+                      mapaAgendaController.evolucao.value,
+                      true,
+                      2500,
+                    ),
+                  ),
+                  ButtonTheme(
+                    height: 50.0,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                            return mapaAgendaController.evolcao.value == ""
+                                ? Theme.of(context).primaryColor
+                                : Colors.amber;
+                          },
+                        ),
+                        shape:
+                            MaterialStateProperty.resolveWith<OutlinedBorder>(
+                          (Set<MaterialState> states) {
+                            return RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            );
+                          },
+                        ),
+                      ),
+                      onPressed: () async {
+                        if (mapaAgendaController.evolucao.value.text == "") {
+                          onAlertButtonPressed(
+                            context,
+                            "Campo Vazio\nTente novamente.",
+                            () {
+                              Get.back();
+                            },
+                          );
+                        } else {
+                          await mapaAgendaController.doEvolucao(context);
+                        }
+                      },
+                      child: Text(
+                        mapaAgendaController.evolcao.value == ""
+                            ? "Enviar Evolução"
+                            : "Editar Evolução",
+                        style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.bold,
+                          color: mapaAgendaController.evolcao.value == ""
+                              ? Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor
+                              : Colors.black87,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

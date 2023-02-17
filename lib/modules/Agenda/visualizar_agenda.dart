@@ -282,6 +282,8 @@ class VisualizarAgenda extends StatelessWidget {
                                   mapaAgendaController.checkout.value =
                                       e.checkout!;
                                   mapaAgendaController.obs.value = e.obs!;
+                                  mapaAgendaController.evolcao.value =
+                                      e.evolcao!;
 
                                   var temp = DateTime.now();
 
@@ -312,8 +314,8 @@ class VisualizarAgenda extends StatelessWidget {
                                   } else if (d2.compareTo(d1) < 0 &&
                                       (e.ctlCheckin == '1' &&
                                           e.ctlCheckout == '1')) {
+                                    print(mapaAgendaController.evolcao.value);
                                     Get.toNamed('/detalhesvisitas');
-
                                     // Get.toNamed('/detalhesvisitas');
                                   } else {
                                     Get.toNamed('/detalhesvisitas');

@@ -119,6 +119,7 @@ class _InfoStatusPageState extends State<InfoStatusPage> {
                             true,
                             infoStatusController.observation.value,
                             false,
+                            300,
                           ),
                         ),
                         ButtonTheme(

@@ -31,7 +31,9 @@ class MapaAgendaController extends GetxController {
   var checkin = ''.obs;
   var checkout = ''.obs;
   var obs = ''.obs;
+  var evolcao = ''.obs;
   var observacao = TextEditingController().obs;
+  var evolucao = TextEditingController().obs;
 
   var markers = <Marker>{}.obs;
 
@@ -65,6 +67,26 @@ class MapaAgendaController extends GetxController {
 
     if (dados == 1) {
       confirmedButtonPressed(context, 'Observação Salva com Sucesso!', () {
+        Get.offAllNamed('/home');
+      });
+    } else {
+      onAlertButtonPressed(
+        context,
+        'Houve Algum Problema! Tente Novamente',
+        () {
+          Get.back();
+        },
+      );
+    }
+  }
+
+  doEvolucao(context) async {
+    final response = await MapaAgendaRepository.doEvolucao();
+
+    var dados = json.decode(response.body);
+
+    if (dados == 1) {
+      confirmedButtonPressed(context, 'Evolução Salva com Sucesso!', () {
         Get.offAllNamed('/home');
       });
     } else {

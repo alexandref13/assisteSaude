@@ -44,6 +44,18 @@ class MapaAgendaRepository {
     );
   }
 
+  static Future doEvolucao() async {
+    MapaAgendaController mapaAgendaController = Get.put(MapaAgendaController());
+
+    return await http.post(
+      Uri.https("assistesaude.com.br", "/flutter/sessao_evolucao_incluir.php"),
+      body: {
+        'idsessao': mapaAgendaController.idSessao.value,
+        'evolcao': mapaAgendaController.evolucao.value.text,
+      },
+    );
+  }
+
   static Future doChangeGps() async {
     MapaAgendaController mapaAgendaController = Get.put(MapaAgendaController());
 

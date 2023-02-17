@@ -20,6 +20,7 @@ class MapaEvento {
   String? latlng;
   String? idpac;
   String? hragenda;
+  String? evolcao;
 
   MapaEvento({
     this.confdata,
@@ -43,6 +44,7 @@ class MapaEvento {
     this.latlng,
     this.idpac,
     this.hragenda,
+    this.evolcao,
   });
 
   MapaEvento.fromJson(Map<String, dynamic> json) {
@@ -67,6 +69,7 @@ class MapaEvento {
     latlng = json['latlng'];
     idpac = json['idpac'];
     hragenda = json['idpac'];
+    evolcao = json['evolcao'];
   }
 
   Map<String, dynamic> toJson() {
@@ -92,6 +95,7 @@ class MapaEvento {
     data['latlng'] = this.latlng;
     data['idpac'] = this.idpac;
     data['hragenda'] = this.hragenda;
+    data['evolcao'] = this.evolcao;
     return data;
   }
 }

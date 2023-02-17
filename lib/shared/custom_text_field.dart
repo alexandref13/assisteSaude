@@ -9,7 +9,8 @@ Widget customTextField(
     int lines,
     bool enabled,
     TextEditingController controller,
-    bool autofocus) {
+    bool autofocus,
+    int caracteres) {
   return TextField(
     autofocus: autofocus,
     onTap: () {
@@ -18,7 +19,7 @@ Widget customTextField(
         currentFocus.focusedChild!.unfocus();
       }
     },
-    maxLength: linesBool ? 300 : null,
+    maxLength: linesBool ? caracteres : null,
     controller: controller,
     maxLines: linesBool ? lines : 1,
     style: GoogleFonts.montserrat(
@@ -59,6 +60,7 @@ Widget customTextField(
           width: 1,
         ),
       ),
+      floatingLabelBehavior: FloatingLabelBehavior.always,
     ),
   );
 }
