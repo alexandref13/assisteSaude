@@ -597,6 +597,29 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                     Get.toNamed('/infoCheck');
                   },
                 ),
+                SpeedDialChild(
+                  labelBackgroundColor:
+                      Theme.of(context).textSelectionTheme.selectionColor,
+                  child: Icon(
+                    Icons.restore,
+                    color: Theme.of(context).textSelectionTheme.selectionColor,
+                  ),
+                  backgroundColor: Colors.blueAccent,
+                  label: 'Resetar',
+                  labelStyle: GoogleFonts.montserrat(
+                    fontSize: 14,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  onTap: () {
+                    deleteAlert(
+                      context,
+                      'Deseja resetar esta sessão?',
+                      () async {
+                        await mapaAgendaController.doResetar(context);
+                      },
+                    );
+                  },
+                ),
               ],
             ),
       body: Obx(

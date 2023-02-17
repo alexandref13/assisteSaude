@@ -21,6 +21,17 @@ class MapaAgendaRepository {
     );
   }
 
+  static Future doReset() async {
+    MapaAgendaController mapaAgendaController = Get.put(MapaAgendaController());
+
+    return await http.post(
+      Uri.https("assistesaude.com.br", "/flutter/resetsessao.php"),
+      body: {
+        'idsessao': mapaAgendaController.idSessao.value,
+      },
+    );
+  }
+
   static Future doObs() async {
     MapaAgendaController mapaAgendaController = Get.put(MapaAgendaController());
 

@@ -97,6 +97,12 @@ class MapaAgendaController extends GetxController {
       confirmedButtonPressed(context, 'Check-in realizado com sucesso!', () {
         Get.offAllNamed('/home');
       });
+    } else if (dados['valida'] == 3) {
+      onAlertButtonPressed(
+          context, 'Existe uma sessão em andamento! Finalize para continuar.',
+          () {
+        Get.offAllNamed('/home');
+      });
     } else {
       onAlertButtonPressed(
         context,
@@ -123,6 +129,26 @@ class MapaAgendaController extends GetxController {
       );
     } else {
       confirmedButtonPressed(context, 'Check-out realizado com sucesso!', () {
+        Get.offAllNamed('/home');
+      });
+    }
+  }
+
+  doResetar(context) async {
+    final response = await MapaAgendaRepository.doReset();
+
+    var dados = json.decode(response.body);
+
+    if (dados['valida'] == 0) {
+      onAlertButtonPressed(
+        context,
+        'Algo deu errado, tente novamente',
+        () {
+          Get.offAllNamed('/home');
+        },
+      );
+    } else {
+      confirmedButtonPressed(context, 'Reset realizado com sucesso!', () {
         Get.offAllNamed('/home');
       });
     }

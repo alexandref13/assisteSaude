@@ -1,10 +1,8 @@
 import 'package:assistsaude/modules/MapaAgenda/mapa_agenda_controller.dart';
-import 'package:assistsaude/shared/circular_progress_indicator.dart';
 import 'package:assistsaude/shared/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 
 class DetalhesVisita extends StatelessWidget {
   final MapaAgendaController mapaAgendaController =
@@ -42,7 +40,12 @@ class DetalhesVisita extends StatelessWidget {
                                   mapaAgendaController.infocheckout.value ==
                                       "1")
                               ? Colors.blue
-                              : Colors.grey),
+                              : (mapaAgendaController.infocheckin.value ==
+                                          "1" &&
+                                      mapaAgendaController.infocheckout.value ==
+                                          "0")
+                                  ? Colors.blue
+                                  : Colors.grey),
                   SizedBox(
                     height: 10,
                   ),
@@ -271,6 +274,9 @@ class DetalhesVisita extends StatelessWidget {
             : (mapaAgendaController.infocheckin.value == "0" &&
                     mapaAgendaController.infocheckout.value == "1")
                 ? Colors.blue
-                : Colors.grey);
+                : (mapaAgendaController.infocheckin.value == "1" &&
+                        mapaAgendaController.infocheckout.value == "0")
+                    ? Colors.blue
+                    : Colors.grey);
   }
 }

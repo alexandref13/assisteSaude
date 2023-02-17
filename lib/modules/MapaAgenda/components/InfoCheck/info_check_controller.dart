@@ -34,6 +34,12 @@ class InfoCheckController extends GetxController {
           Get.offAllNamed('/home');
         },
       );
+    } else if (dados['valida'] == 2) {
+      onAlertButtonPressed(
+          context, 'Existe uma sessão em andamento! Finalize para continuar.',
+          () {
+        Get.offAllNamed('/home');
+      });
     } else {
       confirmedButtonPressed(
         context,

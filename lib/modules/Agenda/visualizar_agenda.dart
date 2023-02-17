@@ -184,34 +184,37 @@ class VisualizarAgenda extends StatelessWidget {
                             return Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12.0),
-                                color: (e.ctlCheckin == "0" &&
-                                            e.ctlCheckout == "0") &&
+                                color: (e.ctlCheckin == "0" && e.ctlCheckout == "0") &&
                                         (e.infoCheck == "0" &&
                                             e.infoCheckout == "0")
                                     ? Colors.amber
-                                    : (e.ctlCheckin == "1" &&
-                                                e.ctlCheckout == "0") &&
+                                    : (e.ctlCheckin == "1" && e.ctlCheckout == "0") &&
                                             (e.infoCheck == "0" &&
                                                 e.infoCheckout == "0")
                                         ? Colors.red[400]
-                                        : (e.ctlCheckin == "1" &&
-                                                    e.ctlCheckout == "1") &&
+                                        : (e.ctlCheckin == "1" && e.ctlCheckout == "1") &&
                                                 (e.infoCheck == "0" &&
                                                     e.infoCheckout == "0")
                                             ? Colors.green[400]
                                             : (e.ctlCheckin == "1" &&
                                                         e.ctlCheckout == "1") &&
-                                                    (e.infoCheck == "0" &&
-                                                        e.infoCheckout == "1")
+                                                    (e.infoCheck == "1" &&
+                                                        e.infoCheckout == "0")
                                                 ? Colors.blue[400]
                                                 : (e.ctlCheckin == "1" &&
                                                             e.ctlCheckout ==
                                                                 "1") &&
-                                                        (e.infoCheck == "1" &&
+                                                        (e.infoCheck == "0" &&
                                                             e.infoCheckout ==
                                                                 "1")
-                                                    ? Colors.grey
-                                                    : Colors.white,
+                                                    ? Colors.blue[400]
+                                                    : (e.ctlCheckin == "1" &&
+                                                                e.ctlCheckout ==
+                                                                    "1") &&
+                                                            (e.infoCheck == "1" &&
+                                                                e.infoCheckout == "1")
+                                                        ? Colors.grey
+                                                        : Colors.white,
                               ),
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 8.0, vertical: 4.0),
