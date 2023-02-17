@@ -215,70 +215,6 @@ class DetalhesVisita extends StatelessWidget {
                     padding: EdgeInsets.all(10),
                     child: customTextField(
                       context,
-                      "Observação",
-                      mapaAgendaController.obs.value,
-                      true,
-                      3,
-                      true,
-                      mapaAgendaController.observacao.value,
-                      true,
-                      300,
-                    ),
-                  ),
-                  ButtonTheme(
-                    height: 50.0,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                            return mapaAgendaController.obs.value == ""
-                                ? Theme.of(context).primaryColor
-                                : Colors.amber;
-                          },
-                        ),
-                        shape:
-                            MaterialStateProperty.resolveWith<OutlinedBorder>(
-                          (Set<MaterialState> states) {
-                            return RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            );
-                          },
-                        ),
-                      ),
-                      onPressed: () async {
-                        if (mapaAgendaController.observacao.value.text == "") {
-                          onAlertButtonPressed(
-                            context,
-                            "Campo Vazio\nTente novamente.",
-                            () {
-                              Get.back();
-                            },
-                          );
-                        } else {
-                          await mapaAgendaController.doObs(context);
-                        }
-                      },
-                      child: Text(
-                        mapaAgendaController.obs.value == ""
-                            ? "Enviar Observação"
-                            : "Editar Observação",
-                        style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.bold,
-                          color: mapaAgendaController.obs.value == ""
-                              ? Theme.of(context)
-                                  .textSelectionTheme
-                                  .selectionColor
-                              : Colors.black87,
-                        ),
-                      ),
-                    ),
-                  ),
-                  divider(context),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    child: customTextField(
-                      context,
                       "Descrição Clínica (Evolução)",
                       mapaAgendaController.evolcao.value,
                       true,
@@ -330,6 +266,70 @@ class DetalhesVisita extends StatelessWidget {
                         style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.bold,
                           color: mapaAgendaController.evolcao.value == ""
+                              ? Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor
+                              : Colors.black87,
+                        ),
+                      ),
+                    ),
+                  ),
+                  divider(context),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: customTextField(
+                      context,
+                      "Observação",
+                      mapaAgendaController.obs.value,
+                      true,
+                      3,
+                      true,
+                      mapaAgendaController.observacao.value,
+                      true,
+                      300,
+                    ),
+                  ),
+                  ButtonTheme(
+                    height: 50.0,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                            return mapaAgendaController.obs.value == ""
+                                ? Theme.of(context).primaryColor
+                                : Colors.amber;
+                          },
+                        ),
+                        shape:
+                            MaterialStateProperty.resolveWith<OutlinedBorder>(
+                          (Set<MaterialState> states) {
+                            return RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            );
+                          },
+                        ),
+                      ),
+                      onPressed: () async {
+                        if (mapaAgendaController.observacao.value.text == "") {
+                          onAlertButtonPressed(
+                            context,
+                            "Campo Vazio\nTente novamente.",
+                            () {
+                              Get.back();
+                            },
+                          );
+                        } else {
+                          await mapaAgendaController.doObs(context);
+                        }
+                      },
+                      child: Text(
+                        mapaAgendaController.obs.value == ""
+                            ? "Enviar Observação"
+                            : "Editar Observação",
+                        style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.bold,
+                          color: mapaAgendaController.obs.value == ""
                               ? Theme.of(context)
                                   .textSelectionTheme
                                   .selectionColor
