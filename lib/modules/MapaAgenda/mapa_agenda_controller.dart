@@ -6,6 +6,7 @@ import 'package:assistsaude/shared/confirmed_button_pressed.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:io' show Platform;
 
 class MapaAgendaController extends GetxController {
   LoginController loginController = Get.find(tag: 'login');
@@ -40,10 +41,21 @@ class MapaAgendaController extends GetxController {
   getClientes() async {
     final MapaAgendaController mapaAgendaController =
         Get.put(MapaAgendaController());
-    BitmapDescriptor markerbitmap = await BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(),
-      "images/paciente.png",
-    );
+
+    BitmapDescriptor markerbitmap;
+
+// Verificar se a plataforma é Android e definir o tamanho do marcador como 180px
+    if (Platform.isAndroid) {
+      markerbitmap = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(),
+        "images/paciente_android.png",
+      );
+    } else {
+      markerbitmap = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(),
+        "images/paciente.png",
+      );
+    }
     markers.assign(
       Marker(
         markerId: MarkerId(name.value),

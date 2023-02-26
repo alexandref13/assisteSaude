@@ -600,7 +600,9 @@ class _HomePageState extends State<HomePage> {
                           size: 22,
                         ),
                         onTap: () {
-                          logoutUser();
+                          deleteAlert(context, 'Deseja realmente sair?', () {
+                            logoutUser();
+                          });
                         },
                       ),
                     ),
@@ -624,7 +626,7 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         children: [
                           Text(
-                            'Versão 2.0',
+                            'Versão 3.0',
                             style: GoogleFonts.montserrat(
                               color: Theme.of(context)
                                   .textSelectionTheme

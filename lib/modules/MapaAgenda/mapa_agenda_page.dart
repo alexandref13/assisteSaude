@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'dart:io' show Platform;
 
 class MapaAgendaPage extends StatefulWidget {
   const MapaAgendaPage({Key? key}) : super(key: key);
@@ -149,10 +150,17 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
 
     LatLng latLatAtual = LatLng(position.latitude, position.longitude);
     // create the instance of CachedNetworkMarker
-    BitmapDescriptor markerbitmapprof = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(), "images/profissional.png");
 
-    // final _platform = Theme.of(context).platform;
+    TargetPlatform _platform = Theme.of(context).platform;
+    BitmapDescriptor markerbitmapprof = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(),
+      _platform == TargetPlatform.iOS
+          ? "images/profissional.png"
+          : "images/profissional_android.png",
+    );
+
+    /* BitmapDescriptor markerbitmapprof = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(), "images/profissional.png");*/
 
     Future.delayed(Duration(seconds: 2)).then((_) async {
       if (this.mounted) {
@@ -272,9 +280,14 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
 
               zoomToFit(controller, bounds, centerBounds);
             }
+            TargetPlatform _platform = Theme.of(context).platform;
             BitmapDescriptor markerbitmapprof =
                 await BitmapDescriptor.fromAssetImage(
-                    ImageConfiguration(), "images/profissional.png");
+              ImageConfiguration(),
+              _platform == TargetPlatform.iOS
+                  ? "images/profissional.png"
+                  : "images/profissional_android.png",
+            );
             if (this.mounted) {
               setState(() {
                 mapaAgendaController.ourLat.value = position.latitude;

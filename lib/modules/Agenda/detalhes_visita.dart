@@ -211,20 +211,62 @@ class DetalhesVisita extends StatelessWidget {
                     ],
                   ),
                   divider(context),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    child: customTextField(
-                      context,
-                      "Descrição Clínica (Evolução)",
-                      mapaAgendaController.evolcao.value,
-                      true,
-                      8,
-                      true,
-                      mapaAgendaController.evolucao.value,
-                      true,
-                      2500,
-                    ),
-                  ),
+                  mapaAgendaController.evolcao.value == ""
+                      ? Container(
+                          padding: EdgeInsets.all(10),
+                          child: customTextField(
+                            context,
+                            "Descrição Clínica",
+                            mapaAgendaController.evolcao.value,
+                            true,
+                            8,
+                            true,
+                            mapaAgendaController.evolucao.value,
+                            true,
+                            2000,
+                          ),
+                        )
+                      : Expanded(
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Text(
+                                      "DESCRIÇÃO CLÍNICA",
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context)
+                                            .textSelectionTheme
+                                            .selectionColor,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Expanded(
+                                child: SingleChildScrollView(
+                                  child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Text(
+                                      mapaAgendaController.evolcao.value,
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context)
+                                            .textSelectionTheme
+                                            .selectionColor,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                   ButtonTheme(
                     height: 50.0,
                     child: ElevatedButton(
@@ -247,7 +289,8 @@ class DetalhesVisita extends StatelessWidget {
                         ),
                       ),
                       onPressed: () async {
-                        if (mapaAgendaController.evolucao.value.text == "") {
+                        if (mapaAgendaController.evolcao.value == "" &&
+                            mapaAgendaController.evolucao.value.text == "") {
                           onAlertButtonPressed(
                             context,
                             "Campo Vazio\nTente novamente.",
@@ -255,6 +298,9 @@ class DetalhesVisita extends StatelessWidget {
                               Get.back();
                             },
                           );
+                        } else if (mapaAgendaController.evolcao.value != "" &&
+                            mapaAgendaController.evolucao.value.text == "") {
+                          mapaAgendaController.evolcao.value = "";
                         } else {
                           await mapaAgendaController.doEvolucao(context);
                         }

@@ -14,60 +14,50 @@ class HomeWidget extends StatelessWidget {
     LoginController loginController = Get.find(tag: 'login');
 
     return SafeArea(
-      child: WillPopScope(
-        onWillPop: () async {
-          deleteAlert(context, 'Deseja realmente sair?', () {
-            SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-          });
-          return false;
-        },
-        child: Scaffold(
-          body: Container(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                      child: IconButton(
-                        onPressed: () {
-                          homeController.key.currentState!.openDrawer();
-                        },
-                        icon: Icon(
-                          Icons.menu,
-                          size: 30,
-                          color: Theme.of(context)
-                              .textSelectionTheme
-                              .selectionColor,
-                        ),
+      child: Scaffold(
+        body: Container(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                    child: IconButton(
+                      onPressed: () {
+                        homeController.key.currentState!.openDrawer();
+                      },
+                      icon: Icon(
+                        Icons.menu,
+                        size: 30,
+                        color:
+                            Theme.of(context).textSelectionTheme.selectionColor,
                       ),
                     ),
-                  ],
+                  ),
+                ],
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.4,
+                padding: EdgeInsets.fromLTRB(5, 150, 5, 0),
+                width: 200,
+                child: FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image:
+                      'https://assistesaude.com.br/downloads/fotoslogomarca/${loginController.imgLogoBranca}',
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.4,
-                  padding: EdgeInsets.fromLTRB(5, 150, 5, 0),
-                  width: 200,
-                  child: FadeInImage.memoryNetwork(
-                    placeholder: kTransparentImage,
-                    image:
-                        'https://assistesaude.com.br/downloads/fotoslogomarca/${loginController.imgLogoBranca}',
+              ),
+              Container(
+                child: Text(
+                  loginController.slogan.value,
+                  style: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).textSelectionTheme.selectionColor,
+                    fontSize: 12,
                   ),
                 ),
-                Container(
-                  child: Text(
-                    loginController.slogan.value,
-                    style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.bold,
-                      color:
-                          Theme.of(context).textSelectionTheme.selectionColor,
-                      fontSize: 12,
-                    ),
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
         ),
       ),

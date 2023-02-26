@@ -26,6 +26,7 @@ import 'theme/theme.dart';
 import 'modules/Login/login_bindings.dart';
 import 'modules/Login/login_page.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:flutter/cupertino.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -72,6 +73,9 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: [
         RefreshLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        DefaultCupertinoLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: [Locale('pt')],

@@ -125,6 +125,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.0"
+  flutter_flushbar:
+    dependency: "direct main"
+    description:
+      name: flutter_flushbar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   flutter_localizations:
     dependency: "direct main"
     description: flutter

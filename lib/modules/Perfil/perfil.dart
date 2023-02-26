@@ -27,11 +27,39 @@ class _PerfilState extends State<Perfil> {
     perfilController.firstId.value = novoItem;
   }
 
+  final ImagePicker _picker = ImagePicker();
+  File? _selectedFile;
+  CroppedFile? _croppedFile;
+
   final uri =
       Uri.parse("https://assistesaude.com.br/flutter/upload_imagem.php");
 
-  File? _selectedFile;
-  final _picker = ImagePicker();
+  Future uploadImage() async {
+    var request = http.MultipartRequest('POST', uri);
+    request.fields['idprof'] = loginController.idprof.value;
+    var pic = await http.MultipartFile.fromPath("image", _croppedFile!.path);
+    request.files.add(pic);
+    var response = await request.send();
+
+    if (response.statusCode == 200) {
+      response.stream.transform(utf8.decoder).listen((value) {
+        loginController.imgperfil.value = value.trim();
+      });
+    } else if (response.statusCode == 404) {
+      loginController.imgperfil.value = '';
+    } else {
+      Navigator.of(context).pop();
+      onAlertButtonPressed(
+        context,
+        'Algo deu errado.\n Tente novamente mais tarde',
+        () {
+          Get.back();
+        },
+      );
+    }
+    _croppedFile = null;
+    _selectedFile = null;
+  }
 
   Widget getImageWidget() {
     if (_selectedFile != null) {
@@ -44,7 +72,7 @@ class _PerfilState extends State<Perfil> {
           child: Column(
             children: [
               Container(
-                  margin: EdgeInsets.only(left: 40),
+                  margin: EdgeInsets.only(left: 40, bottom: 5),
                   child: Center(
                     child: Icon(
                       Icons.edit,
@@ -54,7 +82,7 @@ class _PerfilState extends State<Perfil> {
                   ),
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Theme.of(context).accentColor)),
+                      color: Theme.of(context).primaryColor)),
             ],
           ),
           width: 70,
@@ -72,7 +100,6 @@ class _PerfilState extends State<Perfil> {
       return GestureDetector(
           onTap: () {
             _configurandoModalBottomSheet(context);
-            //Navigator.pushNamed(context, '/Home');
           },
           child: loginController.imgperfil.value == ''
               ? Container(
@@ -91,13 +118,13 @@ class _PerfilState extends State<Perfil> {
                         ),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Theme.of(context).accentColor,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                     ],
                   ),
-                  width: 80,
-                  height: 80,
+                  width: 70,
+                  height: 70,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
@@ -105,109 +132,107 @@ class _PerfilState extends State<Perfil> {
                     ),
                   ),
                 )
-              : Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                        width: 70,
-                        height: 70,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(35),
-                          child: FadeInImage.memoryNetwork(
-                            placeholder: kTransparentImage,
-                            image:
-                                'https://assistesaude.com.br/downloads/fotosprofissionais/${loginController.imgperfil.value}',
+              : Obx(() => Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          width: 70,
+                          height: 70,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
                           ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      child: Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.center,
-                            child: Container(
-                              margin: EdgeInsets.only(left: 40),
-                              child: Center(
-                                child: Icon(
-                                  Icons.edit,
-                                  size: 20,
-                                  color: Theme.of(context)
-                                      .textSelectionTheme
-                                      .selectionColor,
-                                ),
-                              ),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Theme.of(context).primaryColor,
-                              ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(35),
+                            child: FadeInImage.memoryNetwork(
+                              placeholder: kTransparentImage,
+                              image:
+                                  'https://assistesaude.com.br/downloads/fotosprofissionais/${loginController.imgperfil.value}',
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
-                ));
+                      Container(
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.center,
+                              child: Container(
+                                margin: EdgeInsets.only(left: 40),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.edit,
+                                    size: 20,
+                                    color: Theme.of(context)
+                                        .textSelectionTheme
+                                        .selectionColor,
+                                  ),
+                                ),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )));
     }
   }
 
-  /*getImage(ImageSource source) async {
+  getImage(ImageSource source) async {
     this.setState(() {});
-    XFile? image = await _picker.pickImage(source: source);
+    // ignore: deprecated_member_use
+    PickedFile? image = await _picker.getImage(source: source);
 
     if (image != null) {
-      File? cropped = await ImageCropper.cropImage(
-          sourcePath: image.path,
-          aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
-          compressQuality: 80,
-          maxWidth: 400,
-          maxHeight: 400,
-          compressFormat: ImageCompressFormat.jpg,
-          androidUiSettings: AndroidUiSettings(
-            toolbarColor: Colors.deepOrange,
-            toolbarTitle: "Imagem para o Perfil",
-            statusBarColor: Colors.deepOrange.shade900,
-            backgroundColor: Colors.white,
-          ));
-
+      final croppedFile = await ImageCropper().cropImage(
+        sourcePath: image.path,
+        compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 80,
+        maxWidth: 400,
+        maxHeight: 400,
+        aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarColor: Colors.deepOrange,
+              toolbarTitle: "Imagem para o Perfil",
+              statusBarColor: Colors.deepOrange.shade900,
+              backgroundColor: Colors.white,
+              toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.ratio4x3,
+              cropGridStrokeWidth: 400,
+              lockAspectRatio: false),
+          IOSUiSettings(
+            title: 'Imagem para o Perfil',
+          ),
+          /*WebUiSettings(
+            context: context,
+            presentStyle: CropperPresentStyle.dialog,
+            boundary: const CroppieBoundary(
+              width: 400,
+              height: 400,
+            ),
+            viewPort:
+                const CroppieViewPort(width: 400, height: 400, type: 'circle'),
+            enableExif: true,
+            enableZoom: true,
+            showZoomer: true,
+          ),*/
+        ],
+      );
       this.setState(() {
-        _selectedFile = File(image.path);
-        _selectedFile = cropped;
-        if (cropped != null) {
+        _croppedFile = croppedFile;
+        //_selectedFile = croppedFile;
+        //_selectedFile = _selectedFile;
+        if (croppedFile != null) {
           uploadImage();
           Get.back();
         }
       });
     }
-  }*/
-
-  Future uploadImage() async {
-    var request = http.MultipartRequest('POST', uri);
-    request.fields['idprof'] = loginController.idprof.value;
-    var pic = await http.MultipartFile.fromPath("image", _selectedFile!.path);
-    request.files.add(pic);
-    var response = await request.send();
-    if (response.statusCode == 200) {
-      response.stream.transform(utf8.decoder).listen((value) {
-        setState(() {
-          loginController.imgperfil.value = value.trim();
-        });
-      });
-    } else {
-      Navigator.of(context).pop();
-      onAlertButtonPressed(
-        context,
-        'Algo deu errado.\n Tente novamente mais tarde',
-        () {
-          Get.back();
-        },
-      );
-    }
-    _selectedFile = null;
   }
 
   void _configurandoModalBottomSheet(context) {
@@ -223,10 +248,10 @@ class _PerfilState extends State<Perfil> {
                     title: Center(
                         child: Text(
                   "Alterar Imagem",
-                  style: GoogleFonts.montserrat(fontSize: 18),
+                  style: GoogleFonts.montserrat(fontSize: 16),
                 ))),
                 Divider(
-                  height: 18,
+                  height: 20,
                   color: Theme.of(context).textSelectionTheme.selectionColor,
                 ),
                 ListTile(
@@ -241,9 +266,7 @@ class _PerfilState extends State<Perfil> {
                       color:
                           Theme.of(context).textSelectionTheme.selectionColor,
                     ),
-                    onTap: () => {
-                          // getImage(ImageSource.camera)
-                        }),
+                    onTap: () => {getImage(ImageSource.camera)}),
                 Divider(
                   height: 20,
                   color: Theme.of(context).textSelectionTheme.selectionColor,
@@ -258,9 +281,7 @@ class _PerfilState extends State<Perfil> {
                         color: Theme.of(context)
                             .textSelectionTheme
                             .selectionColor),
-                    onTap: () => {
-                          //getImage(ImageSource.gallery)
-                        }),
+                    onTap: () => {getImage(ImageSource.gallery)}),
                 Divider(
                   height: 20,
                   color: Theme.of(context).textSelectionTheme.selectionColor,

@@ -54,238 +54,78 @@ class _SessionPageState extends State<SessionPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        deleteAlert(context, 'Deseja realmente sair?', () {
-          SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-        });
-        return false;
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Sessões',
-            style: GoogleFonts.montserrat(
-              fontSize: 16,
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text(
+          'Sessões',
+          style: GoogleFonts.montserrat(
+            fontSize: 16,
+            color: Theme.of(context).textSelectionTheme.selectionColor,
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              sessionController.getSessions().then((value) => value);
+            },
+            icon: Icon(
+              Icons.refresh_outlined,
               color: Theme.of(context).textSelectionTheme.selectionColor,
             ),
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                sessionController.getSessions().then((value) => value);
-              },
-              icon: Icon(
-                Icons.refresh_outlined,
-                color: Theme.of(context).textSelectionTheme.selectionColor,
-              ),
-            )
-          ],
-        ),
-        body: Obx(
-          () {
-            return sessionController.isLoading.value
-                ? CircularProgressIndicatorWidget()
-                : SingleChildScrollView(
-                    child: Container(
-                      margin: EdgeInsets.only(top: 5),
-                      padding: EdgeInsets.all(8),
-                      height: MediaQuery.of(context).size.height * .95,
-                      width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 5,
-                              vertical: 8,
+          )
+        ],
+      ),
+      body: Obx(
+        () {
+          return sessionController.isLoading.value
+              ? CircularProgressIndicatorWidget()
+              : SingleChildScrollView(
+                  child: Container(
+                    margin: EdgeInsets.only(top: 5),
+                    padding: EdgeInsets.all(8),
+                    height: MediaQuery.of(context).size.height * .95,
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 5,
+                            vertical: 8,
+                          ),
+                          child: Text(
+                            'Selecione um Paciente: ',
+                            style: GoogleFonts.montserrat(
+                              fontSize: 14,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
                             ),
-                            child: Text(
-                              'Selecione um Paciente: ',
-                              style: GoogleFonts.montserrat(
-                                fontSize: 14,
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
                                 color: Theme.of(context)
                                     .textSelectionTheme
-                                    .selectionColor,
-                              ),
-                            ),
+                                    .selectionColor!),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Theme.of(context)
-                                      .textSelectionTheme
-                                      .selectionColor!),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: ButtonTheme(
-                              height: 50.0,
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.resolveWith<Color>(
-                                    (Set<MaterialState> states) {
-                                      return Theme.of(context).accentColor;
-                                    },
-                                  ),
-                                  elevation:
-                                      MaterialStateProperty.resolveWith<double>(
-                                    (Set<MaterialState> states) {
-                                      return 0;
-                                    },
-                                  ),
-                                  shape: MaterialStateProperty.resolveWith<
-                                      OutlinedBorder>(
-                                    (Set<MaterialState> states) {
-                                      return RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      );
-                                    },
-                                  ),
-                                ),
-                                onPressed: () {},
-                                child: DropdownButton<String>(
-                                  autofocus: false,
-                                  isExpanded: true,
-                                  underline: Container(),
-                                  icon: Icon(
-                                    Icons.keyboard_arrow_down,
-                                    size: 27,
-                                  ),
-                                  dropdownColor: Theme.of(context).primaryColor,
-                                  style: GoogleFonts.montserrat(
-                                      fontSize: 14,
-                                      color: Theme.of(context)
-                                          .textSelectionTheme
-                                          .selectionColor),
-                                  items: sessionController.clientes.map((item) {
-                                    return DropdownMenuItem(
-                                      value: item['idpac'].toString(),
-                                      child: Text(item['nome_pac']),
-                                    );
-                                  }).toList(),
-                                  onChanged: (String? novoItemSelecionado) {
-                                    dropDownClientsSelected(
-                                        novoItemSelecionado!);
-                                    sessionController.firstId.value =
-                                        novoItemSelecionado;
-                                  },
-                                  value: sessionController.firstId.value,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 15),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 5,
-                              vertical: 8,
-                            ),
-                            child: Text(
-                              'Data Inicial: ',
-                              style: GoogleFonts.montserrat(
-                                fontSize: 14,
-                                color: Theme.of(context)
-                                    .textSelectionTheme
-                                    .selectionColor,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            child: GestureDetector(
-                              onTap: () async {
-                                startSelectedDate =
-                                    await selectDateTime(context);
-                                if (startSelectedDate == null) return;
-
-                                setState(() {
-                                  startSelectedDate = DateTime(
-                                    startSelectedDate!.year,
-                                    startSelectedDate!.month,
-                                    startSelectedDate!.day,
-                                    startSelectedTime!.hour,
-                                    startSelectedTime!.minute,
-                                  );
-                                });
-                              },
-                              child: customTextField(
-                                context,
-                                DateFormat("dd/MM/yyyy").format(
-                                  startSelectedDate!,
-                                ),
-                                DateFormat("dd/MM/yyyy").format(
-                                  startSelectedDate!,
-                                ),
-                                false,
-                                1,
-                                false,
-                                startTime,
-                                false,
-                                300,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 15),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 5,
-                              vertical: 8,
-                            ),
-                            child: Text(
-                              'Data Final: ',
-                              style: GoogleFonts.montserrat(
-                                fontSize: 14,
-                                color: Theme.of(context)
-                                    .textSelectionTheme
-                                    .selectionColor,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            child: GestureDetector(
-                              onTap: () async {
-                                endSelectedDate =
-                                    await selectDateOnEndTime(context);
-                                if (endSelectedDate == null) return;
-                                setState(() {
-                                  endSelectedDate = DateTime(
-                                    endSelectedDate!.year,
-                                    endSelectedDate!.month,
-                                    endSelectedDate!.day,
-                                    endSelectedTime!.hour,
-                                    endSelectedTime!.minute,
-                                  );
-                                });
-                              },
-                              child: customTextField(
-                                context,
-                                DateFormat("dd/MM/yyyy").format(
-                                  endSelectedDate!,
-                                ),
-                                DateFormat("dd/MM/yyyy").format(
-                                  endSelectedDate!,
-                                ),
-                                false,
-                                1,
-                                false,
-                                endTime,
-                                false,
-                                300,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          ButtonTheme(
+                          child: ButtonTheme(
                             height: 50.0,
                             child: ElevatedButton(
                               style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.resolveWith<Color>(
                                   (Set<MaterialState> states) {
-                                    return Theme.of(context).primaryColor;
+                                    return Theme.of(context).accentColor;
+                                  },
+                                ),
+                                elevation:
+                                    MaterialStateProperty.resolveWith<double>(
+                                  (Set<MaterialState> states) {
+                                    return 0;
                                   },
                                 ),
                                 shape: MaterialStateProperty.resolveWith<
@@ -297,43 +137,193 @@ class _SessionPageState extends State<SessionPage> {
                                   },
                                 ),
                               ),
-                              onPressed: () async {
-                                sessionController.initialDate.value =
-                                    DateFormat("yyyy-MM-dd").format(
-                                  startSelectedDate!,
-                                );
-                                sessionController.finalDate.value =
-                                    DateFormat('yyyy-MM-dd').format(
-                                  endSelectedDate!,
-                                );
-
-                                if (startSelectedDate == DateTime.now() ||
-                                    endSelectedDate == DateTime.now()) {
-                                  onAlertButtonPressed(
-                                      context, 'Campo Obrigátorio Vazio', () {
-                                    Get.back();
-                                  });
-                                } else {
-                                  await sessionController.doRelatorios(context);
-                                }
-                              },
-                              child: Text(
-                                "Enviar",
-                                style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context)
-                                      .textSelectionTheme
-                                      .selectionColor,
+                              onPressed: () {},
+                              child: DropdownButton<String>(
+                                autofocus: false,
+                                isExpanded: true,
+                                underline: Container(),
+                                icon: Icon(
+                                  Icons.keyboard_arrow_down,
+                                  size: 27,
                                 ),
+                                dropdownColor: Theme.of(context).primaryColor,
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 14,
+                                    color: Theme.of(context)
+                                        .textSelectionTheme
+                                        .selectionColor),
+                                items: sessionController.clientes.map((item) {
+                                  return DropdownMenuItem(
+                                    value: item['idpac'].toString(),
+                                    child: Text(item['nome_pac']),
+                                  );
+                                }).toList(),
+                                onChanged: (String? novoItemSelecionado) {
+                                  dropDownClientsSelected(novoItemSelecionado!);
+                                  sessionController.firstId.value =
+                                      novoItemSelecionado;
+                                },
+                                value: sessionController.firstId.value,
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: 15),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 5,
+                            vertical: 8,
+                          ),
+                          child: Text(
+                            'Data Inicial: ',
+                            style: GoogleFonts.montserrat(
+                              fontSize: 14,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          child: GestureDetector(
+                            onTap: () async {
+                              startSelectedDate = await selectDateTime(context);
+                              if (startSelectedDate == null) return;
+
+                              setState(() {
+                                startSelectedDate = DateTime(
+                                  startSelectedDate!.year,
+                                  startSelectedDate!.month,
+                                  startSelectedDate!.day,
+                                  startSelectedTime!.hour,
+                                  startSelectedTime!.minute,
+                                );
+                              });
+                            },
+                            child: customTextField(
+                              context,
+                              DateFormat("dd/MM/yyyy").format(
+                                startSelectedDate!,
+                              ),
+                              DateFormat("dd/MM/yyyy").format(
+                                startSelectedDate!,
+                              ),
+                              false,
+                              1,
+                              false,
+                              startTime,
+                              false,
+                              300,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 5,
+                            vertical: 8,
+                          ),
+                          child: Text(
+                            'Data Final: ',
+                            style: GoogleFonts.montserrat(
+                              fontSize: 14,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          child: GestureDetector(
+                            onTap: () async {
+                              endSelectedDate =
+                                  await selectDateOnEndTime(context);
+                              if (endSelectedDate == null) return;
+                              setState(() {
+                                endSelectedDate = DateTime(
+                                  endSelectedDate!.year,
+                                  endSelectedDate!.month,
+                                  endSelectedDate!.day,
+                                  endSelectedTime!.hour,
+                                  endSelectedTime!.minute,
+                                );
+                              });
+                            },
+                            child: customTextField(
+                              context,
+                              DateFormat("dd/MM/yyyy").format(
+                                endSelectedDate!,
+                              ),
+                              DateFormat("dd/MM/yyyy").format(
+                                endSelectedDate!,
+                              ),
+                              false,
+                              1,
+                              false,
+                              endTime,
+                              false,
+                              300,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        ButtonTheme(
+                          height: 50.0,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                                  return Theme.of(context).primaryColor;
+                                },
+                              ),
+                              shape: MaterialStateProperty.resolveWith<
+                                  OutlinedBorder>(
+                                (Set<MaterialState> states) {
+                                  return RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  );
+                                },
+                              ),
+                            ),
+                            onPressed: () async {
+                              sessionController.initialDate.value =
+                                  DateFormat("yyyy-MM-dd").format(
+                                startSelectedDate!,
+                              );
+                              sessionController.finalDate.value =
+                                  DateFormat('yyyy-MM-dd').format(
+                                endSelectedDate!,
+                              );
+
+                              if (startSelectedDate == DateTime.now() ||
+                                  endSelectedDate == DateTime.now()) {
+                                onAlertButtonPressed(
+                                    context, 'Campo Obrigátorio Vazio', () {
+                                  Get.back();
+                                });
+                              } else {
+                                await sessionController.doRelatorios(context);
+                              }
+                            },
+                            child: Text(
+                              "Enviar",
+                              style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  );
-          },
-        ),
+                  ),
+                );
+        },
       ),
     );
   }
