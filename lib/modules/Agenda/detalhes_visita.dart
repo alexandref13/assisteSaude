@@ -219,11 +219,11 @@ class DetalhesVisita extends StatelessWidget {
                             "Descrição Clínica",
                             mapaAgendaController.evolcao.value,
                             true,
-                            8,
+                            5,
                             true,
                             mapaAgendaController.evolucao.value,
                             true,
-                            2000,
+                            1000,
                           ),
                         )
                       : Expanded(
@@ -321,18 +321,20 @@ class DetalhesVisita extends StatelessWidget {
                     ),
                   ),
                   divider(context),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    child: customTextField(
-                      context,
-                      "Observação",
-                      mapaAgendaController.obs.value,
-                      true,
-                      3,
-                      true,
-                      mapaAgendaController.observacao.value,
-                      true,
-                      300,
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      child: customTextField(
+                        context,
+                        "Observação",
+                        mapaAgendaController.obs.value,
+                        true,
+                        3,
+                        true,
+                        mapaAgendaController.observacao.value,
+                        true,
+                        300,
+                      ),
                     ),
                   ),
                   ButtonTheme(
