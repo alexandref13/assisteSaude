@@ -2,7 +2,7 @@
 //  NotificationService.m
 //  OneSignalNotificationServiceExtension
 //
-//  Created by Alexandre Rocha on 14/11/22.
+//  Created by Alexandre Rocha on 11/03/23.
 //
 
 #import "NotificationService.h"
@@ -21,7 +21,7 @@
     self.bestAttemptContent = [request.content mutableCopy];
     
     // Modify the notification content here...
-    self.bestAttemptContent.title = [NSString stringWithFormat:@"%@", self.bestAttemptContent.title];
+    self.bestAttemptContent.title = [NSString stringWithFormat:@"%@ [modified]", self.bestAttemptContent.title];
     
     self.contentHandler(self.bestAttemptContent);
 }
