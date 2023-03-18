@@ -22,25 +22,27 @@ PODS:
     - Flutter
   - local_auth_ios (0.0.1):
     - Flutter
-  - onesignal_flutter (3.4.2):
+  - onesignal_flutter (3.5.0):
     - Flutter
-    - OneSignalXCFramework (= 3.11.4)
-  - OneSignalXCFramework (3.11.4):
-    - OneSignalXCFramework/OneSignalCore (= 3.11.4)
-    - OneSignalXCFramework/OneSignalExtension (= 3.11.4)
-    - OneSignalXCFramework/OneSignalOutcomes (= 3.11.4)
-  - OneSignalXCFramework/OneSignalCore (3.11.4)
-  - OneSignalXCFramework/OneSignalExtension (3.11.4):
+    - OneSignalXCFramework (= 3.12.3)
+  - OneSignalXCFramework (3.12.3):
+    - OneSignalXCFramework/OneSignalCore (= 3.12.3)
+    - OneSignalXCFramework/OneSignalExtension (= 3.12.3)
+    - OneSignalXCFramework/OneSignalOutcomes (= 3.12.3)
+  - OneSignalXCFramework/OneSignalCore (3.12.3)
+  - OneSignalXCFramework/OneSignalExtension (3.12.3):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalOutcomes
-  - OneSignalXCFramework/OneSignalOutcomes (3.11.4):
+  - OneSignalXCFramework/OneSignalOutcomes (3.12.3):
     - OneSignalXCFramework/OneSignalCore
-  - path_provider_ios (0.0.1):
+  - path_provider_foundation (0.0.1):
     - Flutter
+    - FlutterMacOS
   - permission_handler_apple (9.0.4):
     - Flutter
-  - shared_preferences_ios (0.0.1):
+  - shared_preferences_foundation (0.0.1):
     - Flutter
+    - FlutterMacOS
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
@@ -57,9 +59,10 @@ DEPENDENCIES:
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - local_auth_ios (from `.symlinks/plugins/local_auth_ios/ios`)
   - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
-  - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
+  - OneSignalXCFramework (< 4.0, >= 3.4.3)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
-  - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
@@ -87,12 +90,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/local_auth_ios/ios"
   onesignal_flutter:
     :path: ".symlinks/plugins/onesignal_flutter/ios"
-  path_provider_ios:
-    :path: ".symlinks/plugins/path_provider_ios/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/ios"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
-  shared_preferences_ios:
-    :path: ".symlinks/plugins/shared_preferences_ios/ios"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
   url_launcher_ios:
@@ -103,20 +106,20 @@ SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
-  google_maps_flutter_ios: 66201f392bf62d500f07670a30488a247b9bb5b9
+  google_maps_flutter_ios: 3e0b99383a8003b8169d06e7e324170bd0424105
   GoogleMaps: 025272d5876d3b32604e5c080dc25eaf68764693
   image_cropper: 60c2789d1f1a78c873235d4319ca0c34a69f2d98
-  image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
-  local_auth_ios: 0d333dde7780f669e66f19d2ff6005f3ea84008d
-  onesignal_flutter: bd3bc654bc632e7d6cc8d219a7caebf0592c63e5
-  OneSignalXCFramework: 45932e3c1e659e1485bfd765e0543d7f30cc737b
-  path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
+  image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
+  local_auth_ios: c6cf091ded637a88f24f86a8875d8b0f526e2605
+  onesignal_flutter: e01b19b76406d2f303edabe36da8dc747443d679
+  OneSignalXCFramework: 75844c29607ca95e6176f6f21257b4382c7fdbfb
+  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
-  shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
+  shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
-  url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
+  url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
 
-PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
+PODFILE CHECKSUM: 730326a5b8ccb9beac4a20f078e69d61bf2cdba7
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0

@@ -97,6 +97,8 @@ class MapaAgendaController extends GetxController {
 
     var dados = json.decode(response.body);
 
+    isLoading = false.obs;
+
     if (dados == 1) {
       confirmedButtonPressed(context, 'Evolução Salva com Sucesso!', () {
         Get.offAllNamed('/home');

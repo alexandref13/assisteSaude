@@ -626,7 +626,7 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         children: [
                           Text(
-                            'Versão 3.0',
+                            'Versão 3.4',
                             style: GoogleFonts.montserrat(
                               color: Theme.of(context)
                                   .textSelectionTheme

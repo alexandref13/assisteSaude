@@ -16,10 +16,10 @@ Widget customTextField(
   return SingleChildScrollView(
     child: TextFormField(
       toolbarOptions: ToolbarOptions(
-        copy: false,
-        cut: false,
-        paste: false,
-        selectAll: false,
+        copy: true,
+        cut: true,
+        paste: true,
+        selectAll: true,
       ),
       autofocus: autofocus,
       maxLength: caracteres,
@@ -76,6 +76,7 @@ Widget customTextField(
         ),
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
+      enableInteractiveSelection: true,
     ),
   );
 }

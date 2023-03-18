@@ -28,7 +28,7 @@ class DetalhesVisita extends StatelessWidget {
             child: Container(
               margin: EdgeInsets.only(top: 5),
               padding: EdgeInsets.all(8),
-              height: MediaQuery.of(context).size.height * .95,
+              height: 800, //MediaQuery.of(context).size.height * .95,
               width: MediaQuery.of(context).size.width,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -237,7 +237,7 @@ class DetalhesVisita extends StatelessWidget {
                                     child: Text(
                                       "DESCRIÇÃO CLÍNICA",
                                       style: GoogleFonts.montserrat(
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold,
                                         color: Theme.of(context)
                                             .textSelectionTheme
@@ -255,7 +255,7 @@ class DetalhesVisita extends StatelessWidget {
                                       mapaAgendaController.evolcao.value,
                                       style: GoogleFonts.montserrat(
                                         fontSize: 14,
-                                        fontWeight: FontWeight.bold,
+                                        //fontWeight: FontWeight.bold,
                                         color: Theme.of(context)
                                             .textSelectionTheme
                                             .selectionColor,

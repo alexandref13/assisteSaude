@@ -2,9 +2,7 @@ import 'package:assistsaude/modules/Agenda/calendario_controller.dart';
 import 'package:assistsaude/modules/Agenda/mapa_calendario.dart';
 import 'package:assistsaude/modules/MapaAgenda/mapa_agenda_controller.dart';
 import 'package:assistsaude/shared/circular_progress_indicator.dart';
-import 'package:assistsaude/shared/delete_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -212,17 +210,32 @@ class VisualizarAgenda extends StatelessWidget {
                             margin: const EdgeInsets.symmetric(
                                 horizontal: 8.0, vertical: 4.0),
                             child: ListTile(
-                              trailing: e.hragenda == "00:00"
-                                  ? Icon(
-                                      Icons.hourglass_empty,
-                                      color: Colors.black,
-                                      size: 20,
-                                    )
-                                  : Text("${e.hragenda}h",
-                                      style: GoogleFonts.montserrat(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black87)),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  e.evolcao != ""
+                                      ? Icon(
+                                          Icons.e_mobiledata,
+                                          color: Colors.black,
+                                          size: 22,
+                                        )
+                                      : Container(),
+                                  SizedBox(width: 5),
+                                  e.hragenda == "00:00"
+                                      ? Icon(
+                                          Icons.hourglass_empty,
+                                          color: Colors.black,
+                                          size: 20,
+                                        )
+                                      : Text(
+                                          "${e.hragenda}h",
+                                          style: GoogleFonts.montserrat(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black87),
+                                        ),
+                                ],
+                              ),
                               title: Text(
                                 e.paciente!,
                                 style: GoogleFonts.montserrat(
