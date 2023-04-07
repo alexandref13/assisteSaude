@@ -558,6 +558,34 @@ class _HomePageState extends State<HomePage> {
                         contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
                         dense: true,
                         title: Text(
+                          'Política de Privacidade',
+                          style: GoogleFonts.montserrat(
+                            color: Theme.of(context)
+                                .textSelectionTheme
+                                .selectionColor,
+                            fontSize: 12,
+                          ),
+                        ),
+                        leading: Icon(
+                          Icons.security_outlined,
+                          color: Theme.of(context).primaryColor,
+                          size: 22,
+                        ),
+                        onTap: () {
+                          homeController.launchInBrowser(
+                              'https://assistesaude.com.br/privacidade.html');
+                        },
+                      ),
+                    ),
+                    Divider(
+                      height: 5,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    Container(
+                      child: ListTile(
+                        contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
+                        dense: true,
+                        title: Text(
                           'Ajuda',
                           style: GoogleFonts.montserrat(
                             color: Theme.of(context)
@@ -626,7 +654,7 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         children: [
                           Text(
-                            'Versão 3.4',
+                            'Versão 3.5',
                             style: GoogleFonts.montserrat(
                               color: Theme.of(context)
                                   .textSelectionTheme
