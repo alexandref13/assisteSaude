@@ -18,7 +18,7 @@ class DetalhesTerapiaPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Paciente',
+          'Informações do Paciente',
           style: GoogleFonts.montserrat(
             fontSize: 14,
             color: Theme.of(context).textSelectionTheme.selectionColor,
@@ -45,7 +45,7 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                 Icon(Icons.airline_seat_flat,
                                     size: 35,
                                     color: details.status != 'NORMAL'
-                                        ? Theme.of(context).errorColor
+                                        ? Theme.of(context).colorScheme.error
                                         : Theme.of(context).primaryColor),
                                 SizedBox(
                                   height: 10,
@@ -797,66 +797,110 @@ class DetalhesTerapiaPage extends StatelessWidget {
                                             ),
                                             Expanded(
                                               child: Container(
-                                                padding: EdgeInsets.symmetric(
-                                                  horizontal: 8,
-                                                ),
-                                                child: ButtonTheme(
-                                                  height: 50.0,
-                                                  child: ElevatedButton(
-                                                    style: ButtonStyle(
-                                                      backgroundColor:
-                                                          MaterialStateProperty
-                                                              .resolveWith<
-                                                                  Color>(
-                                                        (Set<MaterialState>
-                                                            states) {
-                                                          return Theme.of(
-                                                                  context)
-                                                              .textSelectionTheme
-                                                              .selectionColor!;
-                                                        },
-                                                      ),
-                                                      shape: MaterialStateProperty
-                                                          .resolveWith<
-                                                              OutlinedBorder>(
-                                                        (Set<MaterialState>
-                                                            states) {
-                                                          return RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0),
-                                                          );
-                                                        },
-                                                      ),
-                                                    ),
-                                                    onPressed: () {
-                                                      if (details.status ==
-                                                          "NORMAL") {
-                                                        Get.toNamed(
-                                                            '/agendaVisitas');
-                                                      } else {
-                                                        onAlertButtonPressed(
-                                                          context,
-                                                          'Paciente ${details.status}. Agendamento Não Permitido',
-                                                          () {
-                                                            Get.back();
-                                                          },
-                                                        );
-                                                      }
-                                                    },
-                                                    child: Text(
-                                                      "Agendar",
-                                                      style: GoogleFonts
-                                                          .montserrat(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.black,
-                                                      ),
-                                                    ),
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: 8,
                                                   ),
-                                                ),
-                                              ),
+                                                  child:
+                                                      details.status == "NORMAL"
+                                                          ? ButtonTheme(
+                                                              height: 50.0,
+                                                              child:
+                                                                  ElevatedButton(
+                                                                style:
+                                                                    ButtonStyle(
+                                                                  backgroundColor:
+                                                                      MaterialStateProperty
+                                                                          .resolveWith<
+                                                                              Color>(
+                                                                    (Set<MaterialState>
+                                                                        states) {
+                                                                      return Theme.of(
+                                                                              context)
+                                                                          .textSelectionTheme
+                                                                          .selectionColor!;
+                                                                    },
+                                                                  ),
+                                                                  shape: MaterialStateProperty
+                                                                      .resolveWith<
+                                                                          OutlinedBorder>(
+                                                                    (Set<MaterialState>
+                                                                        states) {
+                                                                      return RoundedRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(10.0),
+                                                                      );
+                                                                    },
+                                                                  ),
+                                                                ),
+                                                                onPressed: () {
+                                                                  Get.toNamed(
+                                                                      '/agendaVisitas');
+                                                                },
+                                                                child: Text(
+                                                                  "Agendar",
+                                                                  style: GoogleFonts
+                                                                      .montserrat(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .black,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : ButtonTheme(
+                                                              height: 50.0,
+                                                              child:
+                                                                  ElevatedButton(
+                                                                style:
+                                                                    ButtonStyle(
+                                                                  backgroundColor:
+                                                                      MaterialStateProperty
+                                                                          .resolveWith<
+                                                                              Color>(
+                                                                    (Set<MaterialState>
+                                                                        states) {
+                                                                      return Theme.of(
+                                                                              context)
+                                                                          .textSelectionTheme
+                                                                          .selectionColor!;
+                                                                    },
+                                                                  ),
+                                                                  shape: MaterialStateProperty
+                                                                      .resolveWith<
+                                                                          OutlinedBorder>(
+                                                                    (Set<MaterialState>
+                                                                        states) {
+                                                                      return RoundedRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(10.0),
+                                                                      );
+                                                                    },
+                                                                  ),
+                                                                ),
+                                                                onPressed: () {
+                                                                  onAlertButtonPressed(
+                                                                    context,
+                                                                    'Paciente ${details.status}. Agendamento Não Permitido',
+                                                                    () {
+                                                                      Get.back();
+                                                                    },
+                                                                  );
+                                                                },
+                                                                child: Text(
+                                                                  "Agendar",
+                                                                  style: GoogleFonts
+                                                                      .montserrat(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .black,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )),
                                             ),
                                           ],
                                         ),

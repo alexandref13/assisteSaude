@@ -60,12 +60,11 @@ android {
         applicationId "com.assistesaude"
         minSdkVersion 20
         targetSdkVersion 31
-        versionCode 14
-        versionName '3.2'
+        versionCode 16
+        versionName '3.5.1'
         multiDexEnabled true
 
     }
-
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.

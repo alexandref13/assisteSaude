@@ -7,7 +7,7 @@ deleteAlert(context, String text, VoidCallback function) {
   Alert(
     image: Icon(
       Icons.warning,
-      color: Theme.of(context).errorColor,
+      color: Theme.of(context).colorScheme.error,
       size: 50,
     ),
     style: AlertStyle(
@@ -18,7 +18,7 @@ deleteAlert(context, String text, VoidCallback function) {
       //descStyle: GoogleFonts.poppins(color: Colors.red,),
       animationDuration: Duration(milliseconds: 300),
       titleStyle: GoogleFonts.poppins(
-        color: Theme.of(context).errorColor,
+        color: Theme.of(context).colorScheme.error,
         fontSize: 18,
       ),
     ),
@@ -37,7 +37,7 @@ deleteAlert(context, String text, VoidCallback function) {
           Get.back();
         },
         width: 80,
-        color: Theme.of(context).errorColor,
+        color: Theme.of(context).colorScheme.error,
       ),
       DialogButton(
         child: Text(

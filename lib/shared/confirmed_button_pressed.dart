@@ -16,7 +16,7 @@ confirmedButtonPressed(context, String? text, VoidCallback onTap) {
       isOverlayTapDismiss: false,
       animationDuration: Duration(milliseconds: 300),
       titleStyle: GoogleFonts.poppins(
-        color: Theme.of(context).errorColor,
+        color: Theme.of(context).colorScheme.error,
         fontSize: 18,
       ),
     ),

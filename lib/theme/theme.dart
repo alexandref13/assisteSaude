@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 
 ThemeData admin = ThemeData(
-  brightness: Brightness.dark,
-  accentColor: Color(0xff333333),
+  hintColor: Color(0xff333333),
   primaryColor: Color(0xff00A859),
-  buttonColor: Color(0xffffacf3),
-  backgroundColor: Color(0xfffbd859),
   textSelectionTheme: TextSelectionThemeData(
     selectionColor: Color(0xffe3e3e3),
   ),
@@ -16,5 +13,7 @@ ThemeData admin = ThemeData(
     elevation: 0,
     centerTitle: true,
   ),
-  errorColor: Color(0xffa3000b),
+  colorScheme: ColorScheme.fromSwatch()
+      .copyWith(secondary: Color(0xff333333))
+      .copyWith(error: Color(0xffa3000b)),
 );

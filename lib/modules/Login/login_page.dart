@@ -101,13 +101,16 @@ class _LoginPageState extends State<LoginPage> {
                                         fontSize: 14),
                                     errorBorder: new OutlineInputBorder(
                                         borderSide: new BorderSide(
-                                            color:
-                                                Theme.of(context).errorColor)),
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .error)),
                                     focusedErrorBorder: new OutlineInputBorder(
                                         borderSide:
                                             new BorderSide(color: Colors.red)),
                                     errorStyle: GoogleFonts.montserrat(
-                                        color: Theme.of(context).errorColor),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .error),
                                   ),
                                   keyboardType: TextInputType.emailAddress,
                                   validator: (valueEmail) {
@@ -143,13 +146,16 @@ class _LoginPageState extends State<LoginPage> {
                                         fontSize: 14),
                                     errorBorder: new OutlineInputBorder(
                                         borderSide: new BorderSide(
-                                            color:
-                                                Theme.of(context).errorColor)),
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .error)),
                                     focusedErrorBorder: new OutlineInputBorder(
                                         borderSide:
                                             new BorderSide(color: Colors.red)),
                                     errorStyle: GoogleFonts.montserrat(
-                                        color: Theme.of(context).errorColor),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .error),
                                   ),
                                   keyboardType: TextInputType.text,
                                   validator: (valueSenha) {

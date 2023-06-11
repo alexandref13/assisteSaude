@@ -62,7 +62,7 @@ class MapaAgendaRepository {
     print("idsessao: ${mapaAgendaController.idSessao.value}");
 
     return await http.post(
-      Uri.https("assistesaude.com.br", "/flutter/alterargpsNovo.php"),
+      Uri.https("assistesaude.com.br", "/flutter/"),
       body: {
         'idpac': mapaAgendaController.idPaciente.value,
         'idsessao': mapaAgendaController.idSessao.value,

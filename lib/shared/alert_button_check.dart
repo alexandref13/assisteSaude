@@ -18,7 +18,7 @@ onAlertButtonCheck(context, String? text, String? page) {
       //descStyle: GoogleFonts.poppins(color: Colors.red,),
       animationDuration: Duration(milliseconds: 300),
       titleStyle: GoogleFonts.poppins(
-        color: Theme.of(context).errorColor,
+        color: Theme.of(context).colorScheme.error,
         fontSize: 16,
       ),
     ),

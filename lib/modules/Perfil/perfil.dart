@@ -240,7 +240,7 @@ class _PerfilState extends State<Perfil> {
         context: context,
         builder: (BuildContext bc) {
           return Container(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).hintColor,
             padding: EdgeInsets.only(bottom: 30),
             child: Wrap(
               children: <Widget>[

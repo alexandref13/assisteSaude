@@ -59,7 +59,7 @@ class _InfoStatusPageState extends State<InfoStatusPage> {
                                 backgroundColor:
                                     MaterialStateProperty.resolveWith<Color>(
                                   (Set<MaterialState> states) {
-                                    return Theme.of(context).accentColor;
+                                    return Theme.of(context).hintColor;
                                   },
                                 ),
                                 elevation:
@@ -86,7 +86,7 @@ class _InfoStatusPageState extends State<InfoStatusPage> {
                                   Icons.keyboard_arrow_down,
                                   size: 27,
                                 ),
-                                dropdownColor: Theme.of(context).accentColor,
+                                dropdownColor: Theme.of(context).hintColor,
                                 style: GoogleFonts.montserrat(
                                     fontSize: 14,
                                     color: Theme.of(context)

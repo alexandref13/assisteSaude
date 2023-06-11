@@ -12,7 +12,7 @@ class DataTableVisitas extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Paciente',
+          'Relatório de Sesssões',
           style: GoogleFonts.montserrat(
             fontSize: 16,
             color: Theme.of(context).textSelectionTheme.selectionColor,
@@ -34,6 +34,8 @@ class DataTableVisitas extends StatelessWidget {
                       style: GoogleFonts.montserrat(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
+                        color:
+                            Theme.of(context).textSelectionTheme.selectionColor,
                       ),
                     ),
                   ),
@@ -43,6 +45,8 @@ class DataTableVisitas extends StatelessWidget {
                       style: GoogleFonts.montserrat(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
+                        color:
+                            Theme.of(context).textSelectionTheme.selectionColor,
                       ),
                     ),
                   ),
@@ -52,6 +56,8 @@ class DataTableVisitas extends StatelessWidget {
                       style: GoogleFonts.montserrat(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
+                        color:
+                            Theme.of(context).textSelectionTheme.selectionColor,
                       ),
                     ),
                   ),
@@ -61,6 +67,8 @@ class DataTableVisitas extends StatelessWidget {
                       style: GoogleFonts.montserrat(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
+                        color:
+                            Theme.of(context).textSelectionTheme.selectionColor,
                       ),
                     ),
                   ),
@@ -70,6 +78,8 @@ class DataTableVisitas extends StatelessWidget {
                       style: GoogleFonts.montserrat(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
+                        color:
+                            Theme.of(context).textSelectionTheme.selectionColor,
                       ),
                     ),
                   ),
@@ -92,31 +102,56 @@ class DataTableVisitas extends StatelessWidget {
                           DataCell(
                             Text(
                               item['dt_agenda'],
-                              style: GoogleFonts.montserrat(fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                fontSize: 14,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
+                              ),
                             ),
                           ),
                           DataCell(
                             Text(
                               item['paciente'],
-                              style: GoogleFonts.montserrat(fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                fontSize: 14,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
+                              ),
                             ),
                           ),
                           DataCell(
                             Text(
                               item['checking'],
-                              style: GoogleFonts.montserrat(fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                fontSize: 14,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
+                              ),
                             ),
                           ),
                           DataCell(
                             Text(
                               item['checkout'],
-                              style: GoogleFonts.montserrat(fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                fontSize: 14,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
+                              ),
                             ),
                           ),
                           DataCell(
                             Text(
                               item['tempo'],
-                              style: GoogleFonts.montserrat(fontSize: 14),
+                              style: GoogleFonts.montserrat(
+                                fontSize: 14,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor,
+                              ),
                             ),
                           ),
                         ],

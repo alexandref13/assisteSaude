@@ -7,7 +7,7 @@ class CircularProgressIndicatorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height,
-      color: Theme.of(context).accentColor,
+      color: Theme.of(context).hintColor,
       child: Center(
         child: SizedBox(
           height: 40,

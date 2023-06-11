@@ -158,15 +158,23 @@ class MapaAgendaController extends GetxController {
     if (dados['valida'] == 0) {
       onAlertButtonPressed(
         context,
-        'Algo deu errado, tente novamente',
+        'Local fora do raio\npermitido para ação!',
         () {
           Get.offAllNamed('/home');
         },
       );
-    } else {
+    } else if (dados['valida'] == 1) {
       confirmedButtonPressed(context, 'Check-out realizado com sucesso!', () {
         Get.offAllNamed('/home');
       });
+    } else {
+      onAlertButtonPressed(
+        context,
+        'Houve algum problema! Tente Novamente',
+        () {
+          Get.offAllNamed('/home');
+        },
+      );
     }
   }
 

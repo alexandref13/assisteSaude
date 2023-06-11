@@ -6,7 +6,6 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:ui';
 
 class Esqueci extends StatefulWidget {
   @override
@@ -34,7 +33,7 @@ class _EsqueciState extends State<Esqueci> {
             return emailController.isLoading.value
                 ? CircularProgressIndicatorWidget()
                 : Container(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).hintColor,
                     child: Center(
                       child: Form(
                         key: emailController.form,
@@ -106,13 +105,16 @@ class _EsqueciState extends State<Esqueci> {
                                         fontSize: 14),
                                     errorBorder: new OutlineInputBorder(
                                         borderSide: new BorderSide(
-                                            color:
-                                                Theme.of(context).errorColor)),
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .error)),
                                     focusedErrorBorder: new OutlineInputBorder(
                                         borderSide: new BorderSide(
                                             color: Colors.red[900]!)),
                                     errorStyle: GoogleFonts.montserrat(
-                                        color: Theme.of(context).errorColor),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .error),
                                   ),
                                   keyboardType: TextInputType.emailAddress,
 

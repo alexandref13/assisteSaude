@@ -58,20 +58,6 @@ class AuthController extends GetxController {
         //print(dadosUsuario);
 
         if (dadosUsuario['valida'] == 1) {
-          var sendTags = {
-            'idusu': dadosUsuario['idprof'],
-            'nome': dadosUsuario['nome'],
-            'sobrenome': dadosUsuario['sobrenome'],
-            'tipousu': dadosUsuario['tipousu'],
-            'idcliente': dadosUsuario['idcliente'],
-          };
-
-          OneSignal.shared.sendTags(sendTags).then((response) {
-            print("Successfully sent tags with response: $response");
-          }).catchError((error) {
-            print("Encountered an error sending tags: $error");
-          });
-
           loginController.hasMoreEmail(email).then(
             (value) async {
               await GetStorage.init();
@@ -113,6 +99,20 @@ class AuthController extends GetxController {
                 } else {
                   loginController.isMoreThanOneEmail(false);
                 }
+
+                var sendTags = {
+                  'idusu': dadosUsuario['idprof'],
+                  'nome': dadosUsuario['nome'],
+                  'sobrenome': dadosUsuario['idcliente'],
+                };
+
+                OneSignal.shared.sendTags(sendTags).then((response) {
+                  print(
+                      "autoLogIn Successfully sent tags with response: $response");
+                }).catchError((error) {
+                  print("autoLogIn Encountered an error sending tags: $error");
+                });
+
                 Get.offNamed('/home');
               }
             },

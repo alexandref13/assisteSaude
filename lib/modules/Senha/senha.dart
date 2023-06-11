@@ -33,7 +33,7 @@ class _SenhaState extends State<Senha> {
             return senhaController.isLoading.value
                 ? CircularProgressIndicatorWidget()
                 : Container(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).hintColor,
                     child: Center(
                       child: Form(
                         key: senhaController.form,
@@ -89,14 +89,17 @@ class _SenhaState extends State<Senha> {
                                         fontSize: 14),
                                     errorBorder: new OutlineInputBorder(
                                         borderSide: new BorderSide(
-                                            color:
-                                                Theme.of(context).errorColor)),
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .error)),
                                     focusedErrorBorder: new OutlineInputBorder(
                                       borderSide: new BorderSide(
                                           color: Colors.red[900]!),
                                     ),
                                     errorStyle: GoogleFonts.montserrat(
-                                        color: Theme.of(context).errorColor),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .error),
                                     prefixIcon: Icon(Icons.lock_outline,
                                         color: Colors.white),
                                   ),
@@ -147,14 +150,17 @@ class _SenhaState extends State<Senha> {
                                         fontSize: 14),
                                     errorBorder: new OutlineInputBorder(
                                         borderSide: new BorderSide(
-                                            color:
-                                                Theme.of(context).errorColor)),
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .error)),
                                     focusedErrorBorder: new OutlineInputBorder(
                                       borderSide: new BorderSide(
                                           color: Colors.red[900]!),
                                     ),
                                     errorStyle: GoogleFonts.montserrat(
-                                        color: Theme.of(context).errorColor),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .error),
                                     prefixIcon: Icon(Icons.lock_outline,
                                         color: Colors.white),
                                   ),

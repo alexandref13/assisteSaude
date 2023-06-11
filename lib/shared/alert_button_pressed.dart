@@ -6,7 +6,7 @@ onAlertButtonPressed(context, String text, VoidCallback onTap) {
   Alert(
     image: Icon(
       Icons.close,
-      color: Theme.of(context).errorColor,
+      color: Theme.of(context).colorScheme.error,
       size: 50,
     ),
     style: AlertStyle(
@@ -17,7 +17,7 @@ onAlertButtonPressed(context, String text, VoidCallback onTap) {
       //descStyle: GoogleFonts.poppins(color: Colors.red,),
       animationDuration: Duration(milliseconds: 300),
       titleStyle: GoogleFonts.poppins(
-        color: Theme.of(context).errorColor,
+        color: Theme.of(context).colorScheme.error,
         fontSize: 16,
       ),
     ),
@@ -34,7 +34,7 @@ onAlertButtonPressed(context, String text, VoidCallback onTap) {
         ),
         onPressed: onTap,
         width: 80,
-        color: Theme.of(context).errorColor,
+        color: Theme.of(context).colorScheme.error,
       )
     ],
   ).show();

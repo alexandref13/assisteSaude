@@ -20,7 +20,7 @@ class VisualizarAgenda extends StatelessWidget {
         shape: BoxShape.circle,
         color: isSameDay(calendarioController.selectedDay.value, date)
             ? Colors.blue[800]
-            : Theme.of(context).accentColor,
+            : Theme.of(context).hintColor,
       ),
       width: 18.0,
       height: 18.0,
@@ -62,7 +62,7 @@ class VisualizarAgenda extends StatelessWidget {
           )
         ],
       ),
-      backgroundColor: Theme.of(context).accentColor,
+      backgroundColor: Theme.of(context).hintColor,
       body: Obx(
         () {
           return calendarioController.isLoading.value
@@ -83,10 +83,24 @@ class VisualizarAgenda extends StatelessWidget {
                             eventLoader: calendarioController.getEventsfromDay,
                             headerStyle: HeaderStyle(
                               titleTextStyle: GoogleFonts.montserrat(
-                                fontSize: 14,
-                                color: Theme.of(context).primaryColor,
-                              ),
+                                  fontSize: 16,
+                                  color: Theme.of(context)
+                                      .textSelectionTheme
+                                      .selectionColor,
+                                  fontWeight: FontWeight.w600),
                               formatButtonVisible: false,
+                              leftChevronIcon: Icon(
+                                Icons.chevron_left,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor, // Cor da seta esquerda
+                              ),
+                              rightChevronIcon: Icon(
+                                Icons.chevron_right,
+                                color: Theme.of(context)
+                                    .textSelectionTheme
+                                    .selectionColor, // Cor da seta direita
+                              ),
                               titleCentered: true,
                             ),
                             calendarBuilders: CalendarBuilders(

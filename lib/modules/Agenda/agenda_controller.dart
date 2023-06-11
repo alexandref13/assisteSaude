@@ -25,6 +25,7 @@ class AgendaController extends GetxController {
     '1',
     '2',
     '4',
+    '6',
     '12',
   ];
 
@@ -64,9 +65,7 @@ class AgendaController extends GetxController {
 
     print("dias: ${diasArray.length}");
 
-    if (itemSelecionado.value == 'Selecione Qtd de') {
-      return 'qtdvazio';
-    } else if (diasArray.length == 0) {
+    if (diasArray.length == 0) {
       return 'diasvazio';
     } else {
       isLoading(true);

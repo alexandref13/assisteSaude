@@ -119,7 +119,7 @@ class _SessionPageState extends State<SessionPage> {
                                 backgroundColor:
                                     MaterialStateProperty.resolveWith<Color>(
                                   (Set<MaterialState> states) {
-                                    return Theme.of(context).accentColor;
+                                    return Theme.of(context).hintColor;
                                   },
                                 ),
                                 elevation:

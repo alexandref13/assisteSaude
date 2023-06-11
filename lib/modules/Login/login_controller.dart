@@ -92,20 +92,6 @@ class LoginController extends GetxController {
     isLoading(false);
 
     if (dadosUsuario['valida'] == 1) {
-      var sendTags = {
-        'idusu': dadosUsuario['idprof'],
-        'nome': dadosUsuario['nome'],
-        'sobrenome': dadosUsuario['sobrenome'],
-        'tipousu': dadosUsuario['tipousu'],
-        'idcliente': dadosUsuario['idcliente'],
-      };
-
-      OneSignal.shared.sendTags(sendTags).then((response) {
-        print("Successfully sent tags with response: $response");
-      }).catchError((error) {
-        print("Encountered an error sending tags: $error");
-      });
-
       hasMoreEmail(email.value.text).then(
         (value) async {
           await GetStorage.init();
@@ -134,6 +120,19 @@ class LoginController extends GetxController {
           genero.value = dadosUsuario['genero'];
           datanas.value = dadosUsuario['datanas'];
           emailprof.value = dadosUsuario['email'];
+
+          var sendTags = {
+            'idusu': idprof,
+            'nome': nome,
+            'sobrenome': idCliente,
+          };
+
+          OneSignal.shared.sendTags(sendTags).then((response) {
+            print(
+                "hasMoreEmail Successfully sent tags with response: $response");
+          }).catchError((error) {
+            print("hasMoreEmail Encountered an error sending tags: $error");
+          });
 
           if (value.length > 1) {
             Get.toNamed('listOfClients');
@@ -212,20 +211,6 @@ class LoginController extends GetxController {
 
     var dados = json.decode(response.body);
 
-    var sendTags = {
-      'idusu': dados['idprof'],
-      'nome': dados['nome'],
-      'sobrenome': dados['sobrenome'],
-      'tipousu': dados['tipousu'],
-      'idcliente': dados['idcliente'],
-    };
-
-    OneSignal.shared.sendTags(sendTags).then((response) {
-      print("Successfully sent tags with response: $response");
-    }).catchError((error) {
-      print("Encountered an error sending tags: $error");
-    });
-
     isLoading(false);
 
     email(dados['email']);
@@ -252,6 +237,18 @@ class LoginController extends GetxController {
     idCliente(dados['idcliente']);
 
     storageId();
+
+    var sendTags = {
+      'idusu': idprof.value,
+      'nome': nome.value,
+      'sobrenome': idCliente.value,
+    };
+
+    OneSignal.shared.sendTags(sendTags).then((response) {
+      print("newLogin Successfully sent tags with response: $response");
+    }).catchError((error) {
+      print("newLogin Encountered an error sending tags: $error");
+    });
 
     Get.offNamed('/home');
 

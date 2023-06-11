@@ -27,8 +27,52 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
+            actions: [
+              Row(
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.send_outlined,
+                      size: 20,
+                      color:
+                          Theme.of(context).textSelectionTheme.selectionColor!,
+                    ),
+                    onPressed: () {
+                      print(agendaController.idcliente.value);
+                      agendaController.getAgendarVisitas().then((value) {
+                        if (value == 1) {
+                          confirmedButtonPressed(
+                            context,
+                            'Agendamento Realizado com Sucesso!',
+                            () async {
+                              await calendarioController.agenda();
+                              loginController.selectedIndex.value = 3;
+                              Get.offAllNamed('/home');
+                            },
+                          );
+                        } else if (value == "diasvazio") {
+                          onAlertButtonPressed(
+                              context, 'Selecione pelo menos um dia da semana!',
+                              () {
+                            Get.back();
+                          });
+                        } else {
+                          onAlertButtonPressed(
+                            context,
+                            'Algo deu errado\n Tente novamente',
+                            () {
+                              Get.back();
+                            },
+                          );
+                        }
+                      });
+                    },
+                  ),
+                ],
+              )
+            ],
             title: Text(
-              'Agendar Visitas',
+              'Agendar Atendimentos',
               style: GoogleFonts.montserrat(
                 fontSize: 16,
                 color: Theme.of(context).textSelectionTheme.selectionColor,
@@ -41,9 +85,8 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                 ? CircularProgressIndicatorWidget()
                 : SingleChildScrollView(
                     child: Container(
-                      margin: EdgeInsets.only(top: 5),
+                      margin: EdgeInsets.fromLTRB(5, 10, 5, 50),
                       padding: EdgeInsets.all(8),
-                      height: MediaQuery.of(context).size.height * .95,
                       width: MediaQuery.of(context).size.width,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -71,7 +114,7 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                                 iconEnabledColor: Theme.of(context)
                                     .textSelectionTheme
                                     .selectionColor,
-                                dropdownColor: Theme.of(context).accentColor,
+                                dropdownColor: Theme.of(context).hintColor,
                                 style: GoogleFonts.montserrat(
                                   fontSize: 14,
                                   color: Theme.of(context)
@@ -117,6 +160,17 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                                         newValue!;
                                   },
                                   activeColor: Theme.of(context).primaryColor,
+                                  fillColor:
+                                      MaterialStateColor.resolveWith((states) {
+                                    if (states
+                                        .contains(MaterialState.selected)) {
+                                      return Theme.of(context)
+                                          .primaryColor; // Cor do quadrado quando selecionado
+                                    } else {
+                                      return Colors
+                                          .grey; // Cor do quadrado quando não selecionado
+                                    }
+                                  }),
                                   controlAffinity:
                                       ListTileControlAffinity.platform),
                             ),
@@ -143,6 +197,16 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                                 },
                                 controlAffinity:
                                     ListTileControlAffinity.platform,
+                                fillColor:
+                                    MaterialStateColor.resolveWith((states) {
+                                  if (states.contains(MaterialState.selected)) {
+                                    return Theme.of(context)
+                                        .primaryColor; // Cor do quadrado quando selecionado
+                                  } else {
+                                    return Colors
+                                        .grey; // Cor do quadrado quando não selecionado
+                                  }
+                                }),
                                 activeColor: Theme.of(context)
                                     .primaryColor, //  <-- platform Checkbox
                               ),
@@ -169,6 +233,16 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                                 agendaController.checkedter.value = newValue!;
                               },
                               activeColor: Theme.of(context).primaryColor,
+                              fillColor:
+                                  MaterialStateColor.resolveWith((states) {
+                                if (states.contains(MaterialState.selected)) {
+                                  return Theme.of(context)
+                                      .primaryColor; // Cor do quadrado quando selecionado
+                                } else {
+                                  return Colors
+                                      .grey; // Cor do quadrado quando não selecionado
+                                }
+                              }),
                               controlAffinity: ListTileControlAffinity
                                   .platform, //  <-- platform Checkbox
                             )),
@@ -194,6 +268,16 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                                 agendaController.checkedqua.value = newValue!;
                               },
                               activeColor: Theme.of(context).primaryColor,
+                              fillColor:
+                                  MaterialStateColor.resolveWith((states) {
+                                if (states.contains(MaterialState.selected)) {
+                                  return Theme.of(context)
+                                      .primaryColor; // Cor do quadrado quando selecionado
+                                } else {
+                                  return Colors
+                                      .grey; // Cor do quadrado quando não selecionado
+                                }
+                              }),
                               controlAffinity: ListTileControlAffinity
                                   .platform, //  <-- platform Checkbox
                             )),
@@ -219,6 +303,16 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                                 agendaController.checkedqui.value = newValue!;
                               },
                               activeColor: Theme.of(context).primaryColor,
+                              fillColor:
+                                  MaterialStateColor.resolveWith((states) {
+                                if (states.contains(MaterialState.selected)) {
+                                  return Theme.of(context)
+                                      .primaryColor; // Cor do quadrado quando selecionado
+                                } else {
+                                  return Colors
+                                      .grey; // Cor do quadrado quando não selecionado
+                                }
+                              }),
                               controlAffinity: ListTileControlAffinity
                                   .platform, //  <-- platform Checkbox
                             )),
@@ -244,6 +338,16 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                                 agendaController.checkedsex.value = newValue!;
                               },
                               activeColor: Theme.of(context).primaryColor,
+                              fillColor:
+                                  MaterialStateColor.resolveWith((states) {
+                                if (states.contains(MaterialState.selected)) {
+                                  return Theme.of(context)
+                                      .primaryColor; // Cor do quadrado quando selecionado
+                                } else {
+                                  return Colors
+                                      .grey; // Cor do quadrado quando não selecionado
+                                }
+                              }),
                               controlAffinity: ListTileControlAffinity
                                   .platform, //  <-- platform Checkbox
                             )),
@@ -269,6 +373,16 @@ class _AgendarVisitasState extends State<AgendarVisitas> {
                                 agendaController.checkedsab.value = newValue!;
                               },
                               activeColor: Theme.of(context).primaryColor,
+                              fillColor:
+                                  MaterialStateColor.resolveWith((states) {
+                                if (states.contains(MaterialState.selected)) {
+                                  return Theme.of(context)
+                                      .primaryColor; // Cor do quadrado quando selecionado
+                                } else {
+                                  return Colors
+                                      .grey; // Cor do quadrado quando não selecionado
+                                }
+                              }),
                               controlAffinity: ListTileControlAffinity
                                   .platform, //  <-- platform Checkbox
                             )),

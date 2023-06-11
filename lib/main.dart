@@ -13,7 +13,6 @@ import 'package:assistsaude/modules/Senha/senha.dart';
 import 'package:assistsaude/modules/Terapia/components/DetalhesTerapia/detalhes_terapia_page.dart';
 import 'package:assistsaude/modules/Terapia/components/DetalhesTerapia/mapa_page.dart';
 import 'package:assistsaude/modules/Terapia/terapia_page.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

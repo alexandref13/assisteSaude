@@ -2,9 +2,7 @@ import 'package:assistsaude/modules/Terapia/components/DetalhesTerapia/detalhs_t
 import 'package:assistsaude/modules/Terapia/terapia_controller.dart';
 import 'package:assistsaude/shared/box_search.dart';
 import 'package:assistsaude/shared/circular_progress_indicator.dart';
-import 'package:assistsaude/shared/delete_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -139,6 +137,11 @@ class TerapiaPage extends StatelessWidget {
                                                     ? Icons
                                                         .not_interested_outlined
                                                     : Icons.person_outline,
+                                                color: terapias.ctlaceito == '0'
+                                                    ? Colors.black
+                                                    : Theme.of(context)
+                                                        .textSelectionTheme
+                                                        .selectionColor,
                                               ),
                                               title: Text(
                                                 terapias.nomepac!,
@@ -206,6 +209,11 @@ class TerapiaPage extends StatelessWidget {
                                                     ? Icons
                                                         .not_interested_outlined
                                                     : Icons.person_outline,
+                                                color: terapias.ctlaceito == '0'
+                                                    ? Colors.black
+                                                    : Theme.of(context)
+                                                        .textSelectionTheme
+                                                        .selectionColor,
                                               ),
                                               title: Text(
                                                 terapias.nomepac!,

@@ -384,9 +384,10 @@ class _HomePageState extends State<HomePage> {
         return false;
       },
       child: Scaffold(
-        backgroundColor: Theme.of(context).textSelectionTheme.selectionColor,
+        backgroundColor: Theme.of(context).hintColor,
         key: homeController.key,
         drawer: Drawer(
+          backgroundColor: Theme.of(context).hintColor,
           child: Container(
             child: ListView(
               children: <Widget>[
@@ -406,7 +407,7 @@ class _HomePageState extends State<HomePage> {
                               overflow: TextOverflow.ellipsis,
                               softWrap: false,
                               style: GoogleFonts.montserrat(
-                                  color: Theme.of(context).accentColor,
+                                  color: Theme.of(context).hintColor,
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -654,7 +655,7 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         children: [
                           Text(
-                            'Versão 3.5',
+                            'Versão 3.6',
                             style: GoogleFonts.montserrat(
                               color: Theme.of(context)
                                   .textSelectionTheme
@@ -700,10 +701,9 @@ class _HomePageState extends State<HomePage> {
               label: 'Agenda',
             ),
           ],
-          selectedIconTheme:
-              IconThemeData(color: Theme.of(context).accentColor),
+          selectedIconTheme: IconThemeData(color: Theme.of(context).hintColor),
           unselectedIconTheme: IconThemeData(color: Colors.white),
-          selectedItemColor: Theme.of(context).accentColor,
+          selectedItemColor: Theme.of(context).hintColor,
           unselectedItemColor: Colors.white,
           currentIndex: loginController.selectedIndex.value,
           onTap: onItemTapped,

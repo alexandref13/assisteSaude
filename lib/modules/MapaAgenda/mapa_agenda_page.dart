@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'dart:io' show Platform;
+import 'package:intl/intl.dart';
 
 class MapaAgendaPage extends StatefulWidget {
   const MapaAgendaPage({Key? key}) : super(key: key);
@@ -387,17 +387,48 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
       );
     }
 
-    Widget ContadorTime() {
+    Widget ContadorTime(String checkin) {
+      DateTime parseDateTime(String dateTimeString) {
+        DateFormat format = DateFormat("dd/MM/yy HH:mm");
+        return format.parse(dateTimeString);
+      }
+
+      DateTime startTime = parseDateTime(checkin);
+
       return Positioned(
         top: 20,
         left: 10,
-        child: Container(
-          child: FloatingActionButton.extended(
-            onPressed: () {},
-            label: const Text('00:10:23'),
-            icon: const Icon(Icons.timer),
-            backgroundColor: Colors.amber[900],
-          ),
+        child: StreamBuilder<int>(
+          stream:
+              Stream.periodic(const Duration(seconds: 1), (int count) => count),
+          builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+            Duration duration = DateTime.now().difference(startTime);
+
+            int hours = duration.inHours;
+            int minutes = duration.inMinutes.remainder(60);
+            int seconds = duration.inSeconds.remainder(60);
+
+            String formattedTime =
+                '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+
+            Color backgroundColor;
+            if (minutes < 30) {
+              backgroundColor = Colors.blue;
+            } else if (minutes < 55) {
+              backgroundColor = Colors.amber;
+            } else {
+              backgroundColor = Colors.green;
+            }
+
+            return Container(
+              child: FloatingActionButton.extended(
+                onPressed: () {},
+                label: Text(formattedTime),
+                icon: const Icon(Icons.timer),
+                backgroundColor: backgroundColor,
+              ),
+            );
+          },
         ),
       );
     }
@@ -405,7 +436,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
     Widget buildContainer() {
       return Stack(
         //alignment: Alignment.bottomRight,
-        textDirection: TextDirection.ltr,
+        // textDirection: TextDirection.ltr,
         children: [
           boxes(),
           boxesProf(),
@@ -466,7 +497,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                   backgroundColor: Colors.green,
                   label: 'Check-in',
                   labelStyle: GoogleFonts.montserrat(
-                      fontSize: 14, color: Theme.of(context).accentColor),
+                      fontSize: 14, color: Theme.of(context).hintColor),
                   onTap: () {
                     deleteAlert(
                       context,
@@ -482,13 +513,13 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                       Theme.of(context).textSelectionTheme.selectionColor,
                   child: Icon(
                     Icons.schedule,
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).hintColor,
                   ),
                   backgroundColor: Colors.greenAccent,
                   label: 'Horário',
                   labelStyle: GoogleFonts.montserrat(
                     fontSize: 14,
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).hintColor,
                   ),
                   onTap: () {
                     Get.toNamed('/agendarhorario');
@@ -505,7 +536,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                   label: 'Info check',
                   labelStyle: GoogleFonts.montserrat(
                     fontSize: 14,
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).hintColor,
                   ),
                   onTap: () {
                     Get.toNamed('/infoCheck');
@@ -522,7 +553,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                   label: 'Atualizar GPS',
                   labelStyle: GoogleFonts.montserrat(
                     fontSize: 14,
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).hintColor,
                   ),
                   onTap: () {
                     deleteAlert(context, "Deseja atualizar o GPS?", () async {
@@ -541,7 +572,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                   label: 'Deletar',
                   labelStyle: GoogleFonts.montserrat(
                     fontSize: 14,
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).hintColor,
                   ),
                   onTap: () {
                     deleteAlert(context, "Deseja deletar a sessão?", () async {
@@ -581,7 +612,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                   label: 'Check-out',
                   labelStyle: GoogleFonts.montserrat(
                     fontSize: 14,
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).hintColor,
                   ),
                   onTap: () {
                     deleteAlert(
@@ -604,7 +635,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                   label: 'Info check',
                   labelStyle: GoogleFonts.montserrat(
                     fontSize: 14,
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).hintColor,
                   ),
                   onTap: () {
                     Get.toNamed('/infoCheck');
@@ -621,7 +652,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                   label: 'Resetar',
                   labelStyle: GoogleFonts.montserrat(
                     fontSize: 14,
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).hintColor,
                   ),
                   onTap: () {
                     deleteAlert(
@@ -656,6 +687,9 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                   children: [
                     buildGoogleMap(context),
                     buildContainer(),
+                    mapaAgendaController.checkin.value == "30/11/-1 00:00"
+                        ? Container()
+                        : ContadorTime(mapaAgendaController.checkin.value)
                   ],
                 );
         },

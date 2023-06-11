@@ -104,6 +104,9 @@ class DetalhesVisita extends StatelessWidget {
                           Icon(
                             Icons.calendar_today_outlined,
                             size: 15,
+                            color: Theme.of(context)
+                                .textSelectionTheme
+                                .selectionColor,
                           ),
                         ],
                       ),
@@ -168,6 +171,9 @@ class DetalhesVisita extends StatelessWidget {
                           Icon(
                             Icons.calendar_today_outlined,
                             size: 15,
+                            color: Theme.of(context)
+                                .textSelectionTheme
+                                .selectionColor,
                           ),
                         ],
                       ),
