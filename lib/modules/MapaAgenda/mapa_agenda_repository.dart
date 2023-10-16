@@ -56,13 +56,23 @@ class MapaAgendaRepository {
     );
   }
 
+  static Future verGps() async {
+    MapaAgendaController mapaAgendaController = Get.put(MapaAgendaController());
+    print('VER SESSÃO: ${mapaAgendaController.idSessao.value}');
+    return await http.post(
+      Uri.https("assistesaude.com.br", "/flutter/verGPS.php"),
+      body: {'idsessao': mapaAgendaController.idSessao.value},
+    );
+  }
+
   static Future doChangeGps() async {
     MapaAgendaController mapaAgendaController = Get.put(MapaAgendaController());
 
-    print("idsessao: ${mapaAgendaController.idSessao.value}");
+    print(
+        "idsessao: ${mapaAgendaController.idSessao.value} idpac: ${mapaAgendaController.idPaciente.value} lat: ${mapaAgendaController.ourLat.value.toString()}  lng: ${mapaAgendaController.ourLng.value.toString()} ");
 
     return await http.post(
-      Uri.https("assistesaude.com.br", "/flutter/"),
+      Uri.https("assistesaude.com.br", "/flutter/alterargpsNovo.php"),
       body: {
         'idpac': mapaAgendaController.idPaciente.value,
         'idsessao': mapaAgendaController.idSessao.value,

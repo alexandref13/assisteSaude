@@ -25,7 +25,7 @@ dependencies:
   http: ^0.13.4
   image_cropper: ^4.0.1
   image_picker: ^0.8.6
-  permission_handler: ^10.2.0
+  permission_handler: ^11.0.1
   local_auth: ^2.1.2
   mask_text_input_formatter: ^2.1.0
   pull_to_refresh: ^2.0.0
@@ -40,6 +40,7 @@ dependencies:
   url_launcher: ^6.1.6
   custom_timer: ^0.2.3
   flutter_flushbar: ^0.0.2
+  safe_device: ^1.1.4
 
 dev_dependencies:
   flutter_test:

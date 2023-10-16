@@ -114,6 +114,21 @@ class MapaAgendaController extends GetxController {
     }
   }
 
+  VerGps(context) async {
+    final response = await MapaAgendaRepository.verGps();
+
+    var dados = json.decode(response.body);
+
+    if (dados == 1) {
+      confirmedButtonPressed(context, 'Detecção de GPS negada! Tente novamente',
+          () {
+        Get.offAllNamed('/home');
+      });
+    } else {
+      return false;
+    }
+  }
+
   doCheckIn(context) async {
     final response = await MapaAgendaRepository.doCheckin();
 

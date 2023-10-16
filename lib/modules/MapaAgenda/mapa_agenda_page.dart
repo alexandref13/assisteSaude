@@ -10,6 +10,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:safe_device/safe_device.dart';
 import 'package:intl/intl.dart';
 
 class MapaAgendaPage extends StatefulWidget {
@@ -27,6 +29,47 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
   Completer<GoogleMapController> _controller = Completer();
 
   Position? _position;
+
+  bool isJailBroken = false;
+  bool canMockLocation = false;
+  bool isRealDevice = true;
+  bool isOnExternalStorage = false;
+  bool isSafeDevice = false;
+  bool isDevelopmentModeEnable = false;
+
+  @override
+  void initState() {
+    super.initState();
+    initPlatformState();
+  }
+
+  Future<void> initPlatformState() async {
+    await Permission.location.request();
+    if (await Permission.location.isPermanentlyDenied) {
+      openAppSettings();
+    }
+
+    if (!mounted) return;
+    try {
+      isJailBroken = await SafeDevice.isJailBroken;
+      canMockLocation = await SafeDevice.canMockLocation;
+      isRealDevice = await SafeDevice.isRealDevice;
+      isOnExternalStorage = await SafeDevice.isOnExternalStorage;
+      isSafeDevice = await SafeDevice.isSafeDevice;
+      isDevelopmentModeEnable = await SafeDevice.isDevelopmentModeEnable;
+    } catch (error) {
+      print(error);
+    }
+
+    setState(() {
+      isJailBroken = isJailBroken;
+      canMockLocation = canMockLocation;
+      isRealDevice = isRealDevice;
+      isOnExternalStorage = isOnExternalStorage;
+      isSafeDevice = isSafeDevice;
+      isDevelopmentModeEnable = isDevelopmentModeEnable;
+    });
+  }
 
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
@@ -120,29 +163,6 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
   }
 
   void timer() async {
-    //String url;
-    //final int targetWidth = 120;
-
-    /*loginController.imgperfil.value == ""
-       ? url = 'https://assistesaude.com.br/dist/img/user.png'
-        : url =
-            'https://assistesaude.com.br/downloads/fotosprofissionais/${loginController.imgperfil.value}';*/
-
-    /* final File markerImageFile = await DefaultCacheManager().getSingleFile(url);
-    final Uint8List markerImageBytes = await markerImageFile.readAsBytes();
-
-    final Codec markerImageCodec = await instantiateImageCodec(
-      markerImageBytes,
-      targetWidth: targetWidth,
-    );
-
-    final FrameInfo frameInfo = await markerImageCodec.getNextFrame();
-    final ByteData? byteData = await frameInfo.image.toByteData(
-      format: ImageByteFormat.png,
-    );
-    final Uint8List resizedMarkerImageBytes = byteData!.buffer.asUint8List();*/
-    //_determinePosition();
-
     Position position = await _determinePosition();
     setState(() {
       _position = position;
@@ -159,9 +179,6 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
           : "images/profissional_android.png",
     );
 
-    /* BitmapDescriptor markerbitmapprof = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(), "images/profissional.png");*/
-
     Future.delayed(Duration(seconds: 2)).then((_) async {
       if (this.mounted) {
         setState(() {
@@ -174,10 +191,6 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                 title: 'Sua localização atual', snippet: "" //"$position",
                 ),
             icon: markerbitmapprof,
-
-            /*_platform == TargetPlatform.iOS
-                ? BitmapDescriptor.fromBytes(resizedMarkerImageBytes)
-                : markerbitmapprof,*/
           ));
         });
       }
@@ -306,6 +319,10 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                 ));
               });
             }
+            canMockLocation
+                ? await mapaAgendaController.VerGps(context)
+                : print('TUDO CERTO COM GPS');
+
             timer();
           },
           circles: Set.from([
