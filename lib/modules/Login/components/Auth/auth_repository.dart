@@ -7,7 +7,7 @@ class AuthRepository {
     LoginController loginController = Get.find(tag: 'login');
 
     return await http.post(
-      Uri.https("assistesaude.com.br", "/flutter/dados_profNovo.php"),
+      Uri.https("assistesaude.com.br", "/flutter/dados_prof.php"),
       body: {
         'idprof': id,
         'iddevice': loginController.deviceId,

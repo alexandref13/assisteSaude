@@ -201,58 +201,69 @@ class LoginController extends GetxController {
   }
 
   newLogin() async {
-    await GetStorage.init();
-    final box = GetStorage();
-    var id = box.read('id');
+    try {
+      await GetStorage.init();
+      final box = GetStorage();
+      var id = box.read('id');
 
-    isLoading(true);
+      isLoading(true);
 
-    final response = await LoginRepository.Newlogin(id);
+      final response = await LoginRepository.Newlogin(id);
 
-    var dados = json.decode(response.body);
+      if (response.statusCode == 200) {
+        var dados = json.decode(response.body);
 
-    isLoading(false);
+        print(dados);
 
-    email(dados['email']);
-    idprof(dados['idprof']);
-    nome(dados['nome']);
-    sobrenome(dados['sobrenome']);
-    tipousu(dados['tipousu']);
-    imgperfil(dados['imgperfil']);
-    especialidade(dados['especialidade']);
-    idCliente(dados['idcliente']);
-    nomeCliente(dados['nomecliente']);
-    imgLogo(dados['imglogo']);
-    imgLogoBranca(dados['imglogobranca']);
-    slogan(dados['slogan']);
-    endereco(dados['endereco']);
-    complemento(dados['complemento']);
-    cidade(dados['cidade']);
-    bairro(dados['bairro']);
-    cep(dados['cep']);
-    uf(dados['uf']);
-    cel(dados['cel']);
-    genero(dados['genero']);
-    datanas(dados['datanas']);
-    idCliente(dados['idcliente']);
+        isLoading(false);
 
-    storageId();
+        email(dados['email']);
+        idprof(dados['idprof']);
+        nome(dados['nome']);
+        sobrenome(dados['sobrenome']);
+        tipousu(dados['tipousu']);
+        imgperfil(dados['imgperfil']);
+        especialidade(dados['especialidade']);
+        idCliente(dados['idcliente']);
+        nomeCliente(dados['nomecliente']);
+        imgLogo(dados['imglogo']);
+        imgLogoBranca(dados['imglogobranca']);
+        slogan(dados['slogan']);
+        endereco(dados['endereco']);
+        complemento(dados['complemento']);
+        cidade(dados['cidade']);
+        bairro(dados['bairro']);
+        cep(dados['cep']);
+        uf(dados['uf']);
+        cel(dados['cel']);
+        genero(dados['genero']);
+        datanas(dados['datanas']);
+        idCliente(dados['idcliente']);
 
-    var sendTags = {
-      'idusu': idprof.value,
-      'nome': nome.value,
-      'sobrenome': idCliente.value,
-    };
+        storageId();
 
-    OneSignal.shared.sendTags(sendTags).then((response) {
-      print("newLogin Successfully sent tags with response: $response");
-    }).catchError((error) {
-      print("newLogin Encountered an error sending tags: $error");
-    });
+        var sendTags = {
+          'idusu': idprof.value,
+          'nome': nome.value,
+          'sobrenome': sobrenome.value,
+        };
 
-    Get.offNamed('/home');
+        OneSignal.shared.sendTags(sendTags).then((response) {
+          print("newLogin Successfully sent tags with response: $response");
+        }).catchError((error) {
+          print("newLogin Encountered an error sending tags: $error");
+        });
 
-    isLoading(false);
+        print("Navigating to /home");
+        Get.offNamed('/home');
+      } else {
+        print("Failed to load data: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Error in newLogin: $e");
+    } finally {
+      isLoading(false);
+    }
   }
 
   @override

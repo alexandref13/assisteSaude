@@ -8,7 +8,7 @@ class LoginRepository {
     LoginController loginController = Get.find(tag: 'login');
 
     return await http.post(
-      Uri.https("assistesaude.com.br", "/flutter/loginNovo.php"),
+      Uri.https("assistesaude.com.br", "/flutter/login.php"),
       body: {
         'email': loginController.email.value.text,
         'senha': loginController.password.value.text,
@@ -22,7 +22,7 @@ class LoginRepository {
     LoginController loginController = Get.find(tag: 'login');
 
     return await http.post(
-      Uri.https("assistesaude.com.br", "/flutter/dados_profNovo.php"),
+      Uri.https("assistesaude.com.br", "/flutter/dados_prof.php"),
       body: {
         'idprof': id,
         'idevice': loginController.deviceId,
