@@ -488,9 +488,7 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                               mapToolbarEnabled: true,
                               tiltGesturesEnabled: true,
                               myLocationButtonEnabled: false,
-                              onCameraMove: (position) {
-                                print("AQUI");
-                              },
+
                               initialCameraPosition: CameraPosition(
                                 target: LatLng(
                                   position.latitude,
