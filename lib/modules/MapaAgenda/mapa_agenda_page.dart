@@ -1,18 +1,21 @@
 import 'dart:async';
+
 import 'package:assistsaude/modules/Agenda/calendario_controller.dart';
 import 'package:assistsaude/modules/Login/login_controller.dart';
+import 'package:assistsaude/modules/MapaAgenda/components/widgets/boxes_prof_widget.dart';
+import 'package:assistsaude/modules/MapaAgenda/components/widgets/boxes_widgets.dart';
+import 'package:assistsaude/modules/MapaAgenda/components/widgets/count_time_widget.dart';
 import 'package:assistsaude/modules/MapaAgenda/mapa_agenda_controller.dart';
 import 'package:assistsaude/shared/delete_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:safe_device/safe_device.dart';
-import 'package:intl/intl.dart';
 
 class MapaAgendaPage extends StatefulWidget {
   const MapaAgendaPage({Key? key}) : super(key: key);
@@ -28,7 +31,10 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
       Get.put(MapaAgendaController());
   Completer<GoogleMapController> _controller = Completer();
 
-  Position? _position;
+  BitmapDescriptor markerProf = BitmapDescriptor.defaultMarker;
+  BitmapDescriptor markerPac = BitmapDescriptor.defaultMarker;
+
+  // Position? _position;
 
   bool isJailBroken = false;
   bool canMockLocation = false;
@@ -39,8 +45,10 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
 
   @override
   void initState() {
-    super.initState();
     initPlatformState();
+    _determinePosition();
+
+    super.initState();
   }
 
   Future<void> initPlatformState() async {
@@ -93,31 +101,8 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
     }
 
     return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-  }
-
-  Future<void> gotoLocation() async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-      target: LatLng(
-          mapaAgendaController.lat.value, mapaAgendaController.lng.value),
-      zoom: 18,
-      tilt: 20,
-      bearing: 45,
-    )));
-  }
-
-  Future<void> gotoLocationProf() async {
-    final GoogleMapController controller = await _controller.future;
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-
-    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-      target: LatLng(position.latitude, position.longitude),
-      zoom: 18,
-      tilt: 20,
-      bearing: 45,
-    )));
+      desiredAccuracy: LocationAccuracy.high,
+    );
   }
 
   Future<void> zoomToFit(GoogleMapController controller, LatLngBounds bounds,
@@ -162,304 +147,79 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
         southWestLongitudeCheck;
   }
 
-  void timer() async {
-    Position position = await _determinePosition();
-    setState(() {
-      _position = position;
-    });
+  // void timer() async {
+  //   Position position = await _determinePosition();
+  //   setState(() {
+  //     _position = position;
+  //   });
 
-    LatLng latLatAtual = LatLng(position.latitude, position.longitude);
-    // create the instance of CachedNetworkMarker
+  //   LatLng latLatAtual = LatLng(position.latitude, position.longitude);
+  //   // create the instance of CachedNetworkMarker
 
-    TargetPlatform _platform = Theme.of(context).platform;
-    BitmapDescriptor markerbitmapprof = await BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(),
-      _platform == TargetPlatform.iOS
-          ? "images/profissional.png"
-          : "images/profissional_android.png",
-    );
+  //   TargetPlatform _platform = Theme.of(context).platform;
+  //   BitmapDescriptor markerbitmapprof = await BitmapDescriptor.fromAssetImage(
+  //     ImageConfiguration(),
+  //     _platform == TargetPlatform.iOS
+  //         ? "images/profissional.png"
+  //         : "images/profissional_android.png",
+  //   );
 
-    Future.delayed(Duration(seconds: 2)).then((_) async {
-      if (this.mounted) {
-        setState(() {
-          mapaAgendaController.ourLat.value = position.latitude;
-          mapaAgendaController.ourLng.value = position.longitude;
-          mapaAgendaController.markers.add(Marker(
-            markerId: MarkerId('Estou Aqui!'),
-            position: latLatAtual,
-            infoWindow: InfoWindow(
-                title: 'Sua localização atual', snippet: "" //"$position",
-                ),
-            icon: markerbitmapprof,
-          ));
-        });
-      }
-      timer();
-    });
+  //   Future.delayed(Duration(seconds: 2)).then((_) async {
+  //     if (this.mounted) {
+  //       setState(() {
+  //         mapaAgendaController.ourLat.value = position.latitude;
+  //         mapaAgendaController.ourLng.value = position.longitude;
+  //         mapaAgendaController.markers.add(Marker(
+  //           markerId: MarkerId('Estou Aqui!'),
+  //           position: latLatAtual,
+  //           infoWindow: InfoWindow(
+  //               title: 'Sua localização atual', snippet: "" //"$position",
+  //               ),
+  //           icon: markerbitmapprof,
+  //         ));
+  //       });
+  //     }
+  //     timer();
+  //   });
+  // }
+
+  Future<String> getJsonFile(String path) async {
+    return await rootBundle.loadString(path);
+  }
+
+  void setMapStyle(String mapStyle) async {
+    final GoogleMapController controller = await _controller.future;
+    controller.setMapStyle(mapStyle);
+  }
+
+  changeMapMode() {
+    getJsonFile("images/mapa_style.json").then(setMapStyle);
   }
 
   @override
   Widget build(BuildContext context) {
-    Future<String> getJsonFile(String path) async {
-      return await rootBundle.loadString(path);
-    }
-
-    void setMapStyle(String mapStyle) async {
+    Future<void> gotoLocation() async {
       final GoogleMapController controller = await _controller.future;
-      controller.setMapStyle(mapStyle);
+      controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: LatLng(
+            mapaAgendaController.lat.value, mapaAgendaController.lng.value),
+        zoom: 18,
+        tilt: 20,
+        bearing: 45,
+      )));
     }
 
-    changeMapMode() {
-      getJsonFile("images/mapa_style.json").then(setMapStyle);
-    }
+    Future<void> gotoLocationProf() async {
+      final GoogleMapController controller = await _controller.future;
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
 
-    Widget buildGoogleMap(BuildContext context) {
-      return Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: GoogleMap(
-          mapType: MapType.normal,
-          zoomControlsEnabled: true,
-          zoomGesturesEnabled: true,
-          scrollGesturesEnabled: true,
-          compassEnabled: true,
-          rotateGesturesEnabled: true,
-          mapToolbarEnabled: true,
-          tiltGesturesEnabled: true,
-          myLocationButtonEnabled: false,
-          initialCameraPosition: CameraPosition(
-            target: LatLng(
-              mapaAgendaController.lat.value,
-              mapaAgendaController.lng.value,
-            ),
-            zoom: 12,
-          ),
-          onMapCreated: (GoogleMapController controller) async {
-            if (!_controller.isCompleted) {
-              _controller.complete(controller);
-            } else {}
-
-            changeMapMode();
-
-            Position position = await _determinePosition();
-            setState(() {
-              _position = position;
-            });
-
-            LatLng latLatPosition =
-                LatLng(position.latitude, position.longitude);
-
-            LatLng latLatCliente = LatLng(
-                mapaAgendaController.lat.value, mapaAgendaController.lng.value);
-
-            //condição para o reposicionamemto
-            if (latLatPosition.latitude <= latLatCliente.latitude) {
-              LatLngBounds bounds = LatLngBounds(
-                southwest: latLatPosition,
-                northeast: latLatCliente,
-              );
-
-              controller
-                  .animateCamera(CameraUpdate.newLatLngBounds(bounds, 50));
-              final LatLng centerBounds = LatLng(
-                  (bounds.northeast.latitude + bounds.southwest.latitude) / 2,
-                  (bounds.northeast.longitude + bounds.southwest.longitude) /
-                      2);
-
-              controller
-                  .moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
-                target: centerBounds,
-                zoom: 16,
-              )));
-
-              zoomToFit(controller, bounds, centerBounds);
-            } else {
-              LatLngBounds bounds = LatLngBounds(
-                southwest: latLatCliente,
-                northeast: latLatPosition,
-              );
-              controller
-                  .animateCamera(CameraUpdate.newLatLngBounds(bounds, 50));
-              final LatLng centerBounds = LatLng(
-                  (bounds.northeast.latitude + bounds.southwest.latitude) / 2,
-                  (bounds.northeast.longitude + bounds.southwest.longitude) /
-                      2);
-
-              controller
-                  .moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
-                target: centerBounds,
-                zoom: 16,
-              )));
-
-              zoomToFit(controller, bounds, centerBounds);
-            }
-            TargetPlatform _platform = Theme.of(context).platform;
-            BitmapDescriptor markerbitmapprof =
-                await BitmapDescriptor.fromAssetImage(
-              ImageConfiguration(),
-              _platform == TargetPlatform.iOS
-                  ? "images/profissional.png"
-                  : "images/profissional_android.png",
-            );
-            if (this.mounted) {
-              setState(() {
-                mapaAgendaController.ourLat.value = position.latitude;
-                mapaAgendaController.ourLng.value = position.longitude;
-                mapaAgendaController.markers.add(Marker(
-                  markerId: MarkerId('Estou Aqui!'),
-                  position: latLatPosition,
-                  infoWindow: InfoWindow(
-                      title: 'Sua localização atual', snippet: "" //"$position",
-                      ),
-                  icon: markerbitmapprof,
-
-                  /*_platform == TargetPlatform.iOS
-                ? BitmapDescriptor.fromBytes(resizedMarkerImageBytes)
-                : markerbitmapprof,*/
-                ));
-              });
-            }
-            canMockLocation
-                ? await mapaAgendaController.VerGps(context)
-                : print('TUDO CERTO COM GPS');
-
-            timer();
-          },
-          circles: Set.from([
-            Circle(
-              circleId: CircleId('circle'),
-              center: LatLng(mapaAgendaController.lat.value,
-                  mapaAgendaController.lng.value),
-              radius: 80,
-              strokeColor: mapaAgendaController.ctlcheckin.value == '0'
-                  ? Colors.yellow.withOpacity(0.2)
-                  : Colors.red.withOpacity(0.2),
-              fillColor: mapaAgendaController.ctlcheckin.value == '0'
-                  ? Colors.yellow.withOpacity(0.3)
-                  : Colors.red.withOpacity(0.3),
-            )
-          ]),
-          markers: mapaAgendaController.markers,
-        ),
-      );
-    }
-
-    Widget boxes() {
-      return Positioned(
-        top: 80,
-        right: 5,
-        child: Container(
-          child: FloatingActionButton(
-            shape: CircleBorder(
-              side: BorderSide(
-                color: Colors.white,
-                width: 4.0,
-              ),
-            ),
-            backgroundColor: Colors.blue,
-            onPressed: () {
-              gotoLocation();
-            },
-            child: Container(
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                child: Icon(
-                  Icons.my_location_outlined,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
-    Widget boxesProf() {
-      return Positioned(
-        top: 160,
-        right: 5,
-        child: Container(
-          child: FloatingActionButton(
-            shape: CircleBorder(
-              side: BorderSide(
-                color: Colors.white,
-                width: 4.0,
-              ),
-            ),
-            backgroundColor: Colors.red,
-            onPressed: () {
-              gotoLocationProf();
-            },
-            child: Container(
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                child: Icon(
-                  Icons.my_location_outlined,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
-    Widget ContadorTime(String checkin) {
-      DateTime parseDateTime(String dateTimeString) {
-        DateFormat format = DateFormat("dd/MM/yy HH:mm");
-        return format.parse(dateTimeString);
-      }
-
-      DateTime startTime = parseDateTime(checkin);
-
-      return Positioned(
-        top: 20,
-        left: 10,
-        child: StreamBuilder<int>(
-          stream:
-              Stream.periodic(const Duration(seconds: 1), (int count) => count),
-          builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-            Duration duration = DateTime.now().difference(startTime);
-
-            int hours = duration.inHours;
-            int minutes = duration.inMinutes.remainder(60);
-            int seconds = duration.inSeconds.remainder(60);
-
-            String formattedTime =
-                '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
-
-            Color backgroundColor;
-            if (minutes < 30) {
-              backgroundColor = Colors.blue;
-            } else if (minutes < 55) {
-              backgroundColor = Colors.amber;
-            } else {
-              backgroundColor = Colors.green;
-            }
-
-            return Container(
-              child: FloatingActionButton.extended(
-                onPressed: () {},
-                label: Text(formattedTime),
-                icon: const Icon(Icons.timer),
-                backgroundColor: backgroundColor,
-              ),
-            );
-          },
-        ),
-      );
-    }
-
-    Widget buildContainer() {
-      return Stack(
-        //alignment: Alignment.bottomRight,
-        // textDirection: TextDirection.ltr,
-        children: [
-          boxes(),
-          boxesProf(),
-          //ContadorTime(),
-        ],
-      );
+      controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        target: LatLng(position.latitude, position.longitude),
+        zoom: 18,
+        tilt: 20,
+        bearing: 45,
+      )));
     }
 
     return Scaffold(
@@ -702,11 +462,217 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                 )
               : Stack(
                   children: [
-                    buildGoogleMap(context),
-                    buildContainer(),
+                    Container(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        child: StreamBuilder<Position>(
+                          stream: Geolocator.getPositionStream(),
+                          builder: (context, snapshot) {
+                            final position = snapshot.data;
+
+                            if (snapshot.connectionState ==
+                                    ConnectionState.waiting ||
+                                position == null) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+
+                            return GoogleMap(
+                              mapType: MapType.normal,
+                              zoomControlsEnabled: true,
+                              zoomGesturesEnabled: true,
+                              scrollGesturesEnabled: true,
+                              compassEnabled: true,
+                              rotateGesturesEnabled: true,
+                              mapToolbarEnabled: true,
+                              tiltGesturesEnabled: true,
+                              myLocationButtonEnabled: false,
+                              onCameraMove: (position) {
+                                print("AQUI");
+                              },
+                              initialCameraPosition: CameraPosition(
+                                target: LatLng(
+                                  position.latitude,
+                                  position.longitude,
+                                ),
+                                zoom: 12,
+                              ),
+                              onMapCreated: ((controller) async {
+                                if (!_controller.isCompleted) {
+                                  _controller.complete(controller);
+                                }
+
+                                changeMapMode();
+
+                                // NOTE -> Aqui eu estou iniciando os Markers tanto do profissional quanto do paciente
+
+                                TargetPlatform _platform =
+                                    Theme.of(context).platform;
+
+                                markerProf =
+                                    await BitmapDescriptor.fromAssetImage(
+                                  ImageConfiguration(),
+                                  _platform == TargetPlatform.iOS
+                                      ? "images/profissional.png"
+                                      : "images/profissional_android.png",
+                                );
+
+                                markerPac =
+                                    await BitmapDescriptor.fromAssetImage(
+                                  ImageConfiguration(),
+                                  _platform == TargetPlatform.iOS
+                                      ? "images/paciente.png"
+                                      : "images/paciente_android.png",
+                                );
+
+                                LatLng latLatPosition = LatLng(
+                                  position.latitude,
+                                  position.longitude,
+                                );
+
+                                LatLng latLatCliente = LatLng(
+                                  mapaAgendaController.lat.value,
+                                  mapaAgendaController.lng.value,
+                                );
+
+                                //condição para o reposicionamemto
+                                if (latLatPosition.latitude <=
+                                    latLatCliente.latitude) {
+                                  LatLngBounds bounds = LatLngBounds(
+                                    southwest: latLatPosition,
+                                    northeast: latLatCliente,
+                                  );
+
+                                  controller.animateCamera(
+                                      CameraUpdate.newLatLngBounds(bounds, 50));
+                                  final LatLng centerBounds = LatLng(
+                                      (bounds.northeast.latitude +
+                                              bounds.southwest.latitude) /
+                                          2,
+                                      (bounds.northeast.longitude +
+                                              bounds.southwest.longitude) /
+                                          2);
+
+                                  controller.moveCamera(
+                                      CameraUpdate.newCameraPosition(
+                                          CameraPosition(
+                                    target: centerBounds,
+                                    zoom: 16,
+                                  )));
+
+                                  zoomToFit(controller, bounds, centerBounds);
+                                } else {
+                                  LatLngBounds bounds = LatLngBounds(
+                                    southwest: latLatCliente,
+                                    northeast: latLatPosition,
+                                  );
+                                  controller.animateCamera(
+                                      CameraUpdate.newLatLngBounds(bounds, 50));
+                                  final LatLng centerBounds = LatLng(
+                                      (bounds.northeast.latitude +
+                                              bounds.southwest.latitude) /
+                                          2,
+                                      (bounds.northeast.longitude +
+                                              bounds.southwest.longitude) /
+                                          2);
+
+                                  controller.moveCamera(
+                                      CameraUpdate.newCameraPosition(
+                                          CameraPosition(
+                                    target: centerBounds,
+                                    zoom: 16,
+                                  )));
+
+                                  zoomToFit(controller, bounds, centerBounds);
+                                }
+
+                                canMockLocation
+                                    ? await mapaAgendaController.VerGps(context)
+                                    : print('TUDO CERTO COM GPS');
+
+                                setState(() {});
+                              }),
+                              // onMapCreated:
+                              //     (GoogleMapController controller) async {
+                              //   if (!_controller.isCompleted) {
+                              //     _controller.complete(controller);
+                              //   } else {}
+
+                              //   setState(() {
+
+                              //   // timer();
+                              // },
+                              circles: Set.from([
+                                Circle(
+                                  circleId: CircleId('circle'),
+                                  center: LatLng(
+                                    mapaAgendaController.lat.value,
+                                    mapaAgendaController.lng.value,
+                                  ),
+                                  radius: 80,
+                                  strokeColor:
+                                      mapaAgendaController.ctlcheckin.value ==
+                                              '0'
+                                          ? Colors.yellow.withOpacity(0.2)
+                                          : Colors.red.withOpacity(0.2),
+                                  fillColor:
+                                      mapaAgendaController.ctlcheckin.value ==
+                                              '0'
+                                          ? Colors.yellow.withOpacity(0.3)
+                                          : Colors.red.withOpacity(0.3),
+                                )
+                              ]),
+                              markers: Set<Marker>.from([
+                                Marker(
+                                  markerId: MarkerId('Estou Aqui!'),
+                                  position: LatLng(
+                                    position.latitude,
+                                    position.longitude,
+                                  ),
+                                  infoWindow: InfoWindow(
+                                      title: 'Sua localização atual',
+                                      snippet: "" //"$position",
+                                      ),
+                                  icon: markerProf,
+                                ),
+                                Marker(
+                                  markerId:
+                                      MarkerId(mapaAgendaController.name.value),
+                                  position: LatLng(
+                                      mapaAgendaController.lat.value,
+                                      mapaAgendaController.lng.value),
+                                  infoWindow: InfoWindow(
+                                    title: mapaAgendaController.name.value,
+                                    snippet: mapaAgendaController
+                                                .ctlcheckin.value ==
+                                            '0'
+                                        ? "${mapaAgendaController.adress}"
+                                        : "${mapaAgendaController.adress}\nCheck-in:${mapaAgendaController.checkin.value}",
+                                  ),
+                                  icon: markerPac,
+                                ),
+                              ]),
+                            );
+                          },
+                        )),
+                    Stack(
+                      //alignment: Alignment.bottomRight,
+                      // textDirection: TextDirection.ltr,
+                      children: [
+                        BoxesWidget(
+                          onTap: gotoLocation,
+                        ),
+                        BoxesProfWidget(
+                          onTap: gotoLocationProf,
+                        )
+                      ],
+                    ),
                     mapaAgendaController.checkin.value == "30/11/-1 00:00"
-                        ? Container()
-                        : ContadorTime(mapaAgendaController.checkin.value)
+                        ? SizedBox.shrink()
+                        : CountTimeWidget(
+                            checkIn: mapaAgendaController.checkin.value,
+                          )
                   ],
                 );
         },
