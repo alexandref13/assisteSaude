@@ -470,6 +470,11 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                           builder: (context, snapshot) {
                             final position = snapshot.data;
 
+                            mapaAgendaController.ourLat.value =
+                                position?.latitude ?? 0.0;
+                            mapaAgendaController.ourLng.value =
+                                position?.longitude ?? 0.0;
+
                             if (snapshot.connectionState ==
                                     ConnectionState.waiting ||
                                 position == null) {
@@ -638,8 +643,9 @@ class _MapaAgendaPageState extends State<MapaAgendaPage> {
                                   markerId:
                                       MarkerId(mapaAgendaController.name.value),
                                   position: LatLng(
-                                      mapaAgendaController.lat.value,
-                                      mapaAgendaController.lng.value),
+                                    mapaAgendaController.lat.value,
+                                    mapaAgendaController.lng.value,
+                                  ),
                                   infoWindow: InfoWindow(
                                     title: mapaAgendaController.name.value,
                                     snippet: mapaAgendaController
