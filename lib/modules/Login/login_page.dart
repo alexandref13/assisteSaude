@@ -1,10 +1,10 @@
 import 'package:assistsaude/modules/Home/home_controller.dart';
-import 'package:assistsaude/modules/Login/components/Auth/auth_controller.dart';
 import 'package:assistsaude/shared/alert_button_pressed.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'login_controller.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,17 +13,17 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final AuthController authController = Get.put(AuthController());
+  // final AuthController authController = Get.put(AuthController());
   HomeController homeController = Get.put(HomeController());
   LoginController loginController = Get.put(LoginController());
 
   @override
   void initState() {
-    authController.localAuthentication.isDeviceSupported().then((isSupported) {
-      if (isSupported) {
-        authController.authenticate(context);
-      }
-    });
+    // authController.localAuthentication.isDeviceSupported().then((isSupported) {
+    //   if (isSupported) {
+    //     authController.authenticate(context);
+    //   }
+    // });
     super.initState();
   }
 

@@ -1,6 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:async';
+
 import 'package:assistsaude/modules/Login/components/list_of_clients_model.dart';
 import 'package:assistsaude/modules/Login/login_repository.dart';
 import 'package:assistsaude/shared/alert_button_pressed.dart';
